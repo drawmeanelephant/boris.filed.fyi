@@ -16,3 +16,6 @@ docs/llms.txt
 
 # Boris build cache (regenerated on build)
 docs/dist/.boris-cache/
+
+# Wrangler local cache
+docs/.wrangler/
