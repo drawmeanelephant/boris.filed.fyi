@@ -141,6 +141,82 @@ be committed so the record of what was published stays in the repo. The
 manual-explicit design is deliberate — see the "explicit, never
 implicit" stance in [[boris]].
 
+## Publish runbook (workflow_dispatch)
+
+The full procedure for publishing from GitHub, step by step. This is
+what an operator (human or agent) runs when the site structure changes.
+
+### 1. Trigger the workflow
+
+```text
+GitHub → Actions tab → "Publish to ATProto" → Run workflow
+```
+
+or from the CLI:
+
+```text
+gh workflow run "Publish to ATProto"
+```
+
+The workflow is `workflow_dispatch`-only — it never runs on its own. It
+checks out the site repo, checks out `drawmeanelephant/boris` at the
+pinned commit, installs Zig 0.16.0, builds Boris on a macOS-arm64
+runner, logs in with the `BORIS_APP_PASSWORD` secret via stdin, and
+publishes.
+
+### 2. Watch it pass
+
+```text
+gh run watch
+```
+
+Every step must be green: Checkout, Install Zig, Build Boris, Login,
+Publish, Upload evidence. The build-from-source step takes the longest
+(a few minutes on the macOS runner).
+
+### 3. Download the evidence artifact
+
+```text
+gh run download <run-id> --dir /tmp/boris-evidence
+```
+
+The artifact contains `docs/evidence/publish-ci.json` — the
+`boris-standard-site-evidence` record with one entry per record, each
+carrying `outcome` (`created`/`updated`), `observed_cid`, and
+`observed_at`.
+
+### 4. Verify the record on the live PDS (getRecord)
+
+The evidence says a record was written; confirm the PDS agrees by
+reading it back directly (no credentials needed):
+
+```text
+curl -s 'https://auriporia.us-west.host.bsky.network/xrpc/com.atproto.repo.getRecord?repo=did:plc:jiokpoojzqntdpyw5xvfr7rv&collection=site.standard.document&rkey=<rkey>'
+```
+
+**Pass** when the response's `cid` matches the `observed_cid` in the
+evidence and the `value` carries the expected content. Example — the
+glossary page's record:
+
+```text
+uri:  at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/glossary
+cid:  bafyreieizz2qbg52efrmpfoyexqhg5ysklbarvha2r44lznfheorwmmglu
+```
+
+### 5. Commit the evidence
+
+Copy the artifact into the repo and land it via the usual PR flow (which
+also re-deploys nothing — this is a docs-only change):
+
+```text
+cp /tmp/boris-evidence/publish-evidence/publish-ci.json docs/evidence/
+# branch → commit → push → PR (auto-merge) → merge
+```
+
+Keeping `docs/evidence/publish-ci.json` in the repo means the record of
+every publish (what was written, when, and its CIDs) stays in the audit
+trail alongside the proof pack and verify results.
+
 ## The agent workflow
 
 The whole pipeline is built for agent-driven changes:
