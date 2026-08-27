@@ -9,16 +9,46 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     permissions:
       contents: read
       deployments: write
     steps:
-      - name: Checkout
+      - name: Checkout site repo
         uses: actions/checkout@v4
 
-      # dist/ is committed pre-built because Boris is a native binary that
-      # can't be built on the runner. Deploy it directly.
+      # The HTML in dist/ is committed pre-built because the Boris binary
+      # is Darwin-arm64 and can't be rebuilt cheaply in CI. But llms.txt
+      # and rss.xml are pure content derivations — regenerate them from
+      # the committed content so every deploy ships a fresh copy even if
+      # someone forgot to run the export commands locally.
+      - name: Checkout Boris source
+        uses: actions/checkout@v4
+        with:
+          repository: drawmeanelephant/boris
+          ref: ef23e37785ced4405191c233da216168aea8ff55
+          path: boris-src
+
+      - name: Install Zig 0.16.0
+        uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: 0.16.0
+
+      - name: Build Boris
+        working-directory: boris-src
+        run: zig build
+
+      - name: Export llms.txt
+        run: |
+          ./boris-src/zig-out/bin/boris --input docs/content --llms --llms-path docs/dist/llms.txt
+
+      - name: Export rss.xml
+        run: |
+          ./boris-src/zig-out/bin/boris --input docs/content --rss --rss-path docs/dist/rss.xml \
+            --rss-title "Boris on ATProto" \
+            --rss-description "Technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to." \
+            --site-url https://boris.filed.fyi/
+
       - name: Deploy dist to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
