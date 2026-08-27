@@ -24,6 +24,7 @@
 <li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
 <li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
 <li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="operations.html">Operating this site</a></li>
 <li class="site-nav__satellite"><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
 </ul>
 </li>
@@ -48,11 +49,18 @@
 </ul>
 </nav></aside>
   <article class="site-content"><h1 id="boris-on-atproto">Boris on ATProto</h1>
-<p>This site is a hands-on technical overview of <strong>Boris</strong> — the Zig content
-compiler — and <strong>the AT Protocol</strong> surface it publishes to. It is also a
-living demo: every page here is compiled by Boris itself, and the whole
-site can be projected onto the <code>standard.site</code> lexicon and published to an
-ATProto PDS. The docs are an artifact of the tool under description.</p>
+<p>This is an <strong>all-around help area for Boris</strong> — the Zig content compiler —
+and the <strong>AT Protocol</strong> surface it publishes to. It is also a living demo:
+every page here is compiled by Boris itself, the whole site projects onto
+the <code>standard.site</code> lexicon on ATProto, and it deploys automatically from
+a public GitHub repo. The docs are an artifact of the tool under
+description.</p>
+<p>This site is a <strong>complement to the upstream project docs</strong>, not a
+replacement: the canonical source for the tool remains the
+<a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a>
+GitHub Pages. Here you'll find the help-area view: what Boris is, how
+ATProto works, how to use the <code>standard-site</code> family, and how this
+specific site is operated end to end.</p>
 <h2 id="what-you-are-looking-at">What you are looking at</h2>
 <p>Boris is a single native binary that turns a directory of Markdown files
 into a verified static site. It is not a framework and it has no runtime:
@@ -74,6 +82,10 @@ app-password) that gate writes.</li>
 project, verify, authorize, and publish it to ATProto with the
 <code>boris standard-site</code> family. This page is the operator's manual, and
 it is exercised by the very site it documents.</li>
+<li><a href="operations.html">Operating this site</a> — the ops playbook: the two-layer model (Cloudflare
+serves the files, ATProto records point at them), the deploy pipeline,
+branch protection, the <code>BORIS_APP_PASSWORD</code> secret convention, the
+publish routine, and the agent workflow.</li>
 </ul>
 <h2 id="why-this-is-interesting">Why this is interesting</h2>
 <p>A static site generator that emits a cryptographic proof pack, wired to
@@ -138,6 +150,7 @@ this site's config; nothing here references the old identities.</p>
     boris.md                        Boris technical overview
     atproto.md                      AT Protocol technical overview
     standard-site.md                the meta guide (operator's manual)
+    operations.md                   the ops playbook (deploy + publish)
     guides/testing-plan.md          test matrix, parent: index
     guides/standard-site-tests.md   per-surface procedures
     guides/test-runs.md             running log of executed tests
@@ -152,7 +165,8 @@ this site's config; nothing here references the old identities.</p>
 <h2 id="read-order">Read order</h2>
 <p>New here? Skim <a href="boris.html">Boris</a> for the mental model, then <a href="atproto.html">The AT Protocol</a> for the
 network side, then <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> for the loop that ties them together.
-If you want to reproduce the build, the procedures live in
+If you want to know how this site is deployed and published, read
+<a href="operations.html">Operating this site</a>. If you want to reproduce the build, the procedures live in
 <a href="guides/standard-site-tests.html">Standard.site Test Procedures</a> and the run log in <a href="guides/test-runs.html">Test Runs</a>.</p>
 </article>
 </main>

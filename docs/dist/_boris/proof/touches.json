@@ -5,17 +5,17 @@
   "inputs": {
     "artifacts": {
       "path": "_boris/proof/artifacts.json",
-      "bytes": 4624,
-      "sha256": "5095bbebc0fb7752dae4c98776a01f2b23437b23b5f3ac1a135cad01c1e5f7d0",
+      "bytes": 4994,
+      "sha256": "c7455bb6dcfc88652e37c9874086c9c4f0410f0164046dbf81d110187e6a2b03",
       "format": "boris-publication-artifacts",
       "schema_version": 1,
       "target": "default",
-      "artifact_count": 12
+      "artifact_count": 13
     },
     "checks": {
       "path": "_boris/proof/checks.json",
-      "bytes": 2244,
-      "sha256": "48c43707955b3c8f50276ee73b073bcf5a44faca1d9d4687dbd85eca6b6ffa9f",
+      "bytes": 2246,
+      "sha256": "7db4f701f711477d23b3a97982a45858bb02646c827ab1c5b60d582d0b693d8a",
       "format": "boris-publication-checks",
       "schema_version": 1,
       "target": "default",
@@ -24,8 +24,8 @@
     },
     "claims": {
       "path": "_boris/proof/claims.json",
-      "bytes": 6511,
-      "sha256": "6b1512bb1c89bfa61f7a2ed9667691b725957db71aaf3fa6d4acc941850b06c8",
+      "bytes": 6513,
+      "sha256": "00f4a5795ab73e73961008ec2a3fd36b486ee7f84122b206ac9469fe068d8f96",
       "format": "boris-publication-claims",
       "schema_version": 1,
       "target": "default",
@@ -153,9 +153,20 @@
     },
     {
       "kind": "artifact",
-      "id": "artifact:sitemap.xml",
+      "id": "artifact:operations.html",
       "metadata": {
         "inventory_index": 10,
+        "path": "operations.html",
+        "kind": "html-page",
+        "status": "committed",
+        "required": true
+      }
+    },
+    {
+      "kind": "artifact",
+      "id": "artifact:sitemap.xml",
+      "metadata": {
+        "inventory_index": 11,
         "path": "sitemap.xml",
         "kind": "sitemap",
         "status": "committed",
@@ -166,7 +177,7 @@
       "kind": "artifact",
       "id": "artifact:standard-site.html",
       "metadata": {
-        "inventory_index": 11,
+        "inventory_index": 12,
         "path": "standard-site.html",
         "kind": "html-page",
         "status": "committed",
@@ -339,6 +350,11 @@
     {
       "kind": "target-owns-artifact",
       "from": "target",
+      "to": "artifact:operations.html"
+    },
+    {
+      "kind": "target-owns-artifact",
+      "from": "target",
       "to": "artifact:sitemap.xml"
     },
     {
@@ -439,6 +455,16 @@
     {
       "kind": "artifact-subject-of-check",
       "from": "artifact:index.html",
+      "to": "check:rendered-html"
+    },
+    {
+      "kind": "artifact-subject-of-check",
+      "from": "artifact:operations.html",
+      "to": "check:artifact-integrity"
+    },
+    {
+      "kind": "artifact-subject-of-check",
+      "from": "artifact:operations.html",
       "to": "check:rendered-html"
     },
     {
@@ -544,6 +570,16 @@
     {
       "kind": "artifact-supports-check",
       "from": "artifact:index.html",
+      "to": "check:rendered-search"
+    },
+    {
+      "kind": "artifact-supports-check",
+      "from": "artifact:operations.html",
+      "to": "check:rendered-html"
+    },
+    {
+      "kind": "artifact-supports-check",
+      "from": "artifact:operations.html",
       "to": "check:rendered-search"
     },
     {
