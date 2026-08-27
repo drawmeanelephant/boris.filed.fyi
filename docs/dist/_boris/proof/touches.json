@@ -6,7 +6,7 @@
     "artifacts": {
       "path": "_boris/proof/artifacts.json",
       "bytes": 5739,
-      "sha256": "a46ae072b7ab2bb7062523ad8b1e9f151f3f4dee910f9bf2439957e98f3cdcee",
+      "sha256": "eab0d244251c9153e4b53745eb57bd3ab39221ec43e96738c6388631284068be",
       "format": "boris-publication-artifacts",
       "schema_version": 1,
       "target": "default",
@@ -15,7 +15,7 @@
     "checks": {
       "path": "_boris/proof/checks.json",
       "bytes": 2246,
-      "sha256": "1d2f8757d183862b4c38f458a4cdf3dd9a273bd205342524bc90a22f9b731d9b",
+      "sha256": "c198d0096326d68255c15e96c573c8cf636dada695167242f6773a25123419f3",
       "format": "boris-publication-checks",
       "schema_version": 1,
       "target": "default",
@@ -25,7 +25,7 @@
     "claims": {
       "path": "_boris/proof/claims.json",
       "bytes": 6513,
-      "sha256": "4bd45173739a60956c3fe83a6c6191cebf7ec3b56e86e7cf181b97dbb4bfff4e",
+      "sha256": "f43519e8f677b59c11632d2e63d08debbf79b42f6a6a8e55860af1f1f9d4ed17",
       "format": "boris-publication-claims",
       "schema_version": 1,
       "target": "default",

@@ -150,18 +150,24 @@ the repo, never in shell history. Boris accepts it <strong>only via stdin</stron
 <p>If it's ever exposed (e.g. pasted in a chat), revoke it in the provider's
 app-password settings and mint a new one.</p>
 <h2 id="the-publish-routine">The publish routine</h2>
-<p>The ATProto records are <strong>not</strong> deployed by CI. They are published
-manually, and only when the site <em>structure</em> changes — adding/renaming
-pages, changing the origin, or updating a title/summary. Content edits
-redeploy to Cloudflare automatically; the records don't move for those.</p>
-<pre><code class="language-text"># login (once per session; password via stdin)
-printf '%s' &quot;$BORIS_APP_PASSWORD&quot; | boris standard-site login --app-password --handle boris.filed.fyi
-
-# publish (only when site structure changed)
+<p>The ATProto records are <strong>not</strong> deployed by the deploy workflow. They
+are published manually, and only when the site <em>structure</em> changes —
+adding/renaming pages, changing the origin, or updating a
+title/summary. Content edits redeploy to Cloudflare automatically; the
+records don't move for those.</p>
+<p>There are two ways to publish, both manual:</p>
+<p><strong>From GitHub (uses the <code>BORIS_APP_PASSWORD</code> secret):</strong></p>
+<pre><code class="language-text">Actions tab → &quot;Publish to ATProto&quot; → Run workflow
+</code></pre>
+<p>The workflow (<code>.github/workflows/publish-atproto.yml</code>) builds Boris from
+source on a macOS-arm64 runner, logs in with the secret via stdin,
+publishes, and uploads <code>docs/evidence/publish-ci.json</code> as an artifact.</p>
+<p><strong>Locally (password never leaves your machine):</strong></p>
+<pre><code class="language-text">printf '%s' &quot;$BORIS_APP_PASSWORD&quot; | boris standard-site login --app-password --handle boris.filed.fyi
 boris standard-site publish --profile docs/standard-site.json --plan docs/evidence/plan.json
 </code></pre>
-<p>The result lands in <code>docs/evidence/publish*.json</code> and should be
-committed so the record of what was published stays in the repo. This
+<p>Either way the result lands in <code>docs/evidence/publish*.json</code> and should
+be committed so the record of what was published stays in the repo. The
 manual-explicit design is deliberate — see the &quot;explicit, never
 implicit&quot; stance in <a href="boris.html">Boris</a>.</p>
 <h2 id="the-agent-workflow">The agent workflow</h2>

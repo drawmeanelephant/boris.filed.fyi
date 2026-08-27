@@ -76,16 +76,21 @@ so any workflow that publishes must pipe the secret:
 For tighter scoping, put the secret in a GitHub *environment* (e.g.
 `production`) so only that deploy workflow can read it.
 
-### Why CI automation is currently not wired up
+### Why CI publish is manual-dispatch only
 
-The `boris` binary is a native Darwin-arm64 artifact that is intentionally
-gitignored (see `boris-agent-kit/`), so a GitHub Actions runner can't execute
-it without building Boris from source (`drawmeanelephant/boris`, Zig 0.16.0)
-as part of the job. On top of that, Boris's design stance is *explicit, never
-implicit* — live publication is a manual, gated act, and `smoke` is documented
-as "never in CI".
+There is a publish workflow (`.github/workflows/publish-atproto.yml`), but it
+is **manual-only** — it runs from the Actions tab, never automatically. This
+matches Boris's design stance: *explicit, never implicit* — live publication
+is a gated act, and `smoke` is documented as "never in CI". Content edits
+deploy to Cloudflare automatically; the PDS records only move when you
+trigger the publish.
 
-So the publish routine is:
+The workflow builds Boris from source (`drawmeanelephant/boris`, Zig 0.16.0)
+on a macOS-arm64 runner (the kit binary is Darwin-arm64 and gitignored, so CI
+can't use it directly), logs in with the `BORIS_APP_PASSWORD` secret via
+stdin, publishes, and uploads `docs/evidence/publish-ci.json` as an artifact.
+
+Local alternative (same result, password never leaves your machine):
 
 ```text
 # login (once per session; password via stdin)
