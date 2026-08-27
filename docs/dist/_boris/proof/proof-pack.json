@@ -5,17 +5,17 @@
   "inputs": {
     "artifacts": {
       "path": "_boris/proof/artifacts.json",
-      "bytes": 4994,
-      "sha256": "c7455bb6dcfc88652e37c9874086c9c4f0410f0164046dbf81d110187e6a2b03",
+      "bytes": 5370,
+      "sha256": "350157f794794ac0725ec8f2f746a592513e6d2c802f5a8389decb28e0ce2ef3",
       "format": "boris-publication-artifacts",
       "schema_version": 1,
       "target": "default",
-      "artifact_count": 13
+      "artifact_count": 14
     },
     "checks": {
       "path": "_boris/proof/checks.json",
       "bytes": 2246,
-      "sha256": "7db4f701f711477d23b3a97982a45858bb02646c827ab1c5b60d582d0b693d8a",
+      "sha256": "eadd3e253503c1476dd7cda503153e09cd456fc1d9339db02ca7934f09b49f11",
       "format": "boris-publication-checks",
       "schema_version": 1,
       "target": "default",
@@ -25,7 +25,7 @@
     "claims": {
       "path": "_boris/proof/claims.json",
       "bytes": 6513,
-      "sha256": "00f4a5795ab73e73961008ec2a3fd36b486ee7f84122b206ac9469fe068d8f96",
+      "sha256": "526a7bee91e3084fa3e39b3b3c5b48a2f60f06b613f13ad0d22f14c805be7ad4",
       "format": "boris-publication-claims",
       "schema_version": 1,
       "target": "default",
@@ -34,25 +34,25 @@
     },
     "touches": {
       "path": "_boris/proof/touches.json",
-      "bytes": 18825,
-      "sha256": "53be42eec31419f554076b14fd8372259e357a2ccf56b6fcc0d04bc47a8c12c8",
+      "bytes": 19763,
+      "sha256": "70ea26598257dbc408aa08c6c4fbf332868b8365ac8dfb3c561b07a8d6daffae",
       "format": "boris-publication-touches",
       "schema_version": 1,
       "target": "default",
-      "node_count": 26,
-      "edge_count": 79
+      "node_count": 27,
+      "edge_count": 84
     }
   },
   "summary": {
     "artifacts": {
-      "total": 13,
+      "total": 14,
       "by_status": {
-        "committed": 13,
+        "committed": 14,
         "omitted-by-plan": 0,
         "not-applicable": 0
       },
       "by_kind": {
-        "html-page": 10,
+        "html-page": 11,
         "theme-asset": 1,
         "content-asset": 0,
         "rendered-search": 1,
@@ -92,8 +92,8 @@
       }
     },
     "limitation_count": 6,
-    "relationship_node_count": 26,
-    "relationship_edge_count": 79,
+    "relationship_node_count": 27,
+    "relationship_edge_count": 84,
     "overall_presentation_status": "verified"
   },
   "artifacts": [
@@ -103,8 +103,8 @@
       "kind": "rendered-search",
       "status": "committed",
       "required": true,
-      "bytes": 59708,
-      "sha256": "e3e71cacc94b16a214e347d69fdba56b71c0fe495747f6ab049645197fda7079",
+      "bytes": 67948,
+      "sha256": "6807696f3a7479a539b48218066a62bd9fc75572fb61665d343044cae1f6fae1",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-search",
@@ -139,8 +139,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 12689,
-      "sha256": "4002ddacb2cf95c5b6505b04660bb01f12e621884c009041f6cf2dd3c1a47858",
+      "bytes": 12777,
+      "sha256": "88952883e67a7c30094ab7d5ac54fb1ca5e09ac777e944ac6d248175473a3203",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -160,8 +160,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 14122,
-      "sha256": "f9d0d8dedadb203f56f6551cd085d588f1475e3cf74903dda1ea39bbba9ba679",
+      "bytes": 14210,
+      "sha256": "bb04879ba0c6bc79e9002cee8c058e4c3cbb72ca9b8e5e04488a348b025fb1a9",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -181,8 +181,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 4275,
-      "sha256": "144e09a42d90783ef9450e0005e9cea454f5110d24a7ad60afadefc619853e57",
+      "bytes": 4366,
+      "sha256": "6df67a53a21b9e235dcdfc51c17744e0d22be1f0882beca0f29bf001e28816c3",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -202,8 +202,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 4304,
-      "sha256": "f93296e666f8b5e02a28d33b478536014ac8a78533136c28bbdb875136d42202",
+      "bytes": 4395,
+      "sha256": "713f605ecc8921f385a377f0c030cb3d41925117f80025268b1cd836ac9ba8b8",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -223,8 +223,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 8590,
-      "sha256": "28b14440193e21ad0a7b8c87cc7eebb421139efb36a9f2868fae91dcee981692",
+      "bytes": 8681,
+      "sha256": "0fd926593e9bf75bb27a34042a27497d44b1ea183c7398d5a53a2abb37e4634a",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -244,8 +244,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 12476,
-      "sha256": "e457958f02d45ef132046b1f7113682818e57f0b5171d50a37f1507444c67fa2",
+      "bytes": 12567,
+      "sha256": "aa558d9dd71efc5faae2f0522b60a5dab47832a6c32f884be56c75bd016501fa",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -265,8 +265,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 9428,
-      "sha256": "24e93e3fbcfaf27984c1c703adb598d8e77d068db6b6cdd2665176674bc9a86f",
+      "bytes": 9519,
+      "sha256": "41cd13e7aa203651253350673291c17c1c5a0c4bc862bf78b53eedf7e6da1faf",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -286,8 +286,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 11201,
-      "sha256": "fbf0bbd46c80e9c0e9e0b8bcc004f02519d8ebe6090d138c425bcf6696a3dc69",
+      "bytes": 11645,
+      "sha256": "d56c79b7d63140abf33e1ff57f79b92002c479eefa423b119837714c223e775f",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -307,8 +307,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 9896,
-      "sha256": "5a017048db3008c6e6199856191184381f2169d1e32f74e573c3b55510c7b051",
+      "bytes": 9984,
+      "sha256": "b22dab8ea4e0bec2069c1b89632b6b5961d0b7647dbf6eb7cbe127240bbfb506",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -328,8 +328,8 @@
       "kind": "sitemap",
       "status": "committed",
       "required": true,
-      "bytes": 790,
-      "sha256": "140ea0ad4a8d9791129c20dca71b0a7096d1c2d5640dc4eae4abd0d568c5f18b",
+      "bytes": 859,
+      "sha256": "2315246ce1e714f1499f4a83f0ae057e22ff3db1bd39ff286da39b407e453f83",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html"
@@ -345,8 +345,29 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 15624,
-      "sha256": "45ea3b4879bcd09a83a57209ce9a2966c07c0a739ba9a63aa0c21fd85196bbcc",
+      "bytes": 15712,
+      "sha256": "b9eff422b57f0b95372271e1921a663f753fa429af2d9b93fee9cc839ae41b7b",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 13,
+      "path": "troubleshooting.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 13382,
+      "sha256": "337a7fb58c6cde357fc4ac83419de6fb705770f871db8a14f8f3326ce4486087",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -370,8 +391,8 @@
       "eligible": true,
       "ran": true,
       "counts": {
-        "eligible": 13,
-        "checked": 13,
+        "eligible": 14,
+        "checked": 14,
         "findings": 0
       },
       "finding_ids": [],
@@ -388,7 +409,8 @@
         "artifact:index.html",
         "artifact:operations.html",
         "artifact:sitemap.xml",
-        "artifact:standard-site.html"
+        "artifact:standard-site.html",
+        "artifact:troubleshooting.html"
       ],
       "supporting_artifact_ids": [],
       "supported_claim_ids": [
@@ -403,8 +425,8 @@
       "eligible": true,
       "ran": true,
       "counts": {
-        "eligible": 10,
-        "checked": 10,
+        "eligible": 11,
+        "checked": 11,
         "findings": 0
       },
       "finding_ids": [],
@@ -418,7 +440,8 @@
         "artifact:guides/testing-plan.html",
         "artifact:index.html",
         "artifact:operations.html",
-        "artifact:standard-site.html"
+        "artifact:standard-site.html",
+        "artifact:troubleshooting.html"
       ],
       "supporting_artifact_ids": [
         "artifact:_boris/search/search-index.json",
@@ -433,7 +456,8 @@
         "artifact:index.html",
         "artifact:operations.html",
         "artifact:sitemap.xml",
-        "artifact:standard-site.html"
+        "artifact:standard-site.html",
+        "artifact:troubleshooting.html"
       ],
       "supported_claim_ids": [
         "claim:rendered-html-passed-declared-audit"
@@ -465,7 +489,8 @@
         "artifact:guides/testing-plan.html",
         "artifact:index.html",
         "artifact:operations.html",
-        "artifact:standard-site.html"
+        "artifact:standard-site.html",
+        "artifact:troubleshooting.html"
       ],
       "supported_claim_ids": [
         "claim:rendered-search-matches-selected-html"
@@ -601,6 +626,7 @@
       "artifact:operations.html",
       "artifact:sitemap.xml",
       "artifact:standard-site.html",
+      "artifact:troubleshooting.html",
       "check:artifact-integrity",
       "check:rendered-html",
       "check:rendered-search",
@@ -630,7 +656,8 @@
           { "from": "target", "to": "artifact:index.html" },
           { "from": "target", "to": "artifact:operations.html" },
           { "from": "target", "to": "artifact:sitemap.xml" },
-          { "from": "target", "to": "artifact:standard-site.html" }
+          { "from": "target", "to": "artifact:standard-site.html" },
+          { "from": "target", "to": "artifact:troubleshooting.html" }
         ]
       },
       {
@@ -659,7 +686,9 @@
           { "from": "artifact:operations.html", "to": "check:rendered-html" },
           { "from": "artifact:sitemap.xml", "to": "check:artifact-integrity" },
           { "from": "artifact:standard-site.html", "to": "check:artifact-integrity" },
-          { "from": "artifact:standard-site.html", "to": "check:rendered-html" }
+          { "from": "artifact:standard-site.html", "to": "check:rendered-html" },
+          { "from": "artifact:troubleshooting.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:troubleshooting.html", "to": "check:rendered-html" }
         ]
       },
       {
@@ -687,7 +716,9 @@
           { "from": "artifact:operations.html", "to": "check:rendered-search" },
           { "from": "artifact:sitemap.xml", "to": "check:rendered-html" },
           { "from": "artifact:standard-site.html", "to": "check:rendered-html" },
-          { "from": "artifact:standard-site.html", "to": "check:rendered-search" }
+          { "from": "artifact:standard-site.html", "to": "check:rendered-search" },
+          { "from": "artifact:troubleshooting.html", "to": "check:rendered-html" },
+          { "from": "artifact:troubleshooting.html", "to": "check:rendered-search" }
         ]
       },
       {

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Troubleshooting · Boris on ATProto</title>
+  <link rel="stylesheet" href="assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/troubleshooting">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="operations.html">Operating this site</a></li>
+<li class="site-nav__satellite"><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+<li class="site-nav__satellite is-current"><a href="troubleshooting.html" aria-current="page">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="index.html">Boris on ATProto</a></li>
+<li aria-current="page">Troubleshooting</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#troubleshooting">Troubleshooting</a></li>
+<li class="page-toc__l2"><a href="#the-invalidnonce-finding-oauth-dpop-writes">The InvalidNonce finding (OAuth + DPoP writes)</a></li>
+<li class="page-toc__l2"><a href="#app-password-vs-oauth-the-tradeoff">App-password vs OAuth — the tradeoff</a></li>
+<li class="page-toc__l2"><a href="#diagnosing-a-failed-publish">Diagnosing a failed publish</a></li>
+<li class="page-toc__l3"><a href="#1-did-it-fail-offline-or-live">1. Did it fail offline or live?</a></li>
+<li class="page-toc__l3"><a href="#2-check-the-session">2. Check the session</a></li>
+<li class="page-toc__l3"><a href="#3-check-the-plan-matches-the-profile-fail-closed-guard">3. Check the plan matches the profile (fail-closed guard)</a></li>
+<li class="page-toc__l3"><a href="#4-check-the-identity-origin-in-the-profile">4. Check the identity + origin in the profile</a></li>
+<li class="page-toc__l3"><a href="#5-check-verify-against-the-built-tree">5. Check verify against the built tree</a></li>
+<li class="page-toc__l3"><a href="#6-live-side-failures">6. Live-side failures</a></li>
+<li class="page-toc__l3"><a href="#7-the-evidence-trail">7. The evidence trail</a></li>
+<li class="page-toc__l2"><a href="#still-stuck">Still stuck?</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="troubleshooting">Troubleshooting</h1>
+<p>This page collects the failure modes observed while operating Boris's
+<code>standard-site</code> family against bsky.social / bsky.network PDS instances,
+and how to diagnose them. The full run history is in
+<a href="guides/test-runs.html">Test Runs</a>; the happy-path procedures are in
+<a href="guides/standard-site-tests.html">Standard.site Test Procedures</a> and <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>.</p>
+<h2 id="the-invalidnonce-finding-oauth-dpop-writes">The InvalidNonce finding (OAuth + DPoP writes)</h2>
+<p><strong>Symptom:</strong> <code>boris standard-site smoke</code> (or any OAuth write) fails with
+<code>InvalidNonce</code> (exit 3), reproducibly, on a freshly signed-in session,
+against bsky.network PDS instances.</p>
+<p><strong>What happens:</strong> <code>standard-site login --did &lt;did&gt;</code> succeeds — the
+read-side discovery and token exchange complete — but the record writes
+are rejected at the DPoP nonce layer. The OAuth access token is bound to
+the DPoP key, and each request must carry a proof with a server-issued
+nonce; the PDS rejects the proof. The refresh path compounds it: an
+expired access token (1-hour lifetime) triggers a DPoP refresh that
+fails at the network layer rather than surfacing a clean &quot;session
+expired&quot; state.</p>
+<p><strong>What it means:</strong> on <code>bsky.social</code> / <code>bsky.network</code>, the OAuth + DPoP
+write path is <strong>non-parity</strong> — <code>login</code> works but writes are rejected.
+This matches the upstream Boris note that bsky.social does not reliably
+grant the Standard.site write scope via the OAuth/DPoP path.</p>
+<p><strong>Workaround:</strong> use the <strong>app-password path</strong> for live writes (see
+below). The recorded passing live smoke against bsky.social used the
+opt-in app-password (<code>Bearer</code>) path.</p>
+<p><strong>If OAuth writes are a hard requirement:</strong> they need a self-hosted PDS
+that implements and grants the granular collection scopes
+(<code>repo:site.standard.document</code>, <code>repo:site.standard.publication</code>). The
+OAuth path is not the supported live target on bsky.social today.</p>
+<h2 id="app-password-vs-oauth-the-tradeoff">App-password vs OAuth — the tradeoff</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>OAuth + DPoP</th>
+<th>App-password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scope</td>
+<td>granular (<code>site.standard.*</code>)</td>
+<td>broad account write</td>
+</tr>
+<tr>
+<td>Token binding</td>
+<td>DPoP key binding</td>
+<td>Bearer</td>
+</tr>
+<tr>
+<td>Works on bsky.social</td>
+<td>✗ (writes fail with <code>InvalidNonce</code>)</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Credential entry</td>
+<td>browser OAuth</td>
+<td>stdin only</td>
+</tr>
+<tr>
+<td>Least privilege</td>
+<td>yes</td>
+<td>no — use a dedicated identity</td>
+</tr>
+<tr>
+<td>CI-friendly</td>
+<td>no (needs interactive grant)</td>
+<td>yes, via a repo secret</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>OAuth</strong> is the <em>right</em> path in principle (least privilege, key
+binding) but doesn't complete writes against bsky.network today.</li>
+<li><strong>App-password</strong> is the <em>working</em> path against bsky.social. It grants
+broad account write within its scope, so it must be kept on a
+dedicated identity and revocable — and the credential is accepted
+<strong>only via stdin</strong>, never argv/profile/env.</li>
+</ul>
+<p>Decision rule: if you're publishing to bsky.social, use app-password.
+If you control a compliant PDS and need granular scopes, use OAuth.</p>
+<h2 id="diagnosing-a-failed-publish">Diagnosing a failed publish</h2>
+<p>When <code>boris standard-site publish</code> (or <code>smoke</code>) fails, walk this
+checklist in order:</p>
+<h3 id="1-did-it-fail-offline-or-live">1. Did it fail offline or live?</h3>
+<ul>
+<li><strong>Offline failure</strong> (<code>plan</code>, <code>records</code>, <code>verify</code>) — no network, no
+credentials involved. The problem is the input or the profile.</li>
+<li><strong>Live failure</strong> (<code>login</code>, <code>publish</code>, <code>smoke</code>) — network + auth are
+involved. The problem is usually the session, the PDS, or the plan
+drift.</li>
+</ul>
+<h3 id="2-check-the-session">2. Check the session</h3>
+<pre><code class="language-text">boris standard-site sessions
+</code></pre>
+<ul>
+<li><strong>No session for the identity</strong> → <code>login</code> first.</li>
+<li><strong>Session present but stale</strong> → the access token may be expired (1-hour
+lifetime for OAuth). Re-run <code>login</code> (OAuth) or <code>login --app-password</code>
+(app-password). For OAuth sessions past expiry, expect the DPoP
+refresh failure described above; re-auth cleanly.</li>
+<li><strong>&quot;sessions&quot; is empty</strong> → the session store is elsewhere or was
+erased. Use <code>--session-root</code> to confirm which store you're reading.</li>
+</ul>
+<h3 id="3-check-the-plan-matches-the-profile-fail-closed-guard">3. Check the plan matches the profile (fail-closed guard)</h3>
+<pre><code class="language-text">boris standard-site plan --profile standard-site.json --out /tmp/plan.json
+boris standard-site publish --profile standard-site.json --plan /tmp/plan.json
+</code></pre>
+<p>Publishing with a committed <code>--plan</code> is <strong>fail-closed on drift</strong>: if the
+profile's DID, origin, or record projection diverges from the committed
+plan, publish refuses. If publish dies on drift, regenerate the plan,
+review the diff, and commit the new plan — then publish against it.</p>
+<h3 id="4-check-the-identity-origin-in-the-profile">4. Check the identity + origin in the profile</h3>
+<pre><code class="language-text">grep -E '&quot;(did|base_url|origin)&quot;' standard-site.json
+</code></pre>
+<ul>
+<li><strong>Wrong DID</strong> → the publish targets the wrong account.</li>
+<li><strong>Placeholder origin</strong> (<code>https://boris.example.net/</code> or similar) →
+the plan projects a fake URL; <code>verify</code> will report
+<code>overall_passed: false</code> with the well-known file <code>missing</code>. Fill in
+the real origin and rebuild.</li>
+<li><strong>Old placeholder DID</strong> (<code>did:plc:aaaa…</code>) → retired; replace with the
+real DID.</li>
+</ul>
+<h3 id="5-check-verify-against-the-built-tree">5. Check verify against the built tree</h3>
+<pre><code class="language-text">boris standard-site verify --profile standard-site.json --dist dist --out verify.json
+</code></pre>
+<ul>
+<li><code>overall_passed: false</code> with well-known <code>missing</code> → the build wasn't
+run with <code>--profile</code>, or the origin doesn't match. Rebuild with the
+profile flag (this is what emits <code>.well-known/site.standard.publication</code>).</li>
+<li><code>overall_passed: false</code> with <code>documents</code> empty → pages lack
+<code>published_at</code> + <code>summary</code>; they're excluded with reason
+<code>missing-date</code>. Add both to the frontmatter (full UTC:
+<code>YYYY-MM-DDTHH:MM:SSZ</code>).</li>
+<li><code>overall_passed: true</code> → the offline gate is green; the failure is
+live-side.</li>
+</ul>
+<h3 id="6-live-side-failures">6. Live-side failures</h3>
+<ul>
+<li><strong><code>InvalidNonce</code> (exit 3)</strong> → OAuth + DPoP write path; switch to
+app-password (see above).</li>
+<li><strong>Auth rejection on publish</strong> → the app-password may be revoked or
+wrong. Revoke and re-mint if it was ever exposed (e.g. pasted in a
+chat), then re-login.</li>
+<li><strong>Network error during refresh</strong> → the access token expired and the
+DPoP refresh failed at the transport layer. Re-login to get a fresh
+session rather than fighting the refresh.</li>
+<li><strong>Record already exists / conflict</strong> → the publish reconciles against
+the live repository; a stale committed plan may describe records that
+no longer match. Re-plan against the current profile and re-publish.</li>
+</ul>
+<h3 id="7-the-evidence-trail">7. The evidence trail</h3>
+<p>Every command writes an artifact:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Artifact</th>
+<th>Tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>plan</code></td>
+<td><code>evidence/plan.json</code></td>
+<td>the projection (documents, exclusions, well-known path)</td>
+</tr>
+<tr>
+<td><code>records</code></td>
+<td><code>evidence/records.json</code></td>
+<td>the canonical payloads</td>
+</tr>
+<tr>
+<td><code>verify</code></td>
+<td><code>evidence/verify.json</code></td>
+<td>offline gate status</td>
+</tr>
+<tr>
+<td><code>publish</code></td>
+<td><code>evidence/publish*.json</code></td>
+<td>per-record outcome (<code>created</code>/<code>updated</code>/<code>failed</code>) + CIDs</td>
+</tr>
+<tr>
+<td><code>smoke</code></td>
+<td><code>evidence/live-smoke.json</code></td>
+<td>per-phase result (discovery → cleanup)</td>
+</tr>
+</tbody>
+</table>
+<p>Check the artifact for the failing step first — the diagnosis is usually
+written down in it.</p>
+<h2 id="still-stuck">Still stuck?</h2>
+<ul>
+<li>Confirm which identity you're actually publishing as: <code>sessions</code>.</li>
+<li>Confirm the PDS is reachable: resolve the DID and check the origin.</li>
+<li>Read <a href="guides/test-runs.html">Test Runs</a> for the recorded findings, including the
+InvalidNonce investigation and the app-password resolution.</li>
+<li>The upstream project docs at
+<a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a>
+are the canonical source for the tool itself.</li>
+</ul>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

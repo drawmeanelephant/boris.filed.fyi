@@ -5,17 +5,17 @@
   "inputs": {
     "artifacts": {
       "path": "_boris/proof/artifacts.json",
-      "bytes": 4994,
-      "sha256": "c7455bb6dcfc88652e37c9874086c9c4f0410f0164046dbf81d110187e6a2b03",
+      "bytes": 5370,
+      "sha256": "350157f794794ac0725ec8f2f746a592513e6d2c802f5a8389decb28e0ce2ef3",
       "format": "boris-publication-artifacts",
       "schema_version": 1,
       "target": "default",
-      "artifact_count": 13
+      "artifact_count": 14
     },
     "checks": {
       "path": "_boris/proof/checks.json",
       "bytes": 2246,
-      "sha256": "7db4f701f711477d23b3a97982a45858bb02646c827ab1c5b60d582d0b693d8a",
+      "sha256": "eadd3e253503c1476dd7cda503153e09cd456fc1d9339db02ca7934f09b49f11",
       "format": "boris-publication-checks",
       "schema_version": 1,
       "target": "default",
@@ -25,7 +25,7 @@
     "claims": {
       "path": "_boris/proof/claims.json",
       "bytes": 6513,
-      "sha256": "00f4a5795ab73e73961008ec2a3fd36b486ee7f84122b206ac9469fe068d8f96",
+      "sha256": "526a7bee91e3084fa3e39b3b3c5b48a2f60f06b613f13ad0d22f14c805be7ad4",
       "format": "boris-publication-claims",
       "schema_version": 1,
       "target": "default",
@@ -179,6 +179,17 @@
       "metadata": {
         "inventory_index": 12,
         "path": "standard-site.html",
+        "kind": "html-page",
+        "status": "committed",
+        "required": true
+      }
+    },
+    {
+      "kind": "artifact",
+      "id": "artifact:troubleshooting.html",
+      "metadata": {
+        "inventory_index": 13,
+        "path": "troubleshooting.html",
         "kind": "html-page",
         "status": "committed",
         "required": true
@@ -363,6 +374,11 @@
       "to": "artifact:standard-site.html"
     },
     {
+      "kind": "target-owns-artifact",
+      "from": "target",
+      "to": "artifact:troubleshooting.html"
+    },
+    {
       "kind": "artifact-subject-of-check",
       "from": "artifact:_boris/search/search-index.json",
       "to": "check:artifact-integrity"
@@ -483,6 +499,16 @@
       "to": "check:rendered-html"
     },
     {
+      "kind": "artifact-subject-of-check",
+      "from": "artifact:troubleshooting.html",
+      "to": "check:artifact-integrity"
+    },
+    {
+      "kind": "artifact-subject-of-check",
+      "from": "artifact:troubleshooting.html",
+      "to": "check:rendered-html"
+    },
+    {
       "kind": "artifact-supports-check",
       "from": "artifact:_boris/search/search-index.json",
       "to": "check:rendered-html"
@@ -595,6 +621,16 @@
     {
       "kind": "artifact-supports-check",
       "from": "artifact:standard-site.html",
+      "to": "check:rendered-search"
+    },
+    {
+      "kind": "artifact-supports-check",
+      "from": "artifact:troubleshooting.html",
+      "to": "check:rendered-html"
+    },
+    {
+      "kind": "artifact-supports-check",
+      "from": "artifact:troubleshooting.html",
       "to": "check:rendered-search"
     },
     {

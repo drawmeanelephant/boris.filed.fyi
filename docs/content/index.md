@@ -48,6 +48,9 @@ The three ideas this site explores:
   serves the files, ATProto records point at them), the deploy pipeline,
   branch protection, the `BORIS_APP_PASSWORD` secret convention, the
   publish routine, and the agent workflow.
+- [[troubleshooting]] — what to do when publish or smoke fails: the
+  InvalidNonce OAuth finding, the app-password vs OAuth tradeoff, and a
+  step-by-step failure checklist.
 
 ## Why this is interesting
 
@@ -125,6 +128,7 @@ docs/
     atproto.md                      AT Protocol technical overview
     standard-site.md                the meta guide (operator's manual)
     operations.md                   the ops playbook (deploy + publish)
+    troubleshooting.md              failure modes + diagnosis
     guides/testing-plan.md          test matrix, parent: index
     guides/standard-site-tests.md   per-surface procedures
     guides/test-runs.md             running log of executed tests
@@ -142,5 +146,6 @@ docs/
 New here? Skim [[boris]] for the mental model, then [[atproto]] for the
 network side, then [[standard-site]] for the loop that ties them together.
 If you want to know how this site is deployed and published, read
-[[operations]]. If you want to reproduce the build, the procedures live in
+[[operations]]. When something breaks, start at [[troubleshooting]]. If you
+want to reproduce the build, the procedures live in
 [[guides/standard-site-tests]] and the run log in [[guides/test-runs]].
