@@ -6,7 +6,7 @@
     "artifacts": {
       "path": "_boris/proof/artifacts.json",
       "bytes": 5739,
-      "sha256": "eab0d244251c9153e4b53745eb57bd3ab39221ec43e96738c6388631284068be",
+      "sha256": "3ddb69a9195486d7593ba00760aaa6387321039f1e1faf4e4541ef3a404ba59d",
       "format": "boris-publication-artifacts",
       "schema_version": 1,
       "target": "default",
@@ -15,7 +15,7 @@
     "checks": {
       "path": "_boris/proof/checks.json",
       "bytes": 2246,
-      "sha256": "c198d0096326d68255c15e96c573c8cf636dada695167242f6773a25123419f3",
+      "sha256": "9be86ec9323342a3fcfa9415b938fa25b19ee377c1dfcf35a5ed89f87e0c3d4b",
       "format": "boris-publication-checks",
       "schema_version": 1,
       "target": "default",
@@ -25,7 +25,7 @@
     "claims": {
       "path": "_boris/proof/claims.json",
       "bytes": 6513,
-      "sha256": "f43519e8f677b59c11632d2e63d08debbf79b42f6a6a8e55860af1f1f9d4ed17",
+      "sha256": "09815c0fcf9884930fab2d44035236e55eab3f1b9f7451cb639580685437be79",
       "format": "boris-publication-claims",
       "schema_version": 1,
       "target": "default",
@@ -35,7 +35,7 @@
     "touches": {
       "path": "_boris/proof/touches.json",
       "bytes": 20652,
-      "sha256": "1b7ccb524bf97c664f9db04035d43ef5a3f16b0581304a2e3e7860c2fb673e36",
+      "sha256": "a915e3d88f21a18761b6e04f5617dea68577d9c00c52239566bab195c2ccf3d7",
       "format": "boris-publication-touches",
       "schema_version": 1,
       "target": "default",
@@ -103,8 +103,8 @@
       "kind": "rendered-search",
       "status": "committed",
       "required": true,
-      "bytes": 73148,
-      "sha256": "a2a67caf54946c9d567f35d99f94c3d7a280b78206ea21b2f79e9c8854b048f4",
+      "bytes": 75966,
+      "sha256": "1ea07045cecb568eaa031d1a4732e8295f25d5df3f94fce07ee75df70f781154",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-search",
@@ -328,8 +328,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 10559,
-      "sha256": "233afc93051c9837447b7f27cc28717afd090d7a9a8096f12f3a7af36728a854",
+      "bytes": 14271,
+      "sha256": "35364ba7f957d1f0a7009e7ec703431ce5877a63866768bec18fc261cd2aa061",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",

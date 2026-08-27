@@ -48,6 +48,12 @@
 <li class="page-toc__l2"><a href="#branch-protection-on-main">Branch protection on main</a></li>
 <li class="page-toc__l2"><a href="#the-secret-convention">The secret convention</a></li>
 <li class="page-toc__l2"><a href="#the-publish-routine">The publish routine</a></li>
+<li class="page-toc__l2"><a href="#publish-runbook-workflow_dispatch">Publish runbook (workflow_dispatch)</a></li>
+<li class="page-toc__l3"><a href="#1-trigger-the-workflow">1. Trigger the workflow</a></li>
+<li class="page-toc__l3"><a href="#2-watch-it-pass">2. Watch it pass</a></li>
+<li class="page-toc__l3"><a href="#3-download-the-evidence-artifact">3. Download the evidence artifact</a></li>
+<li class="page-toc__l3"><a href="#4-verify-the-record-on-the-live-pds-getrecord">4. Verify the record on the live PDS (getRecord)</a></li>
+<li class="page-toc__l3"><a href="#5-commit-the-evidence">5. Commit the evidence</a></li>
 <li class="page-toc__l2"><a href="#the-agent-workflow">The agent workflow</a></li>
 </ul>
 </nav></aside>
@@ -170,6 +176,53 @@ boris standard-site publish --profile docs/standard-site.json --plan docs/eviden
 be committed so the record of what was published stays in the repo. The
 manual-explicit design is deliberate — see the &quot;explicit, never
 implicit&quot; stance in <a href="boris.html">Boris</a>.</p>
+<h2 id="publish-runbook-workflow_dispatch">Publish runbook (workflow_dispatch)</h2>
+<p>The full procedure for publishing from GitHub, step by step. This is
+what an operator (human or agent) runs when the site structure changes.</p>
+<h3 id="1-trigger-the-workflow">1. Trigger the workflow</h3>
+<pre><code class="language-text">GitHub → Actions tab → &quot;Publish to ATProto&quot; → Run workflow
+</code></pre>
+<p>or from the CLI:</p>
+<pre><code class="language-text">gh workflow run &quot;Publish to ATProto&quot;
+</code></pre>
+<p>The workflow is <code>workflow_dispatch</code>-only — it never runs on its own. It
+checks out the site repo, checks out <code>drawmeanelephant/boris</code> at the
+pinned commit, installs Zig 0.16.0, builds Boris on a macOS-arm64
+runner, logs in with the <code>BORIS_APP_PASSWORD</code> secret via stdin, and
+publishes.</p>
+<h3 id="2-watch-it-pass">2. Watch it pass</h3>
+<pre><code class="language-text">gh run watch
+</code></pre>
+<p>Every step must be green: Checkout, Install Zig, Build Boris, Login,
+Publish, Upload evidence. The build-from-source step takes the longest
+(a few minutes on the macOS runner).</p>
+<h3 id="3-download-the-evidence-artifact">3. Download the evidence artifact</h3>
+<pre><code class="language-text">gh run download &lt;run-id&gt; --dir /tmp/boris-evidence
+</code></pre>
+<p>The artifact contains <code>docs/evidence/publish-ci.json</code> — the
+<code>boris-standard-site-evidence</code> record with one entry per record, each
+carrying <code>outcome</code> (<code>created</code>/<code>updated</code>), <code>observed_cid</code>, and
+<code>observed_at</code>.</p>
+<h3 id="4-verify-the-record-on-the-live-pds-getrecord">4. Verify the record on the live PDS (getRecord)</h3>
+<p>The evidence says a record was written; confirm the PDS agrees by
+reading it back directly (no credentials needed):</p>
+<pre><code class="language-text">curl -s 'https://auriporia.us-west.host.bsky.network/xrpc/com.atproto.repo.getRecord?repo=did:plc:jiokpoojzqntdpyw5xvfr7rv&amp;collection=site.standard.document&amp;rkey=&lt;rkey&gt;'
+</code></pre>
+<p><strong>Pass</strong> when the response's <code>cid</code> matches the <code>observed_cid</code> in the
+evidence and the <code>value</code> carries the expected content. Example — the
+glossary page's record:</p>
+<pre><code class="language-text">uri:  at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/glossary
+cid:  bafyreieizz2qbg52efrmpfoyexqhg5ysklbarvha2r44lznfheorwmmglu
+</code></pre>
+<h3 id="5-commit-the-evidence">5. Commit the evidence</h3>
+<p>Copy the artifact into the repo and land it via the usual PR flow (which
+also re-deploys nothing — this is a docs-only change):</p>
+<pre><code class="language-text">cp /tmp/boris-evidence/publish-evidence/publish-ci.json docs/evidence/
+# branch → commit → push → PR (auto-merge) → merge
+</code></pre>
+<p>Keeping <code>docs/evidence/publish-ci.json</code> in the repo means the record of
+every publish (what was written, when, and its CIDs) stays in the audit
+trail alongside the proof pack and verify results.</p>
 <h2 id="the-agent-workflow">The agent workflow</h2>
 <p>The whole pipeline is built for agent-driven changes:</p>
 <pre><code class="language-text">agent: branch → commit → push → open PR (auto-merge enabled)
