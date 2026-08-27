@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ATProto glossary · Boris on ATProto</title>
+  <link rel="stylesheet" href="assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/glossary">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="boris.html">Boris</a></li>
+<li class="site-nav__satellite is-current"><a href="glossary.html" aria-current="page">ATProto glossary</a></li>
+<li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="operations.html">Operating this site</a></li>
+<li class="site-nav__satellite"><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+<li class="site-nav__satellite"><a href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="index.html">Boris on ATProto</a></li>
+<li aria-current="page">ATProto glossary</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#atproto-glossary">ATProto glossary</a></li>
+<li class="page-toc__l2"><a href="#identity">Identity</a></li>
+<li class="page-toc__l2"><a href="#hosting-and-data">Hosting and data</a></li>
+<li class="page-toc__l2"><a href="#network-and-discovery">Network and discovery</a></li>
+<li class="page-toc__l2"><a href="#authorization">Authorization</a></li>
+<li class="page-toc__l2"><a href="#how-they-fit-together">How they fit together</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="atproto-glossary">ATProto glossary</h1>
+<p>A quick-reference glossary of the AT Protocol terms this site uses. Each
+entry links to the deeper treatment in <a href="atproto.html">The AT Protocol</a>; the Boris-side view
+is <a href="boris.html">Boris</a>, the publication loop is <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>, and failure
+modes are in <a href="troubleshooting.html">Troubleshooting</a>.</p>
+<h2 id="identity">Identity</h2>
+<p><strong>DID</strong> — Decentralized Identifier. The portable, self-certifying
+identifier that owns records. ATProto uses <code>did:plc:</code> (the dominant
+production method) and <code>did:web:</code> (DNS-anchored). A DID resolves to a
+DID document that points at the account's PDS and authorization server.
+Portable: the owner can move the account to a different PDS without
+changing the identifier or the records. This site's identity is
+<code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code>.</p>
+<p><strong>Handle</strong> — A human-readable name that resolves to a DID (e.g.
+<code>boris.filed.fyi</code>). Handles are the friendly alias; DIDs are the
+canonical identifier. Boris accepts either for login
+(<code>--did</code> or <code>--handle</code>).</p>
+<h2 id="hosting-and-data">Hosting and data</h2>
+<p><strong>PDS</strong> — Personal Data Server. The server that hosts the account's
+repository of records and speaks the HTTP API (XRPC) for reading and
+writing them. The PDS is where records physically live. This site's PDS
+is <code>https://auriporia.us-west.host.bsky.network</code>.</p>
+<p><strong>XRPC</strong> — The AT Protocol's HTTP API surface for reading and writing
+records (<code>com.atproto.repo.*</code> etc.). Boris talks to the PDS over XRPC
+for <code>login</code>, <code>publish</code>, and <code>smoke</code>.</p>
+<p><strong>Record</strong> — A typed JSON value stored in a repository under a
+<code>collection</code> + <code>rkey</code>, owned by a DID. The <code>standard.site</code> family uses
+two: <code>site.standard.publication</code> (rkey <code>self</code>, the root pointer) and
+<code>site.standard.document</code> (one rkey per page). See <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> for
+how Boris projects and publishes them.</p>
+<p><strong>Lexicon</strong> — The schema that defines a record's shape and validation
+rules. The collection name namespaces the lexicon (e.g.
+<code>site.standard.publication</code>). <code>standard.site</code> is a small, deliberate
+lexicon family.</p>
+<p><strong>AT-URI</strong> — The canonical address of a record:
+<code>at://&lt;did&gt;/&lt;collection&gt;/&lt;rkey&gt;</code>. It is stable across PDS moves because
+it is keyed by the DID, not the server. Example:
+<code>at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self</code>.</p>
+<h2 id="network-and-discovery">Network and discovery</h2>
+<p><strong>AppView / indexer</strong> — Read-side services that aggregate records across
+the network for discovery (e.g. a Bluesky feed). Non-normative for
+publication: Boris's <code>smoke</code> can observe an AppView with <code>--indexer</code>,
+but publication itself never depends on one.</p>
+<p><strong>Verification surface</strong> — The <code>.well-known/site.standard.publication</code>
+file served at the site's origin. It carries the publication record's
+AT-URI so a reader can confirm the hosted site claims the DID it points
+at. This is the bridge between the hosting layer (Cloudflare) and the
+network layer (the PDS) — see <a href="operations.html">Operating this site</a>.</p>
+<h2 id="authorization">Authorization</h2>
+<p><strong>DPoP</strong> — Demonstrating Proof of Possession (RFC 9449). The mechanism
+that binds an OAuth access token to a key the client holds; each request
+carries a signed proof with a server-issued nonce. This is the OAuth +
+DPoP write path — the one that fails with <code>InvalidNonce</code> against
+bsky.network (see <a href="troubleshooting.html">Troubleshooting</a>).</p>
+<p><strong>Bearer</strong> — The simple token-carrying auth scheme used by the
+app-password path. The credential itself is the bearer of authority
+(no key binding). This is the path that completes live writes against
+bsky.social today.</p>
+<h2 id="how-they-fit-together">How they fit together</h2>
+<pre><code class="language-text">handle ──resolves to──▶ DID ──owns──▶ records on a PDS (XRPC)
+                                        │
+                              site.standard.publication/self
+                                        │  points at
+                                        ▼
+                              https://boris.filed.fyi/
+                                        │  confirms via
+                                        ▼
+                              .well-known/site.standard.publication
+                                        │  (the AT-URI)
+                                        ▼
+                              a reader resolves DID → URL → well-known → claim confirmed
+</code></pre>
+<p>For the full picture: <a href="atproto.html">The AT Protocol</a> explains the pieces, <a href="boris.html">Boris</a> the
+tool that builds the site, <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> the loop that publishes it,
+<a href="operations.html">Operating this site</a> how this site is run, and <a href="troubleshooting.html">Troubleshooting</a> what to do
+when it breaks.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

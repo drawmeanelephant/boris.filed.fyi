@@ -19,6 +19,7 @@
 <ul>
 <li class="site-nav__satellite"><a href="atproto.html">The AT Protocol</a></li>
 <li class="site-nav__satellite"><a href="boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="glossary.html">ATProto glossary</a></li>
 <li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
 <li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
 <li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
@@ -90,6 +91,9 @@ publish routine, and the agent workflow.</li>
 <li><a href="troubleshooting.html">Troubleshooting</a> — what to do when publish or smoke fails: the
 InvalidNonce OAuth finding, the app-password vs OAuth tradeoff, and a
 step-by-step failure checklist.</li>
+<li><a href="glossary.html">ATProto glossary</a> — a quick-reference glossary of AT Protocol terms (DID,
+PDS, XRPC, record, lexicon, AT-URI, AppView, DPoP, Bearer), each
+linked back to the overview pages.</li>
 </ul>
 <h2 id="why-this-is-interesting">Why this is interesting</h2>
 <p>A static site generator that emits a cryptographic proof pack, wired to
@@ -156,6 +160,7 @@ this site's config; nothing here references the old identities.</p>
     standard-site.md                the meta guide (operator's manual)
     operations.md                   the ops playbook (deploy + publish)
     troubleshooting.md              failure modes + diagnosis
+    glossary.md                     ATProto term reference
     guides/testing-plan.md          test matrix, parent: index
     guides/standard-site-tests.md   per-surface procedures
     guides/test-runs.md             running log of executed tests
@@ -171,9 +176,10 @@ this site's config; nothing here references the old identities.</p>
 <p>New here? Skim <a href="boris.html">Boris</a> for the mental model, then <a href="atproto.html">The AT Protocol</a> for the
 network side, then <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> for the loop that ties them together.
 If you want to know how this site is deployed and published, read
-<a href="operations.html">Operating this site</a>. When something breaks, start at <a href="troubleshooting.html">Troubleshooting</a>. If you
-want to reproduce the build, the procedures live in
-<a href="guides/standard-site-tests.html">Standard.site Test Procedures</a> and the run log in <a href="guides/test-runs.html">Test Runs</a>.</p>
+<a href="operations.html">Operating this site</a>. When something breaks, start at <a href="troubleshooting.html">Troubleshooting</a>. For a
+term you keep seeing, check <a href="glossary.html">ATProto glossary</a>. If you want to reproduce the
+build, the procedures live in <a href="guides/standard-site-tests.html">Standard.site Test Procedures</a> and the run
+log in <a href="guides/test-runs.html">Test Runs</a>.</p>
 </article>
 </main>
 <footer class="site-footer">

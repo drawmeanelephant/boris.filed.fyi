@@ -19,6 +19,11 @@
       "status": "verified"
     },
     {
+      "entity_id": "glossary",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/glossary",
+      "status": "verified"
+    },
+    {
       "entity_id": "guides/getting-started",
       "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:getting-started",
       "status": "verified"

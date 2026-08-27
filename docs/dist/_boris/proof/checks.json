@@ -4,12 +4,12 @@
   "target": "default",
   "artifact_inventory": {
     "path": "_boris/proof/artifacts.json",
-    "bytes": 5370,
-    "sha256": "350157f794794ac0725ec8f2f746a592513e6d2c802f5a8389decb28e0ce2ef3",
+    "bytes": 5739,
+    "sha256": "a46ae072b7ab2bb7062523ad8b1e9f151f3f4dee910f9bf2439957e98f3cdcee",
     "format": "boris-publication-artifacts",
     "schema_version": 1,
     "target": "default",
-    "artifact_count": 14
+    "artifact_count": 15
   },
   "checks": [
     {
@@ -21,12 +21,12 @@
       "scope": {
         "subject_statuses": ["committed"],
         "subject_kinds": [],
-        "subject_sha256": "654e54cf8bbce66ca39d54e04577b1ee96fe7f85117c036eba18b3bc99edb85a",
+        "subject_sha256": "de46f6a4318e2fe487fa4c2d6f09f2cec2a2542a052eed5a7b6e7a4f8c06f2aa",
         "supporting_statuses": [],
         "supporting_kinds": [],
         "supporting_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
-      "counts": {"eligible": 14, "checked": 14, "findings": 0},
+      "counts": {"eligible": 15, "checked": 15, "findings": 0},
       "finding_offset": 0
     },
     {
@@ -38,12 +38,12 @@
       "scope": {
         "subject_statuses": ["committed"],
         "subject_kinds": ["html-page"],
-        "subject_sha256": "f269b50fda7f4888b4b97419648634bfe988aa86720f2b3818afd0528e19a9bd",
+        "subject_sha256": "844081fac4bf947e0194e02ce3a00fa69d27144bbd4ac45a4f35c30f4bffd0d0",
         "supporting_statuses": ["committed"],
         "supporting_kinds": [],
-        "supporting_sha256": "654e54cf8bbce66ca39d54e04577b1ee96fe7f85117c036eba18b3bc99edb85a"
+        "supporting_sha256": "de46f6a4318e2fe487fa4c2d6f09f2cec2a2542a052eed5a7b6e7a4f8c06f2aa"
       },
-      "counts": {"eligible": 11, "checked": 11, "findings": 0},
+      "counts": {"eligible": 12, "checked": 12, "findings": 0},
       "finding_offset": 0
     },
     {
@@ -55,10 +55,10 @@
       "scope": {
         "subject_statuses": ["committed"],
         "subject_kinds": ["rendered-search"],
-        "subject_sha256": "bc21d4b81927f2bffc507caeecf9955d38f319864644c132dd9befe49077e2eb",
+        "subject_sha256": "56e5b71c598057ac1da0c1a7414ff04be7c5518503442bdc887760f710e42273",
         "supporting_statuses": ["committed"],
         "supporting_kinds": ["html-page"],
-        "supporting_sha256": "f269b50fda7f4888b4b97419648634bfe988aa86720f2b3818afd0528e19a9bd"
+        "supporting_sha256": "844081fac4bf947e0194e02ce3a00fa69d27144bbd4ac45a4f35c30f4bffd0d0"
       },
       "counts": {"eligible": 1, "checked": 1, "findings": 0},
       "finding_offset": 0
