@@ -42,7 +42,7 @@ manual and never in CI.
 | T-06 | Sessions | `standard-site sessions` / `logout` | no | yes | medium | passed |
 | T-07 | Publish | `standard-site publish` | no | yes | high | passed |
 | T-08 | Smoke | `standard-site smoke` | no | yes | high | passed |
-| T-09 | Context | `context` bundle | yes | no | low | planned |
+| T-09 | Deploy | Cloudflare Pages | no | yes | medium | passed |
 | T-10 | Nostr | `nostr plan` / `sign` | yes | no | low | scheduled |
 
 ## Acceptance criteria

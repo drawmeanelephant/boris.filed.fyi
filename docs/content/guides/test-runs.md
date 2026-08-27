@@ -26,6 +26,8 @@ evidence artifact. The loop these tests exercise is documented in
 | 2026-08-27 | T-05 | `standard-site login --app-password` | **passed** (stdin-only secret) | `sessions` (flavor `app-password`) |
 | 2026-08-27 | T-08 | `standard-site smoke` (app-pw, throwaway identity) | **passed — full live round-trip** | `evidence/live-smoke.json` |
 | 2026-08-27 | T-07 | `standard-site publish` (app-pw, `boris.filed.fyi`) | **passed — `self` record created live** | `evidence/publish.json` |
+| 2026-08-27 | T-07b | `standard-site publish` (9 doc records) | **passed — 9 docs created, 1 self updated** | `evidence/publish-docs.json` |
+| 2026-08-27 | T-09 | Cloudflare Pages deploy (`boris-product`) | **passed — `boris.filed.fyi` serving** | `https://boris.filed.fyi/` |
 
 ## Notes
 
