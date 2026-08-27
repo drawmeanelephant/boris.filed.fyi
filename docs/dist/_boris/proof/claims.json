@@ -5,7 +5,7 @@
   "artifact_inventory": {
     "path": "_boris/proof/artifacts.json",
     "bytes": 5739,
-    "sha256": "3ddb69a9195486d7593ba00760aaa6387321039f1e1faf4e4541ef3a404ba59d",
+    "sha256": "504f0584838c9bc287ad401857fb8854d0cccbe28b595203d82c00469248976c",
     "format": "boris-publication-artifacts",
     "schema_version": 1,
     "target": "default",
@@ -14,7 +14,7 @@
   "publication_checks": {
     "path": "_boris/proof/checks.json",
     "bytes": 2246,
-    "sha256": "9be86ec9323342a3fcfa9415b938fa25b19ee377c1dfcf35a5ed89f87e0c3d4b",
+    "sha256": "7e25e6da10edaad866b2dcc62bbdaa66c0c46cd45bd6c7e6df1804c8034cde5a",
     "format": "boris-publication-checks",
     "schema_version": 1,
     "target": "default",
@@ -31,9 +31,9 @@
         "check_status": "passed",
         "coverage": "complete",
         "counts": {"eligible": 15, "checked": 15, "findings": 0},
-        "subject_sha256": "7dc4095412784bc5ecd7e17da0dd1648765f90ba79a2c785f7529df212f7ba80",
+        "subject_sha256": "2510afc3a8885daef2a2275628ab4d1c29df4516b46cb2f02f494199a684c6c6",
         "supporting_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "checks_report_sha256": "9be86ec9323342a3fcfa9415b938fa25b19ee377c1dfcf35a5ed89f87e0c3d4b",
+        "checks_report_sha256": "7e25e6da10edaad866b2dcc62bbdaa66c0c46cd45bd6c7e6df1804c8034cde5a",
         "reason": null
       },
       "scope": {
@@ -53,9 +53,9 @@
         "check_status": "passed",
         "coverage": "complete",
         "counts": {"eligible": 12, "checked": 12, "findings": 0},
-        "subject_sha256": "c191814c3aa164552fcb2c1dd374db896c51fe9fbb182c6f218a94d822fc2174",
-        "supporting_sha256": "7dc4095412784bc5ecd7e17da0dd1648765f90ba79a2c785f7529df212f7ba80",
-        "checks_report_sha256": "9be86ec9323342a3fcfa9415b938fa25b19ee377c1dfcf35a5ed89f87e0c3d4b",
+        "subject_sha256": "88d9b157e0aa4ee59f30ef0f24dbb6345847a9f0d30d02c8a79219db8ee71239",
+        "supporting_sha256": "2510afc3a8885daef2a2275628ab4d1c29df4516b46cb2f02f494199a684c6c6",
+        "checks_report_sha256": "7e25e6da10edaad866b2dcc62bbdaa66c0c46cd45bd6c7e6df1804c8034cde5a",
         "reason": null
       },
       "scope": {
@@ -75,9 +75,9 @@
         "check_status": "passed",
         "coverage": "complete",
         "counts": {"eligible": 1, "checked": 1, "findings": 0},
-        "subject_sha256": "fcfea17cc6a6542b85b6560dffe5c487dc5102df2c4746572f5350e6e89176ea",
-        "supporting_sha256": "c191814c3aa164552fcb2c1dd374db896c51fe9fbb182c6f218a94d822fc2174",
-        "checks_report_sha256": "9be86ec9323342a3fcfa9415b938fa25b19ee377c1dfcf35a5ed89f87e0c3d4b",
+        "subject_sha256": "263f1cef56e4bb37aa82563d9c1db114197edae09a352155edbca618fcd7f2ab",
+        "supporting_sha256": "88d9b157e0aa4ee59f30ef0f24dbb6345847a9f0d30d02c8a79219db8ee71239",
+        "checks_report_sha256": "7e25e6da10edaad866b2dcc62bbdaa66c0c46cd45bd6c7e6df1804c8034cde5a",
         "reason": null
       },
       "scope": {

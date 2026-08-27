@@ -64,13 +64,23 @@ Key facts:
 - The deploy workflow is the required check on `main` — PRs can't merge
   without it passing.
 
-The two-command build:
+The three-command build:
 
 ```text
 boris build --input docs/content --html-dir docs/dist --theme docs/themes/boris \
   --profile docs/standard-site.json --sitemap --site-url https://boris.filed.fyi/
 boris --input docs/content --llms --llms-path docs/dist/llms.txt
+boris --input docs/content --rss --rss-path docs/dist/rss.xml \
+  --rss-title "Boris on ATProto" \
+  --rss-description "Technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to." \
+  --site-url https://boris.filed.fyi/
 ```
+
+The `rss.xml` feed lists every dated page with its `pubDate` (from
+`published_at`) and categories (from `tags`). Note that `llms.txt` and
+`rss.xml` are emitted by standalone commands, so the HTML link audit
+doesn't treat them as published outputs — the footer links `sitemap.xml`
+(emitted by the build itself) and lists the others as plain paths.
 
 ## Branch protection on main
 

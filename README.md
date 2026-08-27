@@ -41,6 +41,10 @@ The build requires the Boris binary (see
 boris build --input docs/content --html-dir docs/dist --theme docs/themes/boris \
   --profile docs/standard-site.json --sitemap --site-url https://boris.filed.fyi/
 boris --input docs/content --llms --llms-path docs/dist/llms.txt
+boris --input docs/content --rss --rss-path docs/dist/rss.xml \
+  --rss-title "Boris on ATProto" \
+  --rss-description "Technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to." \
+  --site-url https://boris.filed.fyi/
 ```
 
 ## Deploy
