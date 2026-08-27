@@ -18,4 +18,5 @@ docs/llms.txt
 docs/dist/.boris-cache/
 
 # Wrangler local cache
+.wrangler/
 docs/.wrangler/
