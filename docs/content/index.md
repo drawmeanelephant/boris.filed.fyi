@@ -51,6 +51,9 @@ The three ideas this site explores:
 - [[troubleshooting]] — what to do when publish or smoke fails: the
   InvalidNonce OAuth finding, the app-password vs OAuth tradeoff, and a
   step-by-step failure checklist.
+- [[glossary]] — a quick-reference glossary of AT Protocol terms (DID,
+  PDS, XRPC, record, lexicon, AT-URI, AppView, DPoP, Bearer), each
+  linked back to the overview pages.
 
 ## Why this is interesting
 
@@ -129,6 +132,7 @@ docs/
     standard-site.md                the meta guide (operator's manual)
     operations.md                   the ops playbook (deploy + publish)
     troubleshooting.md              failure modes + diagnosis
+    glossary.md                     ATProto term reference
     guides/testing-plan.md          test matrix, parent: index
     guides/standard-site-tests.md   per-surface procedures
     guides/test-runs.md             running log of executed tests
@@ -146,6 +150,7 @@ docs/
 New here? Skim [[boris]] for the mental model, then [[atproto]] for the
 network side, then [[standard-site]] for the loop that ties them together.
 If you want to know how this site is deployed and published, read
-[[operations]]. When something breaks, start at [[troubleshooting]]. If you
-want to reproduce the build, the procedures live in
-[[guides/standard-site-tests]] and the run log in [[guides/test-runs]].
+[[operations]]. When something breaks, start at [[troubleshooting]]. For a
+term you keep seeing, check [[glossary]]. If you want to reproduce the
+build, the procedures live in [[guides/standard-site-tests]] and the run
+log in [[guides/test-runs]].

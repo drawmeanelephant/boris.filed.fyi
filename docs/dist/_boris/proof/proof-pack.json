@@ -5,17 +5,17 @@
   "inputs": {
     "artifacts": {
       "path": "_boris/proof/artifacts.json",
-      "bytes": 5370,
-      "sha256": "350157f794794ac0725ec8f2f746a592513e6d2c802f5a8389decb28e0ce2ef3",
+      "bytes": 5739,
+      "sha256": "a46ae072b7ab2bb7062523ad8b1e9f151f3f4dee910f9bf2439957e98f3cdcee",
       "format": "boris-publication-artifacts",
       "schema_version": 1,
       "target": "default",
-      "artifact_count": 14
+      "artifact_count": 15
     },
     "checks": {
       "path": "_boris/proof/checks.json",
       "bytes": 2246,
-      "sha256": "eadd3e253503c1476dd7cda503153e09cd456fc1d9339db02ca7934f09b49f11",
+      "sha256": "1d2f8757d183862b4c38f458a4cdf3dd9a273bd205342524bc90a22f9b731d9b",
       "format": "boris-publication-checks",
       "schema_version": 1,
       "target": "default",
@@ -25,7 +25,7 @@
     "claims": {
       "path": "_boris/proof/claims.json",
       "bytes": 6513,
-      "sha256": "526a7bee91e3084fa3e39b3b3c5b48a2f60f06b613f13ad0d22f14c805be7ad4",
+      "sha256": "4bd45173739a60956c3fe83a6c6191cebf7ec3b56e86e7cf181b97dbb4bfff4e",
       "format": "boris-publication-claims",
       "schema_version": 1,
       "target": "default",
@@ -34,25 +34,25 @@
     },
     "touches": {
       "path": "_boris/proof/touches.json",
-      "bytes": 19763,
-      "sha256": "70ea26598257dbc408aa08c6c4fbf332868b8365ac8dfb3c561b07a8d6daffae",
+      "bytes": 20652,
+      "sha256": "8e891217ea5ad6f5b9a5ef47752eb54b017455dfdb24fc4de2a1c8296088fea8",
       "format": "boris-publication-touches",
       "schema_version": 1,
       "target": "default",
-      "node_count": 27,
-      "edge_count": 84
+      "node_count": 28,
+      "edge_count": 89
     }
   },
   "summary": {
     "artifacts": {
-      "total": 14,
+      "total": 15,
       "by_status": {
-        "committed": 14,
+        "committed": 15,
         "omitted-by-plan": 0,
         "not-applicable": 0
       },
       "by_kind": {
-        "html-page": 11,
+        "html-page": 12,
         "theme-asset": 1,
         "content-asset": 0,
         "rendered-search": 1,
@@ -92,8 +92,8 @@
       }
     },
     "limitation_count": 6,
-    "relationship_node_count": 27,
-    "relationship_edge_count": 84,
+    "relationship_node_count": 28,
+    "relationship_edge_count": 89,
     "overall_presentation_status": "verified"
   },
   "artifacts": [
@@ -103,8 +103,8 @@
       "kind": "rendered-search",
       "status": "committed",
       "required": true,
-      "bytes": 67948,
-      "sha256": "6807696f3a7479a539b48218066a62bd9fc75572fb61665d343044cae1f6fae1",
+      "bytes": 72808,
+      "sha256": "d2b3a6642aeaac5af698e26e5d0a261eb03724d674b6617dbe1d76d563f88773",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-search",
@@ -139,8 +139,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 12777,
-      "sha256": "88952883e67a7c30094ab7d5ac54fb1ca5e09ac777e944ac6d248175473a3203",
+      "bytes": 12859,
+      "sha256": "28030e167d16469ebfd98114302c8881a5ccd225f1fb302a982752a57f74c0e4",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -160,8 +160,8 @@
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 14210,
-      "sha256": "bb04879ba0c6bc79e9002cee8c058e4c3cbb72ca9b8e5e04488a348b025fb1a9",
+      "bytes": 14292,
+      "sha256": "7631bb62ba4a6b5b9ad5385d3d0116a8020e0bd189bc880c9e061fa49a70794a",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -177,12 +177,12 @@
     },
     {
       "inventory_index": 4,
-      "path": "guides/getting-started.html",
+      "path": "glossary.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 4366,
-      "sha256": "6df67a53a21b9e235dcdfc51c17744e0d22be1f0882beca0f29bf001e28816c3",
+      "bytes": 8579,
+      "sha256": "b9917c4492748f41db277752602db842c5b46e88f81adf9515a99f172d7044a1",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -198,12 +198,12 @@
     },
     {
       "inventory_index": 5,
-      "path": "guides/publishing.html",
+      "path": "guides/getting-started.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 4395,
-      "sha256": "713f605ecc8921f385a377f0c030cb3d41925117f80025268b1cd836ac9ba8b8",
+      "bytes": 4451,
+      "sha256": "b1c813a7ef564e519fc4ac75af0985e9511f9e799067d16d0c174598c219f25f",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -219,12 +219,12 @@
     },
     {
       "inventory_index": 6,
-      "path": "guides/standard-site-tests.html",
+      "path": "guides/publishing.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 8681,
-      "sha256": "0fd926593e9bf75bb27a34042a27497d44b1ea183c7398d5a53a2abb37e4634a",
+      "bytes": 4480,
+      "sha256": "62c3b26f13954d3ad6d9a626553d38893f7bd803271dbb05bb389ac70307c694",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -240,12 +240,12 @@
     },
     {
       "inventory_index": 7,
-      "path": "guides/test-runs.html",
+      "path": "guides/standard-site-tests.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 12567,
-      "sha256": "aa558d9dd71efc5faae2f0522b60a5dab47832a6c32f884be56c75bd016501fa",
+      "bytes": 8766,
+      "sha256": "ecb141d9b8fae3a1e133435be43dacf3cb0d0bbe7604322c7f453405879d29c0",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -261,12 +261,12 @@
     },
     {
       "inventory_index": 8,
-      "path": "guides/testing-plan.html",
+      "path": "guides/test-runs.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 9519,
-      "sha256": "41cd13e7aa203651253350673291c17c1c5a0c4bc862bf78b53eedf7e6da1faf",
+      "bytes": 12652,
+      "sha256": "22bd4b6335efc81967eea0cbd5ac4a7b1aad02568bbff20bcae8ea2c367e3b52",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -282,12 +282,12 @@
     },
     {
       "inventory_index": 9,
-      "path": "index.html",
+      "path": "guides/testing-plan.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 11645,
-      "sha256": "d56c79b7d63140abf33e1ff57f79b92002c479eefa423b119837714c223e775f",
+      "bytes": 9604,
+      "sha256": "6246bd24b16bdc751664344a894c49e28576651d8b7ea2ce60e8ae2286725b23",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -303,12 +303,12 @@
     },
     {
       "inventory_index": 10,
-      "path": "operations.html",
+      "path": "index.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 9984,
-      "sha256": "b22dab8ea4e0bec2069c1b89632b6b5961d0b7647dbf6eb7cbe127240bbfb506",
+      "bytes": 12078,
+      "sha256": "ef1bd4043f4e54e7fc65c34e42e191fcb891dfc1a5eb73c4fa0c1025c5a8d359",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -324,29 +324,12 @@
     },
     {
       "inventory_index": 11,
-      "path": "sitemap.xml",
-      "kind": "sitemap",
-      "status": "committed",
-      "required": true,
-      "bytes": 859,
-      "sha256": "2315246ce1e714f1499f4a83f0ae057e22ff3db1bd39ff286da39b407e453f83",
-      "related_check_ids": [
-        "artifact-integrity",
-        "rendered-html"
-      ],
-      "related_claim_ids": [
-        "committed-artifacts-match-inventory",
-        "rendered-html-passed-declared-audit"
-      ]
-    },
-    {
-      "inventory_index": 12,
-      "path": "standard-site.html",
+      "path": "operations.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 15712,
-      "sha256": "b9eff422b57f0b95372271e1921a663f753fa429af2d9b93fee9cc839ae41b7b",
+      "bytes": 10066,
+      "sha256": "041681e008f2bb0ce69e164415678bedfe92874ede852bb1a78b028462f8ba68",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -361,13 +344,51 @@
       ]
     },
     {
+      "inventory_index": 12,
+      "path": "sitemap.xml",
+      "kind": "sitemap",
+      "status": "committed",
+      "required": true,
+      "bytes": 921,
+      "sha256": "9e3d2327caec61efc4baa91f82bc8224ee3937740b5f0b638775b2afdda6e267",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit"
+      ]
+    },
+    {
       "inventory_index": 13,
+      "path": "standard-site.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 15794,
+      "sha256": "03d26a0df0d7301a3ab9a4f5dd15fb47526ffd0da1c69f0f0b0debfc1bad3db3",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 14,
       "path": "troubleshooting.html",
       "kind": "html-page",
       "status": "committed",
       "required": true,
-      "bytes": 13382,
-      "sha256": "337a7fb58c6cde357fc4ac83419de6fb705770f871db8a14f8f3326ce4486087",
+      "bytes": 13464,
+      "sha256": "7215b69e27525119572ed93061a0eec371dafdd699634fa0ad0280590bd70bed",
       "related_check_ids": [
         "artifact-integrity",
         "rendered-html",
@@ -391,8 +412,8 @@
       "eligible": true,
       "ran": true,
       "counts": {
-        "eligible": 14,
-        "checked": 14,
+        "eligible": 15,
+        "checked": 15,
         "findings": 0
       },
       "finding_ids": [],
@@ -401,6 +422,7 @@
         "artifact:assets/css/boris.css",
         "artifact:atproto.html",
         "artifact:boris.html",
+        "artifact:glossary.html",
         "artifact:guides/getting-started.html",
         "artifact:guides/publishing.html",
         "artifact:guides/standard-site-tests.html",
@@ -425,14 +447,15 @@
       "eligible": true,
       "ran": true,
       "counts": {
-        "eligible": 11,
-        "checked": 11,
+        "eligible": 12,
+        "checked": 12,
         "findings": 0
       },
       "finding_ids": [],
       "subject_artifact_ids": [
         "artifact:atproto.html",
         "artifact:boris.html",
+        "artifact:glossary.html",
         "artifact:guides/getting-started.html",
         "artifact:guides/publishing.html",
         "artifact:guides/standard-site-tests.html",
@@ -448,6 +471,7 @@
         "artifact:assets/css/boris.css",
         "artifact:atproto.html",
         "artifact:boris.html",
+        "artifact:glossary.html",
         "artifact:guides/getting-started.html",
         "artifact:guides/publishing.html",
         "artifact:guides/standard-site-tests.html",
@@ -482,6 +506,7 @@
       "supporting_artifact_ids": [
         "artifact:atproto.html",
         "artifact:boris.html",
+        "artifact:glossary.html",
         "artifact:guides/getting-started.html",
         "artifact:guides/publishing.html",
         "artifact:guides/standard-site-tests.html",
@@ -617,6 +642,7 @@
       "artifact:assets/css/boris.css",
       "artifact:atproto.html",
       "artifact:boris.html",
+      "artifact:glossary.html",
       "artifact:guides/getting-started.html",
       "artifact:guides/publishing.html",
       "artifact:guides/standard-site-tests.html",
@@ -648,6 +674,7 @@
           { "from": "target", "to": "artifact:assets/css/boris.css" },
           { "from": "target", "to": "artifact:atproto.html" },
           { "from": "target", "to": "artifact:boris.html" },
+          { "from": "target", "to": "artifact:glossary.html" },
           { "from": "target", "to": "artifact:guides/getting-started.html" },
           { "from": "target", "to": "artifact:guides/publishing.html" },
           { "from": "target", "to": "artifact:guides/standard-site-tests.html" },
@@ -670,6 +697,8 @@
           { "from": "artifact:atproto.html", "to": "check:rendered-html" },
           { "from": "artifact:boris.html", "to": "check:artifact-integrity" },
           { "from": "artifact:boris.html", "to": "check:rendered-html" },
+          { "from": "artifact:glossary.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:glossary.html", "to": "check:rendered-html" },
           { "from": "artifact:guides/getting-started.html", "to": "check:artifact-integrity" },
           { "from": "artifact:guides/getting-started.html", "to": "check:rendered-html" },
           { "from": "artifact:guides/publishing.html", "to": "check:artifact-integrity" },
@@ -700,6 +729,8 @@
           { "from": "artifact:atproto.html", "to": "check:rendered-search" },
           { "from": "artifact:boris.html", "to": "check:rendered-html" },
           { "from": "artifact:boris.html", "to": "check:rendered-search" },
+          { "from": "artifact:glossary.html", "to": "check:rendered-html" },
+          { "from": "artifact:glossary.html", "to": "check:rendered-search" },
           { "from": "artifact:guides/getting-started.html", "to": "check:rendered-html" },
           { "from": "artifact:guides/getting-started.html", "to": "check:rendered-search" },
           { "from": "artifact:guides/publishing.html", "to": "check:rendered-html" },

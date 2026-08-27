@@ -5,17 +5,17 @@
   "inputs": {
     "artifacts": {
       "path": "_boris/proof/artifacts.json",
-      "bytes": 5370,
-      "sha256": "350157f794794ac0725ec8f2f746a592513e6d2c802f5a8389decb28e0ce2ef3",
+      "bytes": 5739,
+      "sha256": "a46ae072b7ab2bb7062523ad8b1e9f151f3f4dee910f9bf2439957e98f3cdcee",
       "format": "boris-publication-artifacts",
       "schema_version": 1,
       "target": "default",
-      "artifact_count": 14
+      "artifact_count": 15
     },
     "checks": {
       "path": "_boris/proof/checks.json",
       "bytes": 2246,
-      "sha256": "eadd3e253503c1476dd7cda503153e09cd456fc1d9339db02ca7934f09b49f11",
+      "sha256": "1d2f8757d183862b4c38f458a4cdf3dd9a273bd205342524bc90a22f9b731d9b",
       "format": "boris-publication-checks",
       "schema_version": 1,
       "target": "default",
@@ -25,7 +25,7 @@
     "claims": {
       "path": "_boris/proof/claims.json",
       "bytes": 6513,
-      "sha256": "526a7bee91e3084fa3e39b3b3c5b48a2f60f06b613f13ad0d22f14c805be7ad4",
+      "sha256": "4bd45173739a60956c3fe83a6c6191cebf7ec3b56e86e7cf181b97dbb4bfff4e",
       "format": "boris-publication-claims",
       "schema_version": 1,
       "target": "default",
@@ -87,9 +87,20 @@
     },
     {
       "kind": "artifact",
-      "id": "artifact:guides/getting-started.html",
+      "id": "artifact:glossary.html",
       "metadata": {
         "inventory_index": 4,
+        "path": "glossary.html",
+        "kind": "html-page",
+        "status": "committed",
+        "required": true
+      }
+    },
+    {
+      "kind": "artifact",
+      "id": "artifact:guides/getting-started.html",
+      "metadata": {
+        "inventory_index": 5,
         "path": "guides/getting-started.html",
         "kind": "html-page",
         "status": "committed",
@@ -100,7 +111,7 @@
       "kind": "artifact",
       "id": "artifact:guides/publishing.html",
       "metadata": {
-        "inventory_index": 5,
+        "inventory_index": 6,
         "path": "guides/publishing.html",
         "kind": "html-page",
         "status": "committed",
@@ -111,7 +122,7 @@
       "kind": "artifact",
       "id": "artifact:guides/standard-site-tests.html",
       "metadata": {
-        "inventory_index": 6,
+        "inventory_index": 7,
         "path": "guides/standard-site-tests.html",
         "kind": "html-page",
         "status": "committed",
@@ -122,7 +133,7 @@
       "kind": "artifact",
       "id": "artifact:guides/test-runs.html",
       "metadata": {
-        "inventory_index": 7,
+        "inventory_index": 8,
         "path": "guides/test-runs.html",
         "kind": "html-page",
         "status": "committed",
@@ -133,7 +144,7 @@
       "kind": "artifact",
       "id": "artifact:guides/testing-plan.html",
       "metadata": {
-        "inventory_index": 8,
+        "inventory_index": 9,
         "path": "guides/testing-plan.html",
         "kind": "html-page",
         "status": "committed",
@@ -144,7 +155,7 @@
       "kind": "artifact",
       "id": "artifact:index.html",
       "metadata": {
-        "inventory_index": 9,
+        "inventory_index": 10,
         "path": "index.html",
         "kind": "html-page",
         "status": "committed",
@@ -155,7 +166,7 @@
       "kind": "artifact",
       "id": "artifact:operations.html",
       "metadata": {
-        "inventory_index": 10,
+        "inventory_index": 11,
         "path": "operations.html",
         "kind": "html-page",
         "status": "committed",
@@ -166,7 +177,7 @@
       "kind": "artifact",
       "id": "artifact:sitemap.xml",
       "metadata": {
-        "inventory_index": 11,
+        "inventory_index": 12,
         "path": "sitemap.xml",
         "kind": "sitemap",
         "status": "committed",
@@ -177,7 +188,7 @@
       "kind": "artifact",
       "id": "artifact:standard-site.html",
       "metadata": {
-        "inventory_index": 12,
+        "inventory_index": 13,
         "path": "standard-site.html",
         "kind": "html-page",
         "status": "committed",
@@ -188,7 +199,7 @@
       "kind": "artifact",
       "id": "artifact:troubleshooting.html",
       "metadata": {
-        "inventory_index": 13,
+        "inventory_index": 14,
         "path": "troubleshooting.html",
         "kind": "html-page",
         "status": "committed",
@@ -331,6 +342,11 @@
     {
       "kind": "target-owns-artifact",
       "from": "target",
+      "to": "artifact:glossary.html"
+    },
+    {
+      "kind": "target-owns-artifact",
+      "from": "target",
       "to": "artifact:guides/getting-started.html"
     },
     {
@@ -411,6 +427,16 @@
     {
       "kind": "artifact-subject-of-check",
       "from": "artifact:boris.html",
+      "to": "check:rendered-html"
+    },
+    {
+      "kind": "artifact-subject-of-check",
+      "from": "artifact:glossary.html",
+      "to": "check:artifact-integrity"
+    },
+    {
+      "kind": "artifact-subject-of-check",
+      "from": "artifact:glossary.html",
       "to": "check:rendered-html"
     },
     {
@@ -536,6 +562,16 @@
     {
       "kind": "artifact-supports-check",
       "from": "artifact:boris.html",
+      "to": "check:rendered-search"
+    },
+    {
+      "kind": "artifact-supports-check",
+      "from": "artifact:glossary.html",
+      "to": "check:rendered-html"
+    },
+    {
+      "kind": "artifact-supports-check",
+      "from": "artifact:glossary.html",
       "to": "check:rendered-search"
     },
     {
