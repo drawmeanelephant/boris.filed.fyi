@@ -1,0 +1,56 @@
+name: Publish to ATProto
+
+# Manual, explicit publish — never automatic. Run this from the Actions
+# tab when the site structure changed (new/renamed pages, changed origin,
+# updated titles/summaries). Matches Boris's "explicit, never implicit"
+# stance: content edits deploy to Cloudflare automatically, but the PDS
+# records only move when you trigger this.
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: macos-14
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout site repo
+        uses: actions/checkout@v4
+
+      # Boris is a native binary, gitignored, not prebuilt in CI. Build
+      # it from the upstream source at the pinned commit on an arm64
+      # runner (the kit is Darwin-arm64).
+      - name: Checkout Boris source
+        uses: actions/checkout@v4
+        with:
+          repository: drawmeanelephant/boris
+          ref: ef23e37785ced4405191c233da216168aea8ff55
+          path: boris-src
+
+      - name: Install Zig 0.16.0
+        uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: 0.16.0
+
+      - name: Build Boris
+        working-directory: boris-src
+        run: zig build
+
+      - name: Login (app-password via stdin only)
+        env:
+          BORIS_APP_PASSWORD: ${{ secrets.BORIS_APP_PASSWORD }}
+        run: |
+          printf '%s' "$BORIS_APP_PASSWORD" | ./boris-src/zig-out/bin/boris standard-site login --app-password --handle boris.filed.fyi
+
+      - name: Publish
+        working-directory: docs
+        run: |
+          ../boris-src/zig-out/bin/boris standard-site plan --profile standard-site.json --out evidence/plan.json
+          ../boris-src/zig-out/bin/boris standard-site publish --profile standard-site.json --out evidence/publish-ci.json
+
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-evidence
+          path: docs/evidence/publish-ci.json
+          if-no-files-found: error

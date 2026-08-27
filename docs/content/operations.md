@@ -111,21 +111,33 @@ app-password settings and mint a new one.
 
 ## The publish routine
 
-The ATProto records are **not** deployed by CI. They are published
-manually, and only when the site *structure* changes — adding/renaming
-pages, changing the origin, or updating a title/summary. Content edits
-redeploy to Cloudflare automatically; the records don't move for those.
+The ATProto records are **not** deployed by the deploy workflow. They
+are published manually, and only when the site *structure* changes —
+adding/renaming pages, changing the origin, or updating a
+title/summary. Content edits redeploy to Cloudflare automatically; the
+records don't move for those.
+
+There are two ways to publish, both manual:
+
+**From GitHub (uses the `BORIS_APP_PASSWORD` secret):**
 
 ```text
-# login (once per session; password via stdin)
-printf '%s' "$BORIS_APP_PASSWORD" | boris standard-site login --app-password --handle boris.filed.fyi
+Actions tab → "Publish to ATProto" → Run workflow
+```
 
-# publish (only when site structure changed)
+The workflow (`.github/workflows/publish-atproto.yml`) builds Boris from
+source on a macOS-arm64 runner, logs in with the secret via stdin,
+publishes, and uploads `docs/evidence/publish-ci.json` as an artifact.
+
+**Locally (password never leaves your machine):**
+
+```text
+printf '%s' "$BORIS_APP_PASSWORD" | boris standard-site login --app-password --handle boris.filed.fyi
 boris standard-site publish --profile docs/standard-site.json --plan docs/evidence/plan.json
 ```
 
-The result lands in `docs/evidence/publish*.json` and should be
-committed so the record of what was published stays in the repo. This
+Either way the result lands in `docs/evidence/publish*.json` and should
+be committed so the record of what was published stays in the repo. The
 manual-explicit design is deliberate — see the "explicit, never
 implicit" stance in [[boris]].
 
