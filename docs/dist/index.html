@@ -104,11 +104,15 @@ Boris treats it as publication truth. <code>standard-site plan</code> projects t
 records <strong>offline</strong> and deterministically; <code>standard-site verify</code>
 cross-checks the built output against that projection <strong>offline</strong>; only
 then does an explicit, session-gated <code>publish</code> write to the network.</p>
-<p>This site is built with two commands (the HTML build with profile +
-sitemap, then the standalone <code>llms.txt</code> export):</p>
+<p>This site is built with three commands (the HTML build with profile +
+sitemap, then the standalone <code>llms.txt</code> and <code>rss.xml</code> exports):</p>
 <pre><code class="language-text">boris build --input content --html-dir dist --theme themes/boris \
   --profile standard-site.json --sitemap --site-url https://boris.filed.fyi/
 boris --input content --llms --llms-path dist/llms.txt
+boris --input content --rss --rss-path dist/rss.xml \
+  --rss-title &quot;Boris on ATProto&quot; \
+  --rss-description &quot;Technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to.&quot; \
+  --site-url https://boris.filed.fyi/
 </code></pre>
 <p>The build emits <code>dist/</code> plus:</p>
 <ul>
@@ -123,6 +127,9 @@ URL to confirm the DID points at this origin).</li>
 <code>https://boris.filed.fyi/</code>.</li>
 <li><code>dist/llms.txt</code> — a deterministic LLM-consumable index of every page
 with its title and summary.</li>
+<li><code>dist/rss.xml</code> — a deterministic RSS 2.0 feed of the dated pages
+(title, link, description, <code>pubDate</code> from <code>published_at</code>, categories
+from <code>tags</code>).</li>
 </ul>
 <h2 id="the-meta-loop">The meta loop</h2>
 <p>This site is recursively self-describing:</p>
@@ -130,7 +137,8 @@ with its title and summary.</li>
 <li>The Markdown in <code>content/</code> is the source.</li>
 <li><code>boris build</code> compiles it to <code>dist/</code> and writes the proof pack, the
 well-known file, and the sitemap.</li>
-<li><code>boris --llms</code> exports <code>llms.txt</code> from the same content graph.</li>
+<li><code>boris --llms</code> and <code>boris --rss</code> export <code>llms.txt</code> and <code>rss.xml</code>
+from the same content graph.</li>
 <li><code>boris standard-site plan</code> projects the records offline using
 <code>standard-site.json</code> (the DID + URL that anchor publication).</li>
 <li><code>boris standard-site verify</code> cross-checks the built tree offline.</li>
@@ -169,7 +177,7 @@ this site's config; nothing here references the old identities.</p>
   themes/boris/                     the Boris theme (layouts + assets)
   boris.json                        GitHub Pages publication profile
   standard-site.json                Atmosphere profile (real DID + boris.filed.fyi origin)
-  dist/                             built HTML + proof pack + well-known + sitemap + llms.txt
+  dist/                             built HTML + proof pack + well-known + sitemap + llms.txt + rss.xml
   evidence/                         offline plan/records/verify + live publish + smoke
 </code></pre>
 <h2 id="read-order">Read order</h2>
@@ -184,6 +192,7 @@ log in <a href="guides/test-runs.html">Test Runs</a>.</p>
 </main>
 <footer class="site-footer">
   <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+  <p class="site-meta-links">Site feeds: <a href="/sitemap.xml">sitemap.xml</a> · <code>/rss.xml</code> · <code>/llms.txt</code> · <code>/_boris/proof/index.html</code></p>
 </footer>
 </body>
 </html>

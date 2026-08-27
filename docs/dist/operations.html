@@ -105,11 +105,20 @@ required status check.</li>
 <li>The deploy workflow is the required check on <code>main</code> — PRs can't merge
 without it passing.</li>
 </ul>
-<p>The two-command build:</p>
+<p>The three-command build:</p>
 <pre><code class="language-text">boris build --input docs/content --html-dir docs/dist --theme docs/themes/boris \
   --profile docs/standard-site.json --sitemap --site-url https://boris.filed.fyi/
 boris --input docs/content --llms --llms-path docs/dist/llms.txt
+boris --input docs/content --rss --rss-path docs/dist/rss.xml \
+  --rss-title &quot;Boris on ATProto&quot; \
+  --rss-description &quot;Technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to.&quot; \
+  --site-url https://boris.filed.fyi/
 </code></pre>
+<p>The <code>rss.xml</code> feed lists every dated page with its <code>pubDate</code> (from
+<code>published_at</code>) and categories (from <code>tags</code>). Note that <code>llms.txt</code> and
+<code>rss.xml</code> are emitted by standalone commands, so the HTML link audit
+doesn't treat them as published outputs — the footer links <code>sitemap.xml</code>
+(emitted by the build itself) and lists the others as plain paths.</p>
 <h2 id="branch-protection-on-main">Branch protection on main</h2>
 <p><code>main</code> is protected so agents can work safely:</p>
 <ul>
@@ -238,6 +247,7 @@ every change is auditable.</p>
 </main>
 <footer class="site-footer">
   <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+  <p class="site-meta-links">Site feeds: <a href="/sitemap.xml">sitemap.xml</a> · <code>/rss.xml</code> · <code>/llms.txt</code> · <code>/_boris/proof/index.html</code></p>
 </footer>
 </body>
 </html>

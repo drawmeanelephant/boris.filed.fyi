@@ -66,13 +66,17 @@ records **offline** and deterministically; `standard-site verify`
 cross-checks the built output against that projection **offline**; only
 then does an explicit, session-gated `publish` write to the network.
 
-This site is built with two commands (the HTML build with profile +
-sitemap, then the standalone `llms.txt` export):
+This site is built with three commands (the HTML build with profile +
+sitemap, then the standalone `llms.txt` and `rss.xml` exports):
 
 ```text
 boris build --input content --html-dir dist --theme themes/boris \
   --profile standard-site.json --sitemap --site-url https://boris.filed.fyi/
 boris --input content --llms --llms-path dist/llms.txt
+boris --input content --rss --rss-path dist/rss.xml \
+  --rss-title "Boris on ATProto" \
+  --rss-description "Technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to." \
+  --site-url https://boris.filed.fyi/
 ```
 
 The build emits `dist/` plus:
@@ -88,6 +92,9 @@ The build emits `dist/` plus:
   `https://boris.filed.fyi/`.
 - `dist/llms.txt` — a deterministic LLM-consumable index of every page
   with its title and summary.
+- `dist/rss.xml` — a deterministic RSS 2.0 feed of the dated pages
+  (title, link, description, `pubDate` from `published_at`, categories
+  from `tags`).
 
 ## The meta loop
 
@@ -96,7 +103,8 @@ This site is recursively self-describing:
 1. The Markdown in `content/` is the source.
 2. `boris build` compiles it to `dist/` and writes the proof pack, the
    well-known file, and the sitemap.
-3. `boris --llms` exports `llms.txt` from the same content graph.
+3. `boris --llms` and `boris --rss` export `llms.txt` and `rss.xml`
+   from the same content graph.
 4. `boris standard-site plan` projects the records offline using
    `standard-site.json` (the DID + URL that anchor publication).
 5. `boris standard-site verify` cross-checks the built tree offline.
@@ -141,7 +149,7 @@ docs/
   themes/boris/                     the Boris theme (layouts + assets)
   boris.json                        GitHub Pages publication profile
   standard-site.json                Atmosphere profile (real DID + boris.filed.fyi origin)
-  dist/                             built HTML + proof pack + well-known + sitemap + llms.txt
+  dist/                             built HTML + proof pack + well-known + sitemap + llms.txt + rss.xml
   evidence/                         offline plan/records/verify + live publish + smoke
 ```
 

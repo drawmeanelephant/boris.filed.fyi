@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Boris on ATProto</title>
+    <link>https://boris.filed.fyi</link>
+    <description>Technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to.</description>
+    <generator>boris/0.8.1</generator>
+    <item>
+      <title>ATProto glossary</title>
+      <link>https://boris.filed.fyi/glossary.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/glossary.html</guid>
+      <description>A quick-reference glossary of AT Protocol terms — DID, PDS, XRPC, record, lexicon, AT-URI, AppView, DPoP, Bearer — each linked back to the overview pages.</description>
+      <pubDate>Thu, 27 Aug 2026 19:05:00 GMT</pubDate>
+      <category>reference</category>
+      <category>atproto</category>
+    </item>
+    <item>
+      <title>Troubleshooting</title>
+      <link>https://boris.filed.fyi/troubleshooting.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/troubleshooting.html</guid>
+      <description>How to diagnose a failed standard-site publish or smoke — the InvalidNonce OAuth finding, the app-password vs OAuth tradeoff, and a step-by-step failure checklist.</description>
+      <pubDate>Thu, 27 Aug 2026 18:55:00 GMT</pubDate>
+      <category>guide</category>
+      <category>atproto</category>
+      <category>ops</category>
+    </item>
+    <item>
+      <title>Operating this site</title>
+      <link>https://boris.filed.fyi/operations.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/operations.html</guid>
+      <description>The ops playbook — how this site is built, deployed, and published to ATProto, including the GitHub branch protection, the Cloudflare deploy pipeline, and the BORIS_APP_PASSWORD secret convention.</description>
+      <pubDate>Thu, 27 Aug 2026 18:45:00 GMT</pubDate>
+      <category>guide</category>
+      <category>ops</category>
+      <category>github</category>
+      <category>cloudflare</category>
+    </item>
+    <item>
+      <title>The AT Protocol</title>
+      <link>https://boris.filed.fyi/atproto.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/atproto.html</guid>
+      <description>The AT Protocol in the shape Boris cares about — DIDs, PDSes, XRPC, records, lexicons, and the two write paths that gate publication.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>overview</category>
+      <category>atproto</category>
+    </item>
+    <item>
+      <title>Boris</title>
+      <link>https://boris.filed.fyi/boris.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/boris.html</guid>
+      <description>What Boris is — a Zig content compiler that produces verified static HTML, a frozen graph, a search index, and a publication proof pack from Markdown.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>overview</category>
+      <category>boris</category>
+    </item>
+    <item>
+      <title>Getting Started</title>
+      <link>https://boris.filed.fyi/guides/getting-started.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/guides/getting-started.html</guid>
+      <description>How to author a Boris page — one Markdown file with YAML frontmatter that shapes the frozen graph.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>guides</category>
+    </item>
+    <item>
+      <title>Publishing</title>
+      <link>https://boris.filed.fyi/guides/publishing.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/guides/publishing.html</guid>
+      <description>The publication profiles — how Boris treats the production URL as publication truth.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>guides</category>
+    </item>
+    <item>
+      <title>Standard.site Test Procedures</title>
+      <link>https://boris.filed.fyi/guides/standard-site-tests.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/guides/standard-site-tests.html</guid>
+      <description>Step-by-step procedures for each ATProto surface in the test matrix, with pass criteria.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>tests</category>
+      <category>atproto</category>
+    </item>
+    <item>
+      <title>Test Runs</title>
+      <link>https://boris.filed.fyi/guides/test-runs.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/guides/test-runs.html</guid>
+      <description>A running log of executed tests against the boris-agent-kit, with commands, results, and evidence artifacts.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>runs</category>
+      <category>status</category>
+    </item>
+    <item>
+      <title>Testing Plan</title>
+      <link>https://boris.filed.fyi/guides/testing-plan.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/guides/testing-plan.html</guid>
+      <description>The test matrix, acceptance criteria, and identity plan for validating the Boris agent kit end to end against the AT Protocol.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>plan</category>
+    </item>
+    <item>
+      <title>Boris on ATProto</title>
+      <link>https://boris.filed.fyi/index.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/index.html</guid>
+      <description>An all-around help area for the Boris Zig content compiler and the AT Protocol — built with Boris, documenting Boris, and operating as a living demo of the tool it describes.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>home</category>
+    </item>
+    <item>
+      <title>Standard.site — the Boris/ATProto loop</title>
+      <link>https://boris.filed.fyi/standard-site.html</link>
+      <guid isPermaLink="true">https://boris.filed.fyi/standard-site.html</guid>
+      <description>The operator's manual for the build, plan, verify, login, publish, and smoke loop that turns a Boris-built site into an on-network ATProto publication.</description>
+      <pubDate>Thu, 27 Aug 2026 17:30:00 GMT</pubDate>
+      <category>guide</category>
+      <category>atproto</category>
+      <category>meta</category>
+    </item>
+  </channel>
+</rss>
