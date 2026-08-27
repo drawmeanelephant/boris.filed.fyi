@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boris · Boris on ATProto</title>
+  <link rel="stylesheet" href="assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/boris">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite is-current"><a href="boris.html" aria-current="page">Boris</a></li>
+<li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="index.html">Boris on ATProto</a></li>
+<li aria-current="page">Boris</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#boris">Boris</a></li>
+<li class="page-toc__l2"><a href="#what-boris-compiles">What Boris compiles</a></li>
+<li class="page-toc__l2"><a href="#build-pipeline">Build pipeline</a></li>
+<li class="page-toc__l2"><a href="#modes">Modes</a></li>
+<li class="page-toc__l2"><a href="#the-proof-pack">The proof pack</a></li>
+<li class="page-toc__l3"><a href="#what-the-claims-mean-and-dont">What the claims mean — and don't</a></li>
+<li class="page-toc__l2"><a href="#ir-rag-and-context-exports">IR, RAG, and context exports</a></li>
+<li class="page-toc__l2"><a href="#the-agent-kit">The agent kit</a></li>
+<li class="page-toc__l2"><a href="#boriss-design-stance">Boris's design stance</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="boris">Boris</h1>
+<p><strong>Boris</strong> is a single native binary — a content compiler written in Zig
+(currently <code>boris/0.8.1</code>, built with Zig 0.16.0 for Darwin-arm64). It
+takes a directory of Markdown (or Textile/Cooklang) and produces, in one
+pass, a verified static HTML site, a frozen content graph, a search index,
+and a publication proof pack. It is not a framework, has no runtime, and
+runs no JavaScript on the output. Everything is frozen at build time.</p>
+<p>This page is the technical overview. The operator's manual for the
+ATProto side is <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>; the AT Protocol background is
+<a href="atproto.html">The AT Protocol</a>.</p>
+<h2 id="what-boris-compiles">What Boris compiles</h2>
+<p>A Boris site is a directory tree with:</p>
+<ul>
+<li><strong><code>content/</code></strong> — one Markdown file per page, each with YAML frontmatter.</li>
+<li><strong><code>themes/&lt;name&gt;/</code></strong> — a layout (<code>layouts/main.html</code>) and assets
+(<code>assets/...</code>). Layouts are closed-slot templates: <code>{{content}}</code>,
+<code>{{nav}}</code>, <code>{{breadcrumb}}</code>, <code>{{toc}}</code>, <code>{{head}}</code>, <code>{{footer}}</code>.</li>
+<li><strong>a publication profile</strong> — <code>boris.json</code> (HTML target) and optionally
+<code>standard-site.json</code> (the ATProto/DID/URL projection).</li>
+</ul>
+<p>A page is a Markdown file whose frontmatter shapes the graph:</p>
+<pre><code class="language-yaml">---
+title: Boris
+parent: index
+tags: [overview, boris]
+relations: [relates_to=atproto]   # optional semantic edges
+---
+
+# Boris
+
+Body in Markdown. [[atproto]] is a real graph edge, not dead prose.
+</code></pre>
+<ul>
+<li><code>parent</code> — the structural parent's entity id (forms the nav forest and
+breadcrumb chain).</li>
+<li><code>tags</code> — free-form list rendered into page metadata.</li>
+<li><code>relations</code> — semantic edges like <code>relates_to=&lt;target&gt;</code>; the frozen
+graph exposes them for impact analysis.</li>
+<li><code>[[wiki-links]]</code> — a link to a missing page <strong>fails the build</strong> rather
+than rendering as dead prose. The graph is strict.</li>
+</ul>
+<h2 id="build-pipeline">Build pipeline</h2>
+<pre><code class="language-text">boris --input content --html-dir dist --theme themes/boris
+</code></pre>
+<p>A build pass produces, for one HTML target:</p>
+<ul>
+<li><code>dist/**/*.html</code> — the rendered pages, each wrapped in the layout.</li>
+<li><code>dist/assets/**</code> — copied theme assets (CSS, images, etc.).</li>
+<li><code>dist/_boris/search/search-index.json</code> — a frozen search index derived
+from the committed HTML page set.</li>
+<li><code>dist/_boris/proof/</code> — the publication proof pack (see below).</li>
+</ul>
+<p>The build is <strong>deterministic</strong>: the same input + profile + environment
+produces byte-identical output, which is what makes the proof pack's
+SHA-256 digests meaningful.</p>
+<h2 id="modes">Modes</h2>
+<p>Boris has several top-level modes, all invoked as <code>boris &lt;command&gt;</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>build</code> (default)</td>
+<td>Compile the HTML site + proof pack.</td>
+</tr>
+<tr>
+<td><code>validate</code></td>
+<td>Validate selected HTML source/config without publication.</td>
+</tr>
+<tr>
+<td><code>watch</code></td>
+<td>Build, then rebuild on content/theme change.</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>Read-only graph health report (findings don't fail by default).</td>
+</tr>
+<tr>
+<td><code>impact &lt;ID&gt;</code></td>
+<td>Read-only transitive impact report for a page.</td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>Emit the normalized publication plan (no publication).</td>
+</tr>
+<tr>
+<td><code>standard-site *</code></td>
+<td>The ATProto family — see <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>.</td>
+</tr>
+<tr>
+<td><code>nostr *</code></td>
+<td>The Nostr NIP-23 publication family (plan/sign/publish).</td>
+</tr>
+<tr>
+<td><code>init [DIR]</code></td>
+<td>Write a starter site (content, theme, profile) into DIR.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>standard-site</code> subfamily is the ATProto surface: <code>plan</code>, <code>records</code>,
+<code>verify</code>, <code>login</code>, <code>sessions</code>, <code>logout</code>, <code>publish</code>, <code>smoke</code>. These are
+covered in <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> and <a href="guides/standard-site-tests.html">Standard.site Test Procedures</a>.</p>
+<h2 id="the-proof-pack">The proof pack</h2>
+<p>Every HTML build writes <code>dist/_boris/proof/</code>. This is the heart of
+Boris's integrity model — it pins what was built, what was checked, and
+what can be claimed as a result.</p>
+<p>The pack has four artifacts plus an <code>index.html</code> presentation:</p>
+<ul>
+<li><strong><code>artifacts.json</code></strong> — the inventory. Every committed file in the
+target gets a <code>path</code>, <code>kind</code> (<code>html-page</code>, <code>theme-asset</code>,
+<code>rendered-search</code>, <code>sitemap</code>, <code>rss</code>, <code>llms</code>), <code>bytes</code>, and <code>sha256</code>.</li>
+<li><strong><code>checks.json</code></strong> — the checks that ran, their status, coverage, and
+findings. The three core checks are <code>artifact-integrity</code> (every
+artifact's bytes+sha256 match), <code>rendered-html</code> (structural/route/
+fragment/duplicate-ID audit of HTML pages), and <code>rendered-search</code>
+(the search index matches the committed HTML page set).</li>
+<li><strong><code>claims.json</code></strong> — the verifiable claims, each grounded in a check's
+evidence and explicitly limited by a set of limitations. A claim is
+<code>verified</code> only when its supporting check passed with complete
+coverage.</li>
+<li><strong><code>touches.json</code></strong> — the full relationship graph (nodes + edges) that
+connects targets → artifacts → checks → claims → limitations.</li>
+</ul>
+<p>The presentation at <code>_boris/proof/index.html</code> renders the pack as a
+human-readable report with status banners and tables.</p>
+<h3 id="what-the-claims-mean-and-dont">What the claims mean — and don't</h3>
+<p>A verified claim is deliberately scoped. The limitations are part of
+the claim, not a footnote:</p>
+<ul>
+<li><strong><code>target-local-only</code></strong> — the claim describes one local target after
+commit; it says nothing about other targets or environments.</li>
+<li><strong><code>no-deployment-verification</code></strong> — local generation cannot verify
+deployed behavior.</li>
+<li><strong><code>no-accessibility-verification</code></strong> — no a11y audit was performed.</li>
+<li><strong><code>no-prose-quality-verification</code></strong> — no writing-quality judgment.</li>
+<li><strong><code>no-universal-reproducibility-claim</code></strong> — deterministic bytes on one
+recorded environment are not universal reproducibility.</li>
+<li><strong><code>omitted-projections-not-certified</code></strong> — an omitted projection is
+explicitly unverified, not certified.</li>
+</ul>
+<p>This is the &quot;conductor rule&quot;: what was not inspected remains explicitly
+unverified. The proof pack never overclaims.</p>
+<h2 id="ir-rag-and-context-exports">IR, RAG, and context exports</h2>
+<p>The same content can be exported as machine-readable corpora without
+re-parsing:</p>
+<ul>
+<li><strong>IR mode</strong> (<code>--out &lt;DIR&gt;</code>, default <code>.boris</code>) — JSON intermediate
+representation under the output directory.</li>
+<li><strong>RAG mode</strong> (<code>--rag --rag-dir &lt;DIR&gt;</code>) — working-context packs sized
+to a target byte budget (<code>--split-size</code>, default 256 KiB). <code>--complete</code>
+exports the entire validated corpus (system + per-page + graph +
+catalog).</li>
+<li><strong>Context mode</strong> (<code>--context --context-dir &lt;DIR&gt;</code>) — a single bounded
+context bundle (byte-capped via <code>--split-size</code>).</li>
+<li><strong><code>--llms</code></strong> — a deterministic <code>llms.txt</code> export for LLM consumption.</li>
+<li><strong><code>--rss</code></strong> — a deterministic RSS 2.0 feed.</li>
+<li><strong><code>--sitemap</code></strong> — a deterministic <code>sitemap.xml</code> in the HTML target.</li>
+<li><strong><code>--scope VALUE</code></strong> — restrict RAG/context to an entity id or
+collection prefix.</li>
+</ul>
+<p>The standalone <code>boris-source-rag</code> tool (in the kit) packs project
+<strong>source files</strong> for LLM upload — a different concern from the content
+RAG above. It emits per-file documents, combined bundles, and a catalog.</p>
+<h2 id="the-agent-kit">The agent kit</h2>
+<p>The <code>boris-agent-kit</code> directory is a transport artifact: native binaries
+built from <code>drawmeanelephant/boris</code> at a recorded commit, verified with
+<code>SHA256SUMS</code> against <code>MANIFEST.json</code>. The kit includes the <code>boris</code>
+compiler plus ten standalone tools:</p>
+<p><code>boris-content-audit</code>, <code>boris-docs-maintenance</code>,
+<code>boris-github-pages-audit</code>, <code>boris-migration-lab</code>,
+<code>boris-scale-smoke</code>, <code>boris-search-index</code>, <code>boris-source-rag</code>,
+<code>boris-testdata</code>, <code>boris-package</code>, and <code>boris</code>.</p>
+<p>Verify before use:</p>
+<pre><code class="language-text">cd boris-agent-kit &amp;&amp; shasum -a 256 -c SHA256SUMS
+</code></pre>
+<p>This site was built with the kit at commit
+<code>ef23e37785ced4405191c233da216168aea8ff55</code> (<code>main</code>, Darwin-arm64,
+Zig 0.16.0, binary <code>boris/0.8.1</code>).</p>
+<h2 id="boriss-design-stance">Boris's design stance</h2>
+<p>Three commitments shape the tool:</p>
+<ol>
+<li><strong>Publication truth is the production URL.</strong> The deployment origin is
+not incidental — it is the anchor that ties identity to a built tree.
+<code>standard-site.json</code> records it; <code>verify</code> enforces it offline.</li>
+<li><strong>Explicit, never implicit.</strong> Nothing is written to the network
+without an explicit command and a stored session. The build and proof
+pack are offline and deterministic; publication is a separate,
+gated, manual act.</li>
+<li><strong>Fail closed on drift.</strong> A committed <code>--plan</code> makes <code>publish</code>
+fail-closed against drift. A <code>[[wiki-link]]</code> to a missing page fails
+the build. An omitted projection is explicitly unverified, not
+silently certified.</li>
+</ol>
+<p>These are why the proof pack's limitations read the way they do: Boris
+does not claim what it did not inspect. The next page, <a href="atproto.html">The AT Protocol</a>,
+explains the network side that the standard-site family publishes to.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

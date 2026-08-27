@@ -1,0 +1,57 @@
+{
+  "format": "boris-standard-site-verify",
+  "schema_version": 1,
+  "overall_passed": true,
+  "well_known": {
+    "status": "match",
+    "checked_path": ".well-known/site.standard.publication",
+    "required_public_url": "https://boris.filed.fyi/.well-known/site.standard.publication"
+  },
+  "documents": [
+    {
+      "entity_id": "atproto",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/atproto",
+      "status": "verified"
+    },
+    {
+      "entity_id": "boris",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/boris",
+      "status": "verified"
+    },
+    {
+      "entity_id": "guides/getting-started",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:getting-started",
+      "status": "verified"
+    },
+    {
+      "entity_id": "guides/publishing",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:publishing",
+      "status": "verified"
+    },
+    {
+      "entity_id": "guides/standard-site-tests",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:standard-site-tests",
+      "status": "verified"
+    },
+    {
+      "entity_id": "guides/test-runs",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:test-runs",
+      "status": "verified"
+    },
+    {
+      "entity_id": "guides/testing-plan",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:testing-plan",
+      "status": "verified"
+    },
+    {
+      "entity_id": "index",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/index",
+      "status": "verified"
+    },
+    {
+      "entity_id": "standard-site",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/standard-site",
+      "status": "verified"
+    }
+  ]
+}

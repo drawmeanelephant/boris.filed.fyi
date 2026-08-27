@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boris on ATProto · Boris on ATProto</title>
+  <link rel="stylesheet" href="assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/index">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-current"><a href="index.html" aria-current="page">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li aria-current="page">Boris on ATProto</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#boris-on-atproto">Boris on ATProto</a></li>
+<li class="page-toc__l2"><a href="#what-you-are-looking-at">What you are looking at</a></li>
+<li class="page-toc__l2"><a href="#why-this-is-interesting">Why this is interesting</a></li>
+<li class="page-toc__l2"><a href="#the-meta-loop">The meta loop</a></li>
+<li class="page-toc__l2"><a href="#site-identity">Site identity</a></li>
+<li class="page-toc__l2"><a href="#anatomy-of-this-site">Anatomy of this site</a></li>
+<li class="page-toc__l2"><a href="#read-order">Read order</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="boris-on-atproto">Boris on ATProto</h1>
+<p>This site is a hands-on technical overview of <strong>Boris</strong> — the Zig content
+compiler — and <strong>the AT Protocol</strong> surface it publishes to. It is also a
+living demo: every page here is compiled by Boris itself, and the whole
+site can be projected onto the <code>standard.site</code> lexicon and published to an
+ATProto PDS. The docs are an artifact of the tool under description.</p>
+<h2 id="what-you-are-looking-at">What you are looking at</h2>
+<p>Boris is a single native binary that turns a directory of Markdown files
+into a verified static site. It is not a framework and it has no runtime:
+it produces frozen HTML, a frozen graph, a frozen search index, and a
+<strong>publication proof pack</strong> — a set of artifacts, checks, and claims whose
+hashes pin what was built. The AT Protocol gives that frozen site a place
+to live on the network: a <code>site.standard.publication</code> record that points a
+DID at a production URL, and <code>site.standard.document</code> records that point
+at individual pages.</p>
+<p>The three ideas this site explores:</p>
+<ul>
+<li><a href="boris.html">Boris</a> — what Boris is, how the build pipeline works, what the proof
+pack guarantees, and how IR/RAG/context exports turn the same content
+into machine-readable corpora.</li>
+<li><a href="atproto.html">The AT Protocol</a> — the AT Protocol in the shape Boris cares about: DIDs,
+PDSes, XRPC, records, lexicons, and the two auth paths (OAuth + DPoP vs
+app-password) that gate writes.</li>
+<li><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> — the meta guide: how to take a Boris-built site and
+project, verify, authorize, and publish it to ATProto with the
+<code>boris standard-site</code> family. This page is the operator's manual, and
+it is exercised by the very site it documents.</li>
+</ul>
+<h2 id="why-this-is-interesting">Why this is interesting</h2>
+<p>A static site generator that emits a cryptographic proof pack, wired to
+a decentralized identity and record store, is a different shape from a
+typical &quot;deploy to a CDN&quot; pipeline. The production URL is not an
+incidental detail — it is the anchor that ties a DID to a built tree, and
+Boris treats it as publication truth. <code>standard-site plan</code> projects the
+records <strong>offline</strong> and deterministically; <code>standard-site verify</code>
+cross-checks the built output against that projection <strong>offline</strong>; only
+then does an explicit, session-gated <code>publish</code> write to the network.</p>
+<p>This site is built with two commands (the HTML build with profile +
+sitemap, then the standalone <code>llms.txt</code> export):</p>
+<pre><code class="language-text">boris build --input content --html-dir dist --theme themes/boris \
+  --profile standard-site.json --sitemap --site-url https://boris.filed.fyi/
+boris --input content --llms --llms-path dist/llms.txt
+</code></pre>
+<p>The build emits <code>dist/</code> plus:</p>
+<ul>
+<li><code>dist/_boris/proof/</code> — the publication proof pack (artifacts, checks,
+claims, touches). Inspect it at <code>dist/_boris/proof/index.html</code> after a
+build — it renders the artifacts, checks, and claims as a report.</li>
+<li><code>dist/_boris/search/search-index.json</code> — the frozen search index.</li>
+<li><code>dist/.well-known/site.standard.publication</code> — the verification surface
+(the publication record's AT-URI, for readers who fetch the well-known
+URL to confirm the DID points at this origin).</li>
+<li><code>dist/sitemap.xml</code> — a deterministic sitemap of all 9 pages under
+<code>https://boris.filed.fyi/</code>.</li>
+<li><code>dist/llms.txt</code> — a deterministic LLM-consumable index of every page
+with its title and summary.</li>
+</ul>
+<h2 id="the-meta-loop">The meta loop</h2>
+<p>This site is recursively self-describing:</p>
+<ol>
+<li>The Markdown in <code>content/</code> is the source.</li>
+<li><code>boris build</code> compiles it to <code>dist/</code> and writes the proof pack, the
+well-known file, and the sitemap.</li>
+<li><code>boris --llms</code> exports <code>llms.txt</code> from the same content graph.</li>
+<li><code>boris standard-site plan</code> projects the records offline using
+<code>standard-site.json</code> (the DID + URL that anchor publication).</li>
+<li><code>boris standard-site verify</code> cross-checks the built tree offline.</li>
+<li><code>boris standard-site login</code> + <code>publish</code> writes to a real PDS, gated by
+a stored session and a committed-plan fail-closed guard.</li>
+</ol>
+<p>Steps 1–5 are offline, deterministic, and CI-safe. Step 6 is explicit,
+manual, and never implicit. The whole loop is documented in
+<a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> and exercised by the test matrix in <a href="guides/testing-plan.html">Testing Plan</a>,
+whose results are logged in <a href="guides/test-runs.html">Test Runs</a>.</p>
+<h2 id="site-identity">Site identity</h2>
+<p>The <code>standard-site.json</code> profile is wired to a real identity,
+<code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> (handle <code>boris.filed.fyi</code>, PDS
+<code>https://auriporia.us-west.host.bsky.network</code>, app-password session).
+The production origin is <code>https://boris.filed.fyi/</code> — the offline
+plan/records/verify steps run against it, and a real <code>publish</code> writes
+the <code>site.standard.publication/self</code> record to that PDS.</p>
+<p>The earlier placeholder DID (<code>did:plc:aaaa…</code>) and the throwaway test
+identity (<code>did:plc:xrqjadveiamk7vq7sfnvfddz</code>) are both retired from
+this site's config; nothing here references the old identities.</p>
+<h2 id="anatomy-of-this-site">Anatomy of this site</h2>
+<pre><code class="language-text">docs/
+  content/
+    index.md                        this trunk page
+    boris.md                        Boris technical overview
+    atproto.md                      AT Protocol technical overview
+    standard-site.md                the meta guide (operator's manual)
+    guides/testing-plan.md          test matrix, parent: index
+    guides/standard-site-tests.md   per-surface procedures
+    guides/test-runs.md             running log of executed tests
+    guides/getting-started.md       authoring a page
+    guides/publishing.md            the publication profiles
+  themes/boris/                     the Boris theme (layouts + assets)
+  boris.json                        GitHub Pages publication profile
+  standard-site.json                Atmosphere profile (real DID + boris.filed.fyi origin)
+  dist/                             built HTML + proof pack + well-known + sitemap + llms.txt
+  evidence/                         offline plan/records/verify + live publish + smoke
+</code></pre>
+<h2 id="read-order">Read order</h2>
+<p>New here? Skim <a href="boris.html">Boris</a> for the mental model, then <a href="atproto.html">The AT Protocol</a> for the
+network side, then <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> for the loop that ties them together.
+If you want to reproduce the build, the procedures live in
+<a href="guides/standard-site-tests.html">Standard.site Test Procedures</a> and the run log in <a href="guides/test-runs.html">Test Runs</a>.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

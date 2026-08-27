@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Publishing · Boris on ATProto</title>
+  <link rel="stylesheet" href="../assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:publishing">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="../index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="../atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="../boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite is-current"><a href="publishing.html" aria-current="page">Publishing</a></li>
+<li class="site-nav__satellite"><a href="standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="../index.html">Boris on ATProto</a></li>
+<li aria-current="page">Publishing</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#publishing">Publishing</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="publishing">Publishing</h1>
+<p>Boris treats the deployment URL as publication truth, not an incidental
+detail. This page covers the publication profiles; the full ATProto
+publish loop (plan → verify → login → publish) is in
+<a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a>, and the ATProto background in <a href="../atproto.html">The AT Protocol</a>.</p>
+<p>The starter profile declares one public HTML target:</p>
+<pre><code class="language-json">{
+  &quot;format&quot;: &quot;boris-publication-profile&quot;,
+  &quot;schema_version&quot;: 1,
+  &quot;input&quot;: &quot;content&quot;,
+  &quot;targets&quot;: [
+    { &quot;name&quot;: &quot;public&quot;, &quot;output&quot;: &quot;dist&quot;, &quot;public&quot;: true, &quot;theme&quot;: &quot;themes/boris&quot; }
+  ]
+}
+</code></pre>
+<p>Inspect the normalized plan before publishing:</p>
+<pre><code class="language-text">boris plan --profile boris.json
+boris standard-site plan --profile standard-site.json
+</code></pre>
+<p>The official GitHub Pages workflow (see the repository's
+<code>docs/github-pages.md</code>) builds a verified target: it resolves the Pages
+location from <code>actions/configure-pages</code>, fails on any URL projection
+that disagrees with it, uploads only inventory-verified files, and
+retains a separate evidence artifact. Atmosphere publication uses
+<code>standard-site.json</code>, wired to the real production identity
+<code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> (handle <code>boris.filed.fyi</code>, origin
+<code>https://boris.filed.fyi/</code>). The earlier placeholder DID and the
+throwaway test identity are both retired. This page is
+related to <a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a> so the semantic graph has an edge to inspect.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

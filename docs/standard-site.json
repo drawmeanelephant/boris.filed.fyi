@@ -1,0 +1,19 @@
+{
+  "format": "boris-publication-profile",
+  "schema_version": 1,
+  "input": "content",
+  "site": { "title": "Boris on ATProto" },
+  "publication": {
+    "target": "standard-site",
+    "base_url": "https://boris.filed.fyi/",
+    "origin": "https://boris.filed.fyi/",
+    "base_path": "",
+    "did": "did:plc:jiokpoojzqntdpyw5xvfr7rv",
+    "name": "Boris on ATProto",
+    "show_in_discover": false,
+    "prune": false
+  },
+  "targets": [
+    { "name": "public", "output": "dist", "public": true, "theme": "themes/boris" }
+  ]
+}

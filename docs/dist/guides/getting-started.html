@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Getting Started · Boris on ATProto</title>
+  <link rel="stylesheet" href="../assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:getting-started">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="../index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="../atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="../boris.html">Boris</a></li>
+<li class="site-nav__satellite is-current"><a href="getting-started.html" aria-current="page">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="../index.html">Boris on ATProto</a></li>
+<li aria-current="page">Getting Started</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#getting-started">Getting Started</a></li>
+<li class="page-toc__l2"><a href="#add-a-page">Add a page</a></li>
+<li class="page-toc__l2"><a href="#frontmatter-at-a-glance">Frontmatter at a glance</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="getting-started">Getting Started</h1>
+<p>A page is one Markdown file with YAML frontmatter. The frontmatter
+<code>id</code> is derived from the path unless you write one; <code>title</code>, <code>tags</code>,
+and <code>parent</code> shape the graph. For the big picture of what Boris is,
+see <a href="../boris.html">Boris</a>; for the ATProto publication loop, see
+<a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a>.</p>
+<h2 id="add-a-page">Add a page</h2>
+<p>Create <code>content/guides/example.md</code>:</p>
+<pre><code class="language-markdown">---
+title: Example
+parent: index
+tags: [guides]
+---
+
+# Example
+
+Hello from [[index]].
+</code></pre>
+<p>Rebuild with <code>boris --input content --html-dir dist --theme themes/boris</code>
+and the page appears in the nav forest, the breadcrumb chain, and the
+frozen graph.</p>
+<h2 id="frontmatter-at-a-glance">Frontmatter at a glance</h2>
+<ul>
+<li><code>title</code> — page title (<code>{{title}}</code>, search, and metadata).</li>
+<li><code>parent</code> — entity id of the structural parent (this page lives under
+<code>index</code>).</li>
+<li><code>tags</code> — free-form list rendered into page metadata.</li>
+<li><code>relations</code> — semantic edges such as <code>[relates_to=target]</code>; see
+<a href="https://github.com/drawmeanelephant/boris/blob/afterparty/docs/contracts/semantic-relations.md">semantic relations</a>.</li>
+</ul>
+<p>A wiki link <code>[[getting-started]]</code> is a real graph edge: a link to a
+missing page fails the build instead of rendering as dead prose.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

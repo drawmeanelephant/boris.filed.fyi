@@ -1,0 +1,68 @@
+{
+  "format": "boris-publication-checks",
+  "schema_version": 1,
+  "target": "default",
+  "artifact_inventory": {
+    "path": "_boris/proof/artifacts.json",
+    "bytes": 4624,
+    "sha256": "51ee000ead277946590fa616c6c427a653bb38b060e51bb40bb81c14446d8c03",
+    "format": "boris-publication-artifacts",
+    "schema_version": 1,
+    "target": "default",
+    "artifact_count": 12
+  },
+  "checks": [
+    {
+      "id": "artifact-integrity",
+      "eligible": true,
+      "ran": true,
+      "status": "passed",
+      "coverage": "complete",
+      "scope": {
+        "subject_statuses": ["committed"],
+        "subject_kinds": [],
+        "subject_sha256": "469665d5b9bf629f66bdd3b7829eb335e570e023b7d76ef654971673654735b0",
+        "supporting_statuses": [],
+        "supporting_kinds": [],
+        "supporting_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "counts": {"eligible": 12, "checked": 12, "findings": 0},
+      "finding_offset": 0
+    },
+    {
+      "id": "rendered-html",
+      "eligible": true,
+      "ran": true,
+      "status": "passed",
+      "coverage": "complete",
+      "scope": {
+        "subject_statuses": ["committed"],
+        "subject_kinds": ["html-page"],
+        "subject_sha256": "bdc2e6e20e9bcaf8b634ecf6175e6629b6190a0199b7f23786003fe2fd070572",
+        "supporting_statuses": ["committed"],
+        "supporting_kinds": [],
+        "supporting_sha256": "469665d5b9bf629f66bdd3b7829eb335e570e023b7d76ef654971673654735b0"
+      },
+      "counts": {"eligible": 9, "checked": 9, "findings": 0},
+      "finding_offset": 0
+    },
+    {
+      "id": "rendered-search",
+      "eligible": true,
+      "ran": true,
+      "status": "passed",
+      "coverage": "complete",
+      "scope": {
+        "subject_statuses": ["committed"],
+        "subject_kinds": ["rendered-search"],
+        "subject_sha256": "ef8cc1a4f773879e1819e3fb44f5cf33914c1acd9c30fef39d93b3d13254f571",
+        "supporting_statuses": ["committed"],
+        "supporting_kinds": ["html-page"],
+        "supporting_sha256": "bdc2e6e20e9bcaf8b634ecf6175e6629b6190a0199b7f23786003fe2fd070572"
+      },
+      "counts": {"eligible": 1, "checked": 1, "findings": 0},
+      "finding_offset": 0
+    }
+  ],
+  "findings": [  ]
+}

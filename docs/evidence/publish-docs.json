@@ -1,0 +1,127 @@
+{
+  "format": "boris-standard-site-evidence",
+  "schema_version": 1,
+  "identity": {
+    "did": "did:plc:jiokpoojzqntdpyw5xvfr7rv",
+    "pds_origin": "https://auriporia.us-west.host.bsky.network"
+  },
+  "bindings": {
+    "source_commit": "unknown",
+    "boris_pin": "boris/0.8.1",
+    "oliver_pin": "oliver@d74249415975d652654e521b7abea40c85b13255",
+    "plan_sha256": "753fd203012b1bacb6cde359d7bd1cf2e6910d40d7723d6b8a774289d1cd03cb"
+  },
+  "records": [
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self",
+      "rkey": "self",
+      "intent": "update",
+      "outcome": "updated",
+      "verification": "write_response",
+      "intended_payload_sha256": "5d340136e7248f4e6ff4badad50157ada78f13a7effaa8c495c47715f6c5661e",
+      "observed_cid": "bafyreibsgzcmlq37gspdgz2avdiizr6erfp5dx4gqwslsu7w5j2t6yzjgu",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/atproto",
+      "rkey": "atproto",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "db4b372359694d70a69a5a76cd1b54c321d29579e57e5b4f4e2d4854dc5facee",
+      "observed_cid": "bafyreibyf5jrpi647mvq7jwt44l2hgwpn2ebd3wizeop2wxstq2f6d7c4u",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/boris",
+      "rkey": "boris",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "55757011063602d7164ed7aa7b5537893d9e7b490fa6bc58713f927998b520d1",
+      "observed_cid": "bafyreiabbmprvwhgkfpbgp4te2lyt6dxeyvicvesyzc5a44dut5g6mn4uu",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:getting-started",
+      "rkey": "guides:getting-started",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "90c6208c952b74ac0b425b5ce02f208fdc577b3e0ded1e5e002f0077caa0cf19",
+      "observed_cid": "bafyreigumhhbzhs6lf33jksywpcstoegymwp2saoqwqrozcyb2y6izhkrm",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:publishing",
+      "rkey": "guides:publishing",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "2ef82333105b5f0ea5a63a22446be3f558ea33bf9bc39e95a26a26b0fb042482",
+      "observed_cid": "bafyreibg2qdsrn6vj6yssi7vw7z64t5nombzbmqso2tg3osofctolw2oiy",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:standard-site-tests",
+      "rkey": "guides:standard-site-tests",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "7c1eebc3f48a25ed93095be79dac6f94e9a252b735a6a14b243fc94b2f33059b",
+      "observed_cid": "bafyreic7zptwbtxu73t7zl7gbccjzcvzw54vub2lb4uwwtocfqsh3mbrjq",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:test-runs",
+      "rkey": "guides:test-runs",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "8f5793b49e180f0319dc53e43bcdf1d1ee6650754a03a4eccbc88c512f60ccbc",
+      "observed_cid": "bafyreie32i7xd2zfjb5ecb3ay5tx2hug4n3zshyjlystrchglkpi6pus3a",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:testing-plan",
+      "rkey": "guides:testing-plan",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "7f00b00bf5792b365fa548886e3126b74b6f5ba0f28f5bcfbccc8d1476f0a446",
+      "observed_cid": "bafyreibuxl4ne3da7ogedb6b4cnjik67gz67vsew4zajnl5icxdqfeevya",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/index",
+      "rkey": "index",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "ff25e4d9f866f9924c05b36020a89bec57c69bf991ba1273ca282884086fde11",
+      "observed_cid": "bafyreibd4majbp7vplcm2lhnvogrnk4cwqagamjkvujcxcsiexln7qgrju",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    },
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/standard-site",
+      "rkey": "standard-site",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "a45f208a67d77a098798ee5dfdf595729f8322b6b145ded51cda017b2308c774",
+      "observed_cid": "bafyreigvw475klf6sytzcp63gzg7k5mpexh5aqgtget47uy5jxkgzqm4z4",
+      "observed_at": "2026-08-27T17:50:17.000Z",
+      "failure": null
+    }
+  ],
+  "overall": "passed"
+}

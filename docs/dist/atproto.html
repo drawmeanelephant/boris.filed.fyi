@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The AT Protocol · Boris on ATProto</title>
+  <link rel="stylesheet" href="assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/atproto">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite is-current"><a href="atproto.html" aria-current="page">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="index.html">Boris on ATProto</a></li>
+<li aria-current="page">The AT Protocol</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#the-at-protocol">The AT Protocol</a></li>
+<li class="page-toc__l2"><a href="#the-pieces-boris-touches">The pieces Boris touches</a></li>
+<li class="page-toc__l3"><a href="#dids">DIDs</a></li>
+<li class="page-toc__l3"><a href="#pds-and-the-http-api">PDS and the HTTP API</a></li>
+<li class="page-toc__l3"><a href="#records-and-lexicons">Records and lexicons</a></li>
+<li class="page-toc__l3"><a href="#verification-surface">Verification surface</a></li>
+<li class="page-toc__l2"><a href="#the-two-write-paths">The two write paths</a></li>
+<li class="page-toc__l3"><a href="#oauth-dpop-granular-scopes">OAuth + DPoP (granular scopes)</a></li>
+<li class="page-toc__l3"><a href="#app-password-broad-write-bearer">App-password (broad write, Bearer)</a></li>
+<li class="page-toc__l3"><a href="#which-path-to-use">Which path to use</a></li>
+<li class="page-toc__l2"><a href="#standards-referenced">Standards referenced</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="the-at-protocol">The AT Protocol</h1>
+<p>The <strong>AT Protocol</strong> (ATProto) is a decentralized networking protocol for
+social applications. It provides portable identity, interoperation
+between services, and a shared data model so that content and
+relationships are not siloed per app. This page is the technical
+overview in the shape that <strong>Boris</strong> cares about: the pieces that let a
+Boris-built static site become an on-network publication.</p>
+<p>For the Boris side, see <a href="boris.html">Boris</a>; for the loop that ties them together,
+see <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>.</p>
+<h2 id="the-pieces-boris-touches">The pieces Boris touches</h2>
+<p>ATProto has several layers; the ones that matter for a published site
+are:</p>
+<ul>
+<li><strong>DIDs</strong> — the portable, verifiable identifier that owns records.</li>
+<li><strong>PDS</strong> — the Personal Data Server that hosts the account's repository
+of records and speaks the HTTP API.</li>
+<li><strong>Records</strong> — typed JSON blobs stored in the repository under a
+<code>collection</code> + <code>rkey</code>.</li>
+<li><strong>Lexicons</strong> — the schemas that define record shapes (the
+<code>site.standard.*</code> family is what Boris publishes).</li>
+<li><strong>Auth</strong> — two write paths: OAuth + DPoP (granular scopes) and the
+app-password (broad account write, Bearer).</li>
+<li><strong>AppView / indexer</strong> — read-side services that aggregate records for
+discovery (non-normative for publication).</li>
+</ul>
+<h3 id="dids">DIDs</h3>
+<p>A DID is a self-certifying, portable identifier. ATProto uses
+<code>did:plc:</code> (the PLC method, the dominant production method) and
+<code>did:web:</code> (DNS-anchored). A DID resolves to a DID document that points
+at the account's PDS and authorization server. Portability means the
+owner can move the account to a different PDS while keeping the same
+identifier and records.</p>
+<p>This site's profile (<code>standard-site.json</code>) is wired to the real
+identity <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> (handle <code>boris.filed.fyi</code>),
+which resolves to the PDS at
+<code>https://auriporia.us-west.host.bsky.network</code> and the authorization
+server <code>https://bsky.social</code>.</p>
+<h3 id="pds-and-the-http-api">PDS and the HTTP API</h3>
+<p>The <strong>Personal Data Server</strong> hosts the account's repository. It speaks an
+HTTP API (XRPC) for reading and writing records. A write to a PDS goes
+through:</p>
+<ol>
+<li><strong>Discovery</strong> — resolve the DID to a PDS origin and authorization
+server metadata (RFC 9728).</li>
+<li><strong>Authorization</strong> — obtain a credential that authorizes the write.</li>
+<li><strong>The write</strong> — <code>com.atproto.repo.createRecord</code> / <code>putRecord</code> /
+<code>deleteRecord</code> against the PDS.</li>
+<li><strong>Readback</strong> — fetch the record by its AT-URI to confirm it landed.</li>
+</ol>
+<p>An <strong>AT-URI</strong> (<code>at://&lt;did&gt;/&lt;collection&gt;/&lt;rkey&gt;</code>) is the canonical
+address of a record. It is stable across moves because it is keyed by the
+DID, not the PDS host.</p>
+<h3 id="records-and-lexicons">Records and lexicons</h3>
+<p>A record is a typed JSON value stored at <code>collection</code> + <code>rkey</code> under the
+owner's DID. The collection name namespaces the record's lexicon (e.g.
+<code>site.standard.publication</code>, <code>site.standard.document</code>). A lexicon defines
+the record's fields and validation rules. The <code>standard.site</code> family is
+small and deliberate:</p>
+<ul>
+<li><strong><code>site.standard.publication</code></strong> (rkey <code>self</code>) — the root pointer. It
+carries the site's production <code>url</code> and <code>name</code>, and ties the DID to a
+deployed origin.</li>
+<li><strong><code>site.standard.document</code></strong> (one rkey per page) — a per-page record
+that points into the published tree.</li>
+</ul>
+<p>This is the shape Boris projects and publishes. <code>boris standard-site records</code> dumps the canonical payloads offline (see the
+<a href="standard-site.html">Standard.site — the Boris/ATProto loop</a> guide).</p>
+<h3 id="verification-surface">Verification surface</h3>
+<p>Because a <code>site.standard.publication</code> record points a DID at a URL,
+publication is verifiable: a reader fetches the DID's record, learns
+the URL, and checks that the URL serves what the record claims. Boris's
+<code>standard-site verify</code> cross-checks the built tree against this
+projection <strong>offline</strong> — it confirms the head links and the
+<code>.well-known/site.standard.publication</code> file are consistent before any
+network write.</p>
+<h2 id="the-two-write-paths">The two write paths</h2>
+<p>ATProto offers two ways to authorize a write, and Boris supports both.
+They are not interchangeable, and the choice matters operationally.</p>
+<h3 id="oauth-dpop-granular-scopes">OAuth + DPoP (granular scopes)</h3>
+<p>The primary, scoped path. A client requests granular repository scopes
+(e.g. <code>repo:site.standard.document</code>, <code>repo:site.standard.publication</code>)
+via OAuth, and proves possession of the token with DPoP (RFC 9449,
+Demonstrating Proof of Possession). Each write is signed with a DPoP
+proof and a server-issued nonce.</p>
+<ul>
+<li><strong>Pros:</strong> least privilege — the grant is scoped to specific
+collections, and the token binds to a key the client holds.</li>
+<li><strong>Cons:</strong> requires a PDS and authorization server that implement the
+granular scopes and the DPoP nonce flow correctly.</li>
+</ul>
+<p><strong>Operational note (recorded 2026-08-27):</strong> against <code>bsky.social</code> /
+<code>bsky.network</code> PDS instances, the OAuth + DPoP write path fails at the
+DPoP nonce layer with <code>InvalidNonce</code>, reproducibly, on a freshly
+signed-in session. Read-side discovery and token exchange succeed; the
+record writes are rejected. See <a href="guides/test-runs.html">Test Runs</a> for the full
+finding. This means OAuth writes currently need a self-hosted PDS that
+grants the granular collection scopes.</p>
+<h3 id="app-password-broad-write-bearer">App-password (broad write, Bearer)</h3>
+<p>The opt-in fallback. An app-password is a long-lived, broad-write
+credential (a Bearer token) that works on <code>bsky.social</code>. Boris reads it
+<strong>once from stdin only</strong> — never from argv, profile, or environment.</p>
+<ul>
+<li><strong>Pros:</strong> works against the dominant production PDS today; completes
+the full create/readback/delete round-trip.</li>
+<li><strong>Cons:</strong> broad account write within its scope — the grant is not
+collection-scoped, so it must be used with a dedicated, disposable
+test identity and revoked after use.</li>
+</ul>
+<p><strong>Operational note (recorded 2026-08-27):</strong> the app-password path
+fully passed a live smoke against a throwaway test identity
+(<code>did:plc:xrqjadveiamk7vq7sfnvfddz</code> /
+<code>pholiota.us-west.host.bsky.network</code>): discovery, authorization, write
+(publication + document, unique rkeys), readback (AT-URI + value + CID
+verified for both records), and cleanup (both deleted, zero residue).
+See <code>evidence/live-smoke.json</code> and <a href="guides/test-runs.html">Test Runs</a>. The production
+identity for this site is now <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code>
+(<code>boris.filed.fyi</code>, PDS <code>auriporia.us-west.host.bsky.network</code>).</p>
+<h3 id="which-path-to-use">Which path to use</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>OAuth + DPoP</th>
+<th>App-password</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scope</td>
+<td>granular (<code>site.standard.*</code>)</td>
+<td>broad account write</td>
+</tr>
+<tr>
+<td>Token binding</td>
+<td>DPoP key binding</td>
+<td>Bearer</td>
+</tr>
+<tr>
+<td>Works on bsky.social</td>
+<td>✗ (writes fail with <code>InvalidNonce</code>)</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>Credential entry</td>
+<td>browser OAuth</td>
+<td>stdin only</td>
+</tr>
+<tr>
+<td>Least privilege</td>
+<td>yes</td>
+<td>no — use a disposable identity</td>
+</tr>
+</tbody>
+</table>
+<p>The supported live parity target on <code>bsky.social</code> today is the
+app-password path. OAuth writes need a compliant PDS.</p>
+<h2 id="standards-referenced">Standards referenced</h2>
+<p>The live smoke's <code>spec.baseline</code> records the authoritative surfaces the
+behavior was validated against:</p>
+<ul>
+<li>AT Protocol DID — the identifier method.</li>
+<li>AT Protocol OAuth — the authorization flow.</li>
+<li>AT Protocol Handle — handle resolution.</li>
+<li>AT Protocol HTTP API / XRPC — the record read/write surface.</li>
+<li>RFC 9728 (OAuth 2.0 Protected Resource Metadata, April 2025) — PDS
+resource metadata discovery.</li>
+<li>RFC 9449 (OAuth 2.0 Demonstrating Proof of Possession, September
+2023) — the DPoP token-binding layer.</li>
+<li>Standard.site permission contract — the <code>site.standard.*</code> collection
+scope model.</li>
+</ul>
+<p>The next page, <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>, shows how these pieces combine into
+the publish loop that turns a Boris build into an on-network site.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

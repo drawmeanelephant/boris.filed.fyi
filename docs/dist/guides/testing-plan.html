@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Testing Plan · Boris on ATProto</title>
+  <link rel="stylesheet" href="../assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:testing-plan">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="../index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="../atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="../boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite is-current"><a href="testing-plan.html" aria-current="page">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="../index.html">Boris on ATProto</a></li>
+<li aria-current="page">Testing Plan</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#atproto-testing-plan">ATProto Testing Plan</a></li>
+<li class="page-toc__l2"><a href="#kit-under-test">Kit under test</a></li>
+<li class="page-toc__l2"><a href="#principle-of-operation">Principle of operation</a></li>
+<li class="page-toc__l2"><a href="#test-matrix">Test matrix</a></li>
+<li class="page-toc__l2"><a href="#acceptance-criteria">Acceptance criteria</a></li>
+<li class="page-toc__l2"><a href="#identity-handles">Identity / handles</a></li>
+<li class="page-toc__l2"><a href="#status-legend">Status legend</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="atproto-testing-plan">ATProto Testing Plan</h1>
+<p>The goal is to validate the <strong>Boris agent kit</strong> end to end against the
+AT Protocol, focusing on the <code>boris standard-site</code> publication family. This
+page is the master plan; each area links to its detailed procedure. The
+operator's manual for the loop is <a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a>; the ATProto and Boris
+overviews are <a href="../atproto.html">The AT Protocol</a> and <a href="../boris.html">Boris</a>.</p>
+<h2 id="kit-under-test">Kit under test</h2>
+<ul>
+<li>Repository <code>drawmeanelephant/boris</code>, commit <code>ef23e37785ced4405191c233da216168aea8ff55</code> (<code>main</code>).</li>
+<li>Binaries <code>boris</code> + 10 tools, Darwin-arm64, Zig 0.16.0. Binary version <code>boris/0.8.1</code>.</li>
+<li>Platform is <strong>non-portable</strong> (Darwin-arm64 only) — recorded as a test constraint.</li>
+<li>Archived as <code>boris-agent-kit-ef23e37785ce.tar.gz</code> with <code>MANIFEST.json</code> + <code>SHA256SUMS</code>.</li>
+</ul>
+<h2 id="principle-of-operation">Principle of operation</h2>
+<p>Boris treats the production URL as publication truth. ATProto publication is
+<strong>explicit, never implicit</strong> — nothing is written to the network without an
+explicit publish command and a stored session. Tests must reflect that: the
+offline projection and verify steps run in CI-like fashion; the live smoke is
+manual and never in CI.</p>
+<h2 id="test-matrix">Test matrix</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Surface</th>
+<th align="center">Offline</th>
+<th align="center">Live</th>
+<th align="center">Priority</th>
+<th align="center">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-01</td>
+<td>Plan</td>
+<td><code>standard-site plan</code></td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">high</td>
+<td align="center">passed</td>
+</tr>
+<tr>
+<td>T-02</td>
+<td>Records</td>
+<td><code>standard-site records</code></td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">high</td>
+<td align="center">passed</td>
+</tr>
+<tr>
+<td>T-03</td>
+<td>Verify</td>
+<td><code>standard-site verify</code></td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">high</td>
+<td align="center">passed</td>
+</tr>
+<tr>
+<td>T-04</td>
+<td>Auth (OAuth)</td>
+<td><code>standard-site login --did</code></td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">high</td>
+<td align="center">partial</td>
+</tr>
+<tr>
+<td>T-05</td>
+<td>Auth (app-pw)</td>
+<td><code>standard-site login --app-password</code></td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">medium</td>
+<td align="center">passed</td>
+</tr>
+<tr>
+<td>T-06</td>
+<td>Sessions</td>
+<td><code>standard-site sessions</code> / <code>logout</code></td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">medium</td>
+<td align="center">passed</td>
+</tr>
+<tr>
+<td>T-07</td>
+<td>Publish</td>
+<td><code>standard-site publish</code></td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">high</td>
+<td align="center">passed</td>
+</tr>
+<tr>
+<td>T-08</td>
+<td>Smoke</td>
+<td><code>standard-site smoke</code></td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">high</td>
+<td align="center">passed</td>
+</tr>
+<tr>
+<td>T-09</td>
+<td>Context</td>
+<td><code>context</code> bundle</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">low</td>
+<td align="center">planned</td>
+</tr>
+<tr>
+<td>T-10</td>
+<td>Nostr</td>
+<td><code>nostr plan</code> / <code>sign</code></td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">low</td>
+<td align="center">scheduled</td>
+</tr>
+</tbody>
+</table>
+<h2 id="acceptance-criteria">Acceptance criteria</h2>
+<ul>
+<li><strong>T-01/T-02</strong> — Deterministic output: two runs with the same input and profile
+must produce byte-identical plans and canonical record payloads. All hashes and
+<code>at_uri</code>s are stable across runs.</li>
+<li><strong>T-03</strong> — <code>verify</code> cross-checks the built head links and the
+<code>.well-known/site.standard.publication</code> project file offline, and fails on drift.</li>
+<li><strong>T-04/T-05</strong> — A dedicated test identity authorizes without touching real account
+data. Credentials are accepted <strong>only via stdin</strong>, never argv/profile/env.</li>
+<li><strong>T-06</strong> — <code>sessions</code> lists DID/flavor/PDS without secrets; <code>logout</code> securely
+erases the stored session.</li>
+<li><strong>T-07</strong> — One-shot publish from the stored session, reconcile + rotate-or-die on
+refresh, and a committed-plan fail-closed guard.</li>
+<li><strong>T-08</strong> — Smoke creates two records under unique <code>boris-smoke-&lt;…&gt;</code> rkeys,
+readback-verifies them, deletes them, and emits a <code>boris-live-smoke-result</code>
+artifact. Runs against a throwaway namespace and leaves no residue.</li>
+</ul>
+<h2 id="identity-handles">Identity / handles</h2>
+<p>All live tests use a <strong>dedicated test identity</strong>, never a personal account.
+This site is wired to <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> (handle
+<code>boris.filed.fyi</code>, PDS <code>auriporia.us-west.host.bsky.network</code>,
+app-password session) — the production identity. An earlier throwaway
+identity (<code>did:plc:xrqjadveiamk7vq7sfnvfddz</code>) passed the live smoke
+and is retired. App passwords grant broad account write in its scope,
+so the credential is scoped and revocable. See
+<a href="standard-site-tests.html">Standard.site Test Procedures</a> for the auth flows and <a href="../atproto.html">The AT Protocol</a> for the
+OAuth/DPoP vs app-password comparison.</p>
+<h2 id="status-legend">Status legend</h2>
+<ul>
+<li><strong>planned</strong> — not yet run; documented and ready.</li>
+<li><strong>scheduled</strong> — queued after higher-priority items.</li>
+<li><strong>passed</strong> / <strong>failed</strong> — recorded in <a href="test-runs.html">Test Runs</a>.</li>
+<li><strong>blocked</strong> — documented but cannot reach a passing live state in the current
+environment (see <a href="test-runs.html">Test Runs</a> finding on the OAuth DPoP path).</li>
+<li><strong>partial</strong> — a subset of the area validated; remainder blocked.</li>
+</ul>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

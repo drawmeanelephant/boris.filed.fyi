@@ -1,0 +1,708 @@
+{
+  "format": "boris-publication-proof-pack",
+  "schema_version": 1,
+  "target": "default",
+  "inputs": {
+    "artifacts": {
+      "path": "_boris/proof/artifacts.json",
+      "bytes": 4624,
+      "sha256": "51ee000ead277946590fa616c6c427a653bb38b060e51bb40bb81c14446d8c03",
+      "format": "boris-publication-artifacts",
+      "schema_version": 1,
+      "target": "default",
+      "artifact_count": 12
+    },
+    "checks": {
+      "path": "_boris/proof/checks.json",
+      "bytes": 2244,
+      "sha256": "adcd22ae3f3fcc70c86f792df13b65b340dc4e52060ae876c7a85ed6b8f4ba77",
+      "format": "boris-publication-checks",
+      "schema_version": 1,
+      "target": "default",
+      "check_count": 3,
+      "finding_count": 0
+    },
+    "claims": {
+      "path": "_boris/proof/claims.json",
+      "bytes": 6511,
+      "sha256": "883a4e002d045eb9efe68c18c036ae846183621ee1320bb1f0eb6ceac16f90ff",
+      "format": "boris-publication-claims",
+      "schema_version": 1,
+      "target": "default",
+      "claim_count": 3,
+      "limitation_count": 6
+    },
+    "touches": {
+      "path": "_boris/proof/touches.json",
+      "bytes": 17922,
+      "sha256": "6d86956a94876da7a6b6593484eeee7d4b844a7b7180490d2ac9ca05922297d3",
+      "format": "boris-publication-touches",
+      "schema_version": 1,
+      "target": "default",
+      "node_count": 25,
+      "edge_count": 74
+    }
+  },
+  "summary": {
+    "artifacts": {
+      "total": 12,
+      "by_status": {
+        "committed": 12,
+        "omitted-by-plan": 0,
+        "not-applicable": 0
+      },
+      "by_kind": {
+        "html-page": 9,
+        "theme-asset": 1,
+        "content-asset": 0,
+        "rendered-search": 1,
+        "sitemap": 1,
+        "rss": 0,
+        "llms": 0
+      }
+    },
+    "checks": {
+      "total": 3,
+      "by_status": {
+        "passed": 3,
+        "failed": 0,
+        "incomplete": 0,
+        "not-applicable": 0
+      },
+      "by_coverage": {
+        "complete": 3,
+        "incomplete": 0,
+        "not-applicable": 0
+      }
+    },
+    "findings": {
+      "total": 0,
+      "by_severity": {
+        "error": 0,
+        "warning": 0,
+        "info": 0
+      }
+    },
+    "claims": {
+      "total": 3,
+      "by_status": {
+        "verified": 3,
+        "failed": 0,
+        "not-verified": 0
+      }
+    },
+    "limitation_count": 6,
+    "relationship_node_count": 25,
+    "relationship_edge_count": 74,
+    "overall_presentation_status": "verified"
+  },
+  "artifacts": [
+    {
+      "inventory_index": 0,
+      "path": "_boris/search/search-index.json",
+      "kind": "rendered-search",
+      "status": "committed",
+      "required": true,
+      "bytes": 52710,
+      "sha256": "59b991bcdc3e0341815c69a0310dde34f40264bfd1ce8847cda338694265469d",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-search",
+        "rendered-html"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-search-matches-selected-html",
+        "rendered-html-passed-declared-audit"
+      ]
+    },
+    {
+      "inventory_index": 1,
+      "path": "assets/css/boris.css",
+      "kind": "theme-asset",
+      "status": "committed",
+      "required": true,
+      "bytes": 7123,
+      "sha256": "48c027c07fe3877b60e0aacaf2c277f34f137a1671bd789af3e4e9ae7e23d961",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit"
+      ]
+    },
+    {
+      "inventory_index": 2,
+      "path": "atproto.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 12602,
+      "sha256": "5a5fef99889ae6d27fec2f766c0aa5e1280c08b01c855bf740d60516a54c698f",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 3,
+      "path": "boris.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 14035,
+      "sha256": "53c188ed90c7264103246a29e68fafdeded04fcd7988d4ff9d9cac73594e335f",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 4,
+      "path": "guides/getting-started.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 4185,
+      "sha256": "d2300403297efd7f465b9b280f805e8911966d3aef31d4e0d4b10fdc5021ae44",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 5,
+      "path": "guides/publishing.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 4214,
+      "sha256": "de5475156e75cce4d581bdbfe5948ba8314da96f7fde061baefa40b6a96735a3",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 6,
+      "path": "guides/standard-site-tests.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 8500,
+      "sha256": "1cf38fedb4276f866ccf856440ca4dbedf8921f0f097eaf176116c40444f84a5",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 7,
+      "path": "guides/test-runs.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 11935,
+      "sha256": "3f99927b025cb737fecf4d1708d3874e6e173235eeb67684bd78eccefb717c56",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 8,
+      "path": "guides/testing-plan.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 9348,
+      "sha256": "4d3b47d5fd7b9fbb9c804a359dfb9358265952d6623970c838c460fda484809f",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 9,
+      "path": "index.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 10199,
+      "sha256": "6a88718271604192f675a6f4be237d9f2c23beb8c27f5473aea92e8469775806",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "inventory_index": 10,
+      "path": "sitemap.xml",
+      "kind": "sitemap",
+      "status": "committed",
+      "required": true,
+      "bytes": 726,
+      "sha256": "f208aca7a2975190aa09cb3e027fee673f2e33c500a3db74d6c16db01305c158",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit"
+      ]
+    },
+    {
+      "inventory_index": 11,
+      "path": "standard-site.html",
+      "kind": "html-page",
+      "status": "committed",
+      "required": true,
+      "bytes": 15537,
+      "sha256": "b5363ab54ef3ef5ae63b92318d32a242e953cc420e116154a442208a95e7b136",
+      "related_check_ids": [
+        "artifact-integrity",
+        "rendered-html",
+        "rendered-html",
+        "rendered-search"
+      ],
+      "related_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "check_index": 0,
+      "check_id": "artifact-integrity",
+      "status": "passed",
+      "coverage": "complete",
+      "eligible": true,
+      "ran": true,
+      "counts": {
+        "eligible": 12,
+        "checked": 12,
+        "findings": 0
+      },
+      "finding_ids": [],
+      "subject_artifact_ids": [
+        "artifact:_boris/search/search-index.json",
+        "artifact:assets/css/boris.css",
+        "artifact:atproto.html",
+        "artifact:boris.html",
+        "artifact:guides/getting-started.html",
+        "artifact:guides/publishing.html",
+        "artifact:guides/standard-site-tests.html",
+        "artifact:guides/test-runs.html",
+        "artifact:guides/testing-plan.html",
+        "artifact:index.html",
+        "artifact:sitemap.xml",
+        "artifact:standard-site.html"
+      ],
+      "supporting_artifact_ids": [],
+      "supported_claim_ids": [
+        "claim:committed-artifacts-match-inventory"
+      ]
+    },
+    {
+      "check_index": 1,
+      "check_id": "rendered-html",
+      "status": "passed",
+      "coverage": "complete",
+      "eligible": true,
+      "ran": true,
+      "counts": {
+        "eligible": 9,
+        "checked": 9,
+        "findings": 0
+      },
+      "finding_ids": [],
+      "subject_artifact_ids": [
+        "artifact:atproto.html",
+        "artifact:boris.html",
+        "artifact:guides/getting-started.html",
+        "artifact:guides/publishing.html",
+        "artifact:guides/standard-site-tests.html",
+        "artifact:guides/test-runs.html",
+        "artifact:guides/testing-plan.html",
+        "artifact:index.html",
+        "artifact:standard-site.html"
+      ],
+      "supporting_artifact_ids": [
+        "artifact:_boris/search/search-index.json",
+        "artifact:assets/css/boris.css",
+        "artifact:atproto.html",
+        "artifact:boris.html",
+        "artifact:guides/getting-started.html",
+        "artifact:guides/publishing.html",
+        "artifact:guides/standard-site-tests.html",
+        "artifact:guides/test-runs.html",
+        "artifact:guides/testing-plan.html",
+        "artifact:index.html",
+        "artifact:sitemap.xml",
+        "artifact:standard-site.html"
+      ],
+      "supported_claim_ids": [
+        "claim:rendered-html-passed-declared-audit"
+      ]
+    },
+    {
+      "check_index": 2,
+      "check_id": "rendered-search",
+      "status": "passed",
+      "coverage": "complete",
+      "eligible": true,
+      "ran": true,
+      "counts": {
+        "eligible": 1,
+        "checked": 1,
+        "findings": 0
+      },
+      "finding_ids": [],
+      "subject_artifact_ids": [
+        "artifact:_boris/search/search-index.json"
+      ],
+      "supporting_artifact_ids": [
+        "artifact:atproto.html",
+        "artifact:boris.html",
+        "artifact:guides/getting-started.html",
+        "artifact:guides/publishing.html",
+        "artifact:guides/standard-site-tests.html",
+        "artifact:guides/test-runs.html",
+        "artifact:guides/testing-plan.html",
+        "artifact:index.html",
+        "artifact:standard-site.html"
+      ],
+      "supported_claim_ids": [
+        "claim:rendered-search-matches-selected-html"
+      ]
+    }
+  ],
+  "findings": [
+  ],
+  "claims": [
+    {
+      "claim_index": 0,
+      "claim_id": "committed-artifacts-match-inventory",
+      "statement": "Every committed artifact record selected by the artifact-integrity check was inspected and matched its declared byte count and SHA-256 digest.",
+      "status": "verified",
+      "evidence_check_id": "artifact-integrity",
+      "limitation_ids": [
+        "target-local-only",
+        "no-deployment-verification",
+        "no-accessibility-verification",
+        "no-prose-quality-verification",
+        "no-universal-reproducibility-claim"
+      ]
+    },
+    {
+      "claim_index": 1,
+      "claim_id": "rendered-html-passed-declared-audit",
+      "statement": "Every committed HTML page selected by the rendered-html check completed the declared structural, route, fragment, and duplicate-ID audit within that check's scope.",
+      "status": "verified",
+      "evidence_check_id": "rendered-html",
+      "limitation_ids": [
+        "target-local-only",
+        "no-deployment-verification",
+        "no-accessibility-verification",
+        "no-prose-quality-verification",
+        "no-universal-reproducibility-claim"
+      ]
+    },
+    {
+      "claim_index": 2,
+      "claim_id": "rendered-search-matches-selected-html",
+      "statement": "The single selected rendered-search artifact matched the committed HTML page set and derived rendered-search content inspected by the rendered-search check.",
+      "status": "verified",
+      "evidence_check_id": "rendered-search",
+      "limitation_ids": [
+        "target-local-only",
+        "no-deployment-verification",
+        "no-accessibility-verification",
+        "no-prose-quality-verification",
+        "no-universal-reproducibility-claim",
+        "omitted-projections-not-certified"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "limitation_index": 0,
+      "limitation_id": "target-local-only",
+      "statement": "These claims describe one selected local HTML target after its commit and say nothing about any other target or environment.",
+      "source": "docs/contracts/publication-checks.md#authority-and-transaction-boundary",
+      "applies_to_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "limitation_index": 1,
+      "limitation_id": "no-deployment-verification",
+      "statement": "No deployment was performed or verified; local generation cannot verify deployed behavior.",
+      "source": "docs/contracts/publication-model.md#verification-vocabulary-and-claims",
+      "applies_to_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "limitation_index": 2,
+      "limitation_id": "no-accessibility-verification",
+      "statement": "No accessibility audit was performed for any page or artifact in this target.",
+      "source": "docs/contracts/publication-model.md#projections",
+      "applies_to_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "limitation_index": 3,
+      "limitation_id": "no-prose-quality-verification",
+      "statement": "No prose, writing, or documentation-quality judgment was made.",
+      "source": "docs/contracts/publication-model.md#verification-vocabulary-and-claims",
+      "applies_to_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "limitation_index": 4,
+      "limitation_id": "no-universal-reproducibility-claim",
+      "statement": "Deterministic bytes on one recorded environment are not universal reproducibility.",
+      "source": "docs/contracts/publication-model.md#verification-vocabulary-and-claims",
+      "applies_to_claim_ids": [
+        "committed-artifacts-match-inventory",
+        "rendered-html-passed-declared-audit",
+        "rendered-search-matches-selected-html"
+      ]
+    },
+    {
+      "limitation_index": 5,
+      "limitation_id": "omitted-projections-not-certified",
+      "statement": "An omitted or unselected projection remains explicitly unverified and is not certified by this report.",
+      "source": "docs/contracts/publication-model.md#the-conductor-rule",
+      "applies_to_claim_ids": [
+        "rendered-search-matches-selected-html"
+      ]
+    }
+  ],
+  "relationships": {
+    "node_ids": [
+      "target",
+      "artifact:_boris/search/search-index.json",
+      "artifact:assets/css/boris.css",
+      "artifact:atproto.html",
+      "artifact:boris.html",
+      "artifact:guides/getting-started.html",
+      "artifact:guides/publishing.html",
+      "artifact:guides/standard-site-tests.html",
+      "artifact:guides/test-runs.html",
+      "artifact:guides/testing-plan.html",
+      "artifact:index.html",
+      "artifact:sitemap.xml",
+      "artifact:standard-site.html",
+      "check:artifact-integrity",
+      "check:rendered-html",
+      "check:rendered-search",
+      "claim:committed-artifacts-match-inventory",
+      "claim:rendered-html-passed-declared-audit",
+      "claim:rendered-search-matches-selected-html",
+      "limitation:target-local-only",
+      "limitation:no-deployment-verification",
+      "limitation:no-accessibility-verification",
+      "limitation:no-prose-quality-verification",
+      "limitation:no-universal-reproducibility-claim",
+      "limitation:omitted-projections-not-certified"
+    ],
+    "groups": [
+      {
+        "edge_kind": "target-owns-artifact",
+        "edges": [
+          { "from": "target", "to": "artifact:_boris/search/search-index.json" },
+          { "from": "target", "to": "artifact:assets/css/boris.css" },
+          { "from": "target", "to": "artifact:atproto.html" },
+          { "from": "target", "to": "artifact:boris.html" },
+          { "from": "target", "to": "artifact:guides/getting-started.html" },
+          { "from": "target", "to": "artifact:guides/publishing.html" },
+          { "from": "target", "to": "artifact:guides/standard-site-tests.html" },
+          { "from": "target", "to": "artifact:guides/test-runs.html" },
+          { "from": "target", "to": "artifact:guides/testing-plan.html" },
+          { "from": "target", "to": "artifact:index.html" },
+          { "from": "target", "to": "artifact:sitemap.xml" },
+          { "from": "target", "to": "artifact:standard-site.html" }
+        ]
+      },
+      {
+        "edge_kind": "artifact-subject-of-check",
+        "edges": [
+          { "from": "artifact:_boris/search/search-index.json", "to": "check:artifact-integrity" },
+          { "from": "artifact:_boris/search/search-index.json", "to": "check:rendered-search" },
+          { "from": "artifact:assets/css/boris.css", "to": "check:artifact-integrity" },
+          { "from": "artifact:atproto.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:atproto.html", "to": "check:rendered-html" },
+          { "from": "artifact:boris.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:boris.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/getting-started.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:guides/getting-started.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/publishing.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:guides/publishing.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/standard-site-tests.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:guides/standard-site-tests.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/test-runs.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:guides/test-runs.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/testing-plan.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:guides/testing-plan.html", "to": "check:rendered-html" },
+          { "from": "artifact:index.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:index.html", "to": "check:rendered-html" },
+          { "from": "artifact:sitemap.xml", "to": "check:artifact-integrity" },
+          { "from": "artifact:standard-site.html", "to": "check:artifact-integrity" },
+          { "from": "artifact:standard-site.html", "to": "check:rendered-html" }
+        ]
+      },
+      {
+        "edge_kind": "artifact-supports-check",
+        "edges": [
+          { "from": "artifact:_boris/search/search-index.json", "to": "check:rendered-html" },
+          { "from": "artifact:assets/css/boris.css", "to": "check:rendered-html" },
+          { "from": "artifact:atproto.html", "to": "check:rendered-html" },
+          { "from": "artifact:atproto.html", "to": "check:rendered-search" },
+          { "from": "artifact:boris.html", "to": "check:rendered-html" },
+          { "from": "artifact:boris.html", "to": "check:rendered-search" },
+          { "from": "artifact:guides/getting-started.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/getting-started.html", "to": "check:rendered-search" },
+          { "from": "artifact:guides/publishing.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/publishing.html", "to": "check:rendered-search" },
+          { "from": "artifact:guides/standard-site-tests.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/standard-site-tests.html", "to": "check:rendered-search" },
+          { "from": "artifact:guides/test-runs.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/test-runs.html", "to": "check:rendered-search" },
+          { "from": "artifact:guides/testing-plan.html", "to": "check:rendered-html" },
+          { "from": "artifact:guides/testing-plan.html", "to": "check:rendered-search" },
+          { "from": "artifact:index.html", "to": "check:rendered-html" },
+          { "from": "artifact:index.html", "to": "check:rendered-search" },
+          { "from": "artifact:sitemap.xml", "to": "check:rendered-html" },
+          { "from": "artifact:standard-site.html", "to": "check:rendered-html" },
+          { "from": "artifact:standard-site.html", "to": "check:rendered-search" }
+        ]
+      },
+      {
+        "edge_kind": "check-reported-finding",
+        "edges": [
+
+        ]
+      },
+      {
+        "edge_kind": "check-supports-claim",
+        "edges": [
+          { "from": "check:artifact-integrity", "to": "claim:committed-artifacts-match-inventory" },
+          { "from": "check:rendered-html", "to": "claim:rendered-html-passed-declared-audit" },
+          { "from": "check:rendered-search", "to": "claim:rendered-search-matches-selected-html" }
+        ]
+      },
+      {
+        "edge_kind": "claim-limited-by",
+        "edges": [
+          { "from": "claim:committed-artifacts-match-inventory", "to": "limitation:target-local-only" },
+          { "from": "claim:committed-artifacts-match-inventory", "to": "limitation:no-deployment-verification" },
+          { "from": "claim:committed-artifacts-match-inventory", "to": "limitation:no-accessibility-verification" },
+          { "from": "claim:committed-artifacts-match-inventory", "to": "limitation:no-prose-quality-verification" },
+          { "from": "claim:committed-artifacts-match-inventory", "to": "limitation:no-universal-reproducibility-claim" },
+          { "from": "claim:rendered-html-passed-declared-audit", "to": "limitation:target-local-only" },
+          { "from": "claim:rendered-html-passed-declared-audit", "to": "limitation:no-deployment-verification" },
+          { "from": "claim:rendered-html-passed-declared-audit", "to": "limitation:no-accessibility-verification" },
+          { "from": "claim:rendered-html-passed-declared-audit", "to": "limitation:no-prose-quality-verification" },
+          { "from": "claim:rendered-html-passed-declared-audit", "to": "limitation:no-universal-reproducibility-claim" },
+          { "from": "claim:rendered-search-matches-selected-html", "to": "limitation:target-local-only" },
+          { "from": "claim:rendered-search-matches-selected-html", "to": "limitation:no-deployment-verification" },
+          { "from": "claim:rendered-search-matches-selected-html", "to": "limitation:no-accessibility-verification" },
+          { "from": "claim:rendered-search-matches-selected-html", "to": "limitation:no-prose-quality-verification" },
+          { "from": "claim:rendered-search-matches-selected-html", "to": "limitation:no-universal-reproducibility-claim" },
+          { "from": "claim:rendered-search-matches-selected-html", "to": "limitation:omitted-projections-not-certified" }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "overall_status": "verified",
+    "status_vocabulary": [
+      "verified",
+      "attention-required",
+      "incomplete",
+      "not-applicable"
+    ]
+  }
+}

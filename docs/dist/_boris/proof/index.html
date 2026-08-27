@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="proof-pack-sha256" content="d9913dc61aac6c1502b2b98d7e5236622bc0f732ecffc235cdb2a56dfaf523e4">
+<title>Publication Proof Pack — default (clean)</title>
+<style>
+  /* Embedded bounded CSS. No external fonts, scripts, images, or stylesheets. */
+  :root {
+    color-scheme: light;
+    --ink: #1a1a1a;
+    --muted: #555;
+    --line: #ccc;
+    --bg: #ffffff;
+    --panel: #fafafa;
+    --accent: #0b5cad;
+    --pass-bg: #eaf6ec;
+    --pass-ink: #1f6b2f;
+    --warn-bg: #fdf3e3;
+    --warn-ink: #8a5a00;
+    --bad-bg: #fdecea;
+    --bad-ink: #a3261e;
+    --na-bg: #eef0f2;
+    --na-ink: #444;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 1.5rem 1.25rem 3rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  header h1 { font-size: 1.5rem; margin: 0 0 0.25rem; }
+  .meta { color: var(--muted); font-size: 0.85rem; }
+  .banner {
+    margin: 1rem 0 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  .banner.verified { background: var(--pass-bg); color: var(--pass-ink); }
+  .banner.attention { background: var(--bad-bg); color: var(--bad-ink); }
+  .banner.incomplete { background: var(--warn-bg); color: var(--warn-ink); }
+  .banner.na { background: var(--na-bg); color: var(--na-ink); }
+  nav { margin: 0 0 1.5rem; }
+  nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+  nav a { color: var(--accent); text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+  h2 {
+    font-size: 1.25rem;
+    margin: 2.25rem 0 0.6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 { font-size: 1.05rem; margin: 1.25rem 0 0.4rem; }
+  .table-wrap { overflow-x: auto; margin: 0.5rem 0 1rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td {
+    text-align: left;
+    padding: 0.45rem 0.5rem;
+    border: 1px solid var(--line);
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  th { background: #f4f4f4; font-weight: 600; }
+  code, .mono {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .status-passed, .status-verified { color: var(--pass-ink); font-weight: 600; }
+  .status-failed, .status-attention { color: var(--bad-ink); font-weight: 600; }
+  .status-incomplete { color: var(--warn-ink); font-weight: 600; }
+  .status-na { color: var(--na-ink); font-weight: 600; }
+  .empty { color: var(--muted); font-style: italic; margin: 0.25rem 0 1rem; }
+  ul.plain { margin: 0.25rem 0 1rem; padding-left: 1.25rem; }
+  .src { color: var(--muted); font-size: 0.8rem; }
+  details { margin: 0.75rem 0 1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+  details > summary {
+    cursor: pointer;
+    padding: 0.55rem 0.75rem;
+    font-weight: 600;
+  }
+  details[open] > summary { border-bottom: 1px solid var(--line); }
+  details > summary:hover { background: #f0f0f0; }
+  .edge-explain { color: var(--muted); font-size: 0.9rem; margin: 0 0.75rem 0.5rem; }
+  footer { margin-top: 2.5rem; padding-top: 0.75rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; }
+  @media print {
+    nav { display: none; }
+    body { max-width: none; padding: 0.5rem; }
+    a { color: inherit; text-decoration: none; }
+    details,
+    details > summary { display: block; }
+    details::details-content { content-visibility: visible !important; display: block !important; }
+    details > :not(summary) { display: block !important; }
+    .table-wrap { overflow: visible; }
+    h2, h3 { break-after: avoid; }
+    tr, li { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Publication Proof Pack</h1>
+  <p class="meta">
+    <code>format: boris-publication-proof-pack</code> ·
+    <code>schema_version: 1</code> ·
+    target <code>default</code>
+  </p>
+  <div class="banner verified" id="banner">Overall presentation status: verified</div>
+</header>
+
+<nav aria-label="Contents">
+  <ul>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#claims">Claims</a></li>
+    <li><a href="#limitations">Limitations</a></li>
+    <li><a href="#findings">Findings</a></li>
+    <li><a href="#checks">Checks</a></li>
+    <li><a href="#artifacts">Artifacts</a></li>
+    <li><a href="#relationships">Relationships</a></li>
+    <li><a href="#inputs">Inputs</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section id="summary">
+    <h2>Summary</h2>
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><th>Artifacts</th><td>12 total — committed 12, omitted-by-plan 0, not-applicable 0 (html-page 9, theme-asset 1, content-asset 0, rendered-search 1, sitemap 1, rss 0, llms 0)</td></tr>
+        <tr><th>Checks</th><td>3 total — passed 3, failed 0, incomplete 0, not-applicable 0 (coverage complete 3, coverage incomplete 0, coverage not-applicable 0)</td></tr>
+        <tr><th>Findings</th><td>0 total — error 0, warning 0, info 0</td></tr>
+        <tr><th>Claims</th><td>3 total — verified 3, failed 0, not-verified 0</td></tr>
+        <tr><th>Limitations</th><td>6</td></tr>
+        <tr><th>Relationship graph</th><td>25 nodes, 74 edges</td></tr>
+        <tr><th>Overall presentation status</th><td class="status-verified">verified</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section id="claims">
+    <h2>Claims</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Claim</th><th>Status</th><th>Evidence check</th><th>Statement</th><th>Limitations</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td><code>committed-artifacts-match-inventory</code></td>
+          <td class="status-verified">verified</td>
+          <td><code>artifact-integrity</code></td>
+          <td>Every committed artifact record selected by the artifact-integrity check was inspected and matched its declared byte count and SHA-256 digest.</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td><code>rendered-html-passed-declared-audit</code></td>
+          <td class="status-verified">verified</td>
+          <td><code>rendered-html</code></td>
+          <td>Every committed HTML page selected by the rendered-html check completed the declared structural, route, fragment, and duplicate-ID audit within that check&#39;s scope.</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><code>rendered-search-matches-selected-html</code></td>
+          <td class="status-verified">verified</td>
+          <td><code>rendered-search</code></td>
+          <td>The single selected rendered-search artifact matched the committed HTML page set and derived rendered-search content inspected by the rendered-search check.</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section id="limitations">
+    <h2>Limitations</h2>
+    <p>Limitations remain visible even though all claims are verified. Each claim is bounded by the limitations below; a verified claim inherits their scope.</p>
+    <ul class="plain">
+      <li><strong><code>target-local-only</code></strong> — These claims describe one selected local HTML target after its commit and say nothing about any other target or environment. <span class="src">source: docs/contracts/publication-checks.md#authority-and-transaction-boundary</span></li>
+      <li><strong><code>no-deployment-verification</code></strong> — No deployment was performed or verified; local generation cannot verify deployed behavior. <span class="src">source: docs/contracts/publication-model.md#verification-vocabulary-and-claims</span></li>
+      <li><strong><code>no-accessibility-verification</code></strong> — No accessibility audit was performed for any page or artifact in this target. <span class="src">source: docs/contracts/publication-model.md#projections</span></li>
+      <li><strong><code>no-prose-quality-verification</code></strong> — No prose, writing, or documentation-quality judgment was made. <span class="src">source: docs/contracts/publication-model.md#verification-vocabulary-and-claims</span></li>
+      <li><strong><code>no-universal-reproducibility-claim</code></strong> — Deterministic bytes on one recorded environment are not universal reproducibility. <span class="src">source: docs/contracts/publication-model.md#verification-vocabulary-and-claims</span></li>
+      <li><strong><code>omitted-projections-not-certified</code></strong> — An omitted or unselected projection remains explicitly unverified and is not certified by this report. <span class="src">source: docs/contracts/publication-model.md#the-conductor-rule</span></li>
+    </ul>
+  </section>
+
+  <section id="findings">
+    <h2>Findings</h2>
+    <p class="empty">No findings were recorded for this target. This section is intentionally empty; the absence of findings is not a claim of excellence.</p>
+  </section>
+
+  <section id="checks">
+    <h2>Checks</h2>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Check</th><th>Status</th><th>Coverage</th><th>Eligible</th><th>Ran</th><th>Counts (eligible / checked / findings)</th><th>Subject artifacts</th><th>Supporting artifacts</th><th>Supported claims</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td><code>artifact-integrity</code></td>
+          <td class="status-verified">passed</td>
+          <td>complete</td>
+          <td>yes</td>
+          <td>yes</td>
+          <td>12 / 12 / 0</td>
+          <td>artifact:_boris/search/search-index.json, artifact:assets/css/boris.css, artifact:atproto.html, artifact:boris.html, artifact:guides/getting-started.html, artifact:guides/publishing.html, artifact:guides/standard-site-tests.html, artifact:guides/test-runs.html, artifact:guides/testing-plan.html, artifact:index.html, artifact:sitemap.xml, artifact:standard-site.html</td>
+          <td>—</td>
+          <td>claim:committed-artifacts-match-inventory</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td><code>rendered-html</code></td>
+          <td class="status-verified">passed</td>
+          <td>complete</td>
+          <td>yes</td>
+          <td>yes</td>
+          <td>9 / 9 / 0</td>
+          <td>artifact:atproto.html, artifact:boris.html, artifact:guides/getting-started.html, artifact:guides/publishing.html, artifact:guides/standard-site-tests.html, artifact:guides/test-runs.html, artifact:guides/testing-plan.html, artifact:index.html, artifact:standard-site.html</td>
+          <td>artifact:_boris/search/search-index.json, artifact:assets/css/boris.css, artifact:atproto.html, artifact:boris.html, artifact:guides/getting-started.html, artifact:guides/publishing.html, artifact:guides/standard-site-tests.html, artifact:guides/test-runs.html, artifact:guides/testing-plan.html, artifact:index.html, artifact:sitemap.xml, artifact:standard-site.html</td>
+          <td>claim:rendered-html-passed-declared-audit</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><code>rendered-search</code></td>
+          <td class="status-verified">passed</td>
+          <td>complete</td>
+          <td>yes</td>
+          <td>yes</td>
+          <td>1 / 1 / 0</td>
+          <td>artifact:_boris/search/search-index.json</td>
+          <td>artifact:atproto.html, artifact:boris.html, artifact:guides/getting-started.html, artifact:guides/publishing.html, artifact:guides/standard-site-tests.html, artifact:guides/test-runs.html, artifact:guides/testing-plan.html, artifact:index.html, artifact:standard-site.html</td>
+          <td>claim:rendered-search-matches-selected-html</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section id="artifacts">
+    <h2>Artifacts</h2>
+    <details>
+      <summary>Artifact inventory (12 records)</summary>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Path</th><th>Kind</th><th>Status</th><th>Required</th><th>Bytes</th><th>SHA-256</th><th>Related checks</th><th>Related claims</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td><code>_boris/search/search-index.json</code></td>
+          <td>rendered-search</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>52710</td>
+          <td class="mono">59b991bcdc3e0341815c69a0310dde34f40264bfd1ce8847cda338694265469d</td>
+          <td>artifact-integrity, rendered-search, rendered-html</td>
+          <td>committed-artifacts-match-inventory, rendered-search-matches-selected-html, rendered-html-passed-declared-audit</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td><code>assets/css/boris.css</code></td>
+          <td>theme-asset</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>7123</td>
+          <td class="mono">48c027c07fe3877b60e0aacaf2c277f34f137a1671bd789af3e4e9ae7e23d961</td>
+          <td>artifact-integrity, rendered-html</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><code>atproto.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>12602</td>
+          <td class="mono">5a5fef99889ae6d27fec2f766c0aa5e1280c08b01c855bf740d60516a54c698f</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><code>boris.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>14035</td>
+          <td class="mono">53c188ed90c7264103246a29e68fafdeded04fcd7988d4ff9d9cac73594e335f</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><code>guides/getting-started.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>4185</td>
+          <td class="mono">d2300403297efd7f465b9b280f805e8911966d3aef31d4e0d4b10fdc5021ae44</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><code>guides/publishing.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>4214</td>
+          <td class="mono">de5475156e75cce4d581bdbfe5948ba8314da96f7fde061baefa40b6a96735a3</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><code>guides/standard-site-tests.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>8500</td>
+          <td class="mono">1cf38fedb4276f866ccf856440ca4dbedf8921f0f097eaf176116c40444f84a5</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><code>guides/test-runs.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>11935</td>
+          <td class="mono">3f99927b025cb737fecf4d1708d3874e6e173235eeb67684bd78eccefb717c56</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><code>guides/testing-plan.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>9348</td>
+          <td class="mono">4d3b47d5fd7b9fbb9c804a359dfb9358265952d6623970c838c460fda484809f</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><code>index.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>10199</td>
+          <td class="mono">6a88718271604192f675a6f4be237d9f2c23beb8c27f5473aea92e8469775806</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><code>sitemap.xml</code></td>
+          <td>sitemap</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>726</td>
+          <td class="mono">f208aca7a2975190aa09cb3e027fee673f2e33c500a3db74d6c16db01305c158</td>
+          <td>artifact-integrity, rendered-html</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td><code>standard-site.html</code></td>
+          <td>html-page</td>
+          <td class="status-verified">committed</td>
+          <td>yes</td>
+          <td>15537</td>
+          <td class="mono">b5363ab54ef3ef5ae63b92318d32a242e953cc420e116154a442208a95e7b136</td>
+          <td>artifact-integrity, rendered-html, rendered-html, rendered-search</td>
+          <td>committed-artifacts-match-inventory, rendered-html-passed-declared-audit, rendered-html-passed-declared-audit, rendered-search-matches-selected-html</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Records that are not committed carry no committed-byte properties; no zero values are invented for them.</p>
+    </details>
+  </section>
+
+  <section id="relationships">
+    <h2>Relationships</h2>
+    <p>25 nodes and 74 edges, grouped by Touch Atlas edge kind. Every edge below is an exact Touch Atlas edge; nothing is inferred.</p>
+    <details>
+      <summary>Relationship nodes (25)</summary>
+      <ul class="plain">
+        <li>target</li>
+        <li>artifact:_boris/search/search-index.json</li>
+        <li>artifact:assets/css/boris.css</li>
+        <li>artifact:atproto.html</li>
+        <li>artifact:boris.html</li>
+        <li>artifact:guides/getting-started.html</li>
+        <li>artifact:guides/publishing.html</li>
+        <li>artifact:guides/standard-site-tests.html</li>
+        <li>artifact:guides/test-runs.html</li>
+        <li>artifact:guides/testing-plan.html</li>
+        <li>artifact:index.html</li>
+        <li>artifact:sitemap.xml</li>
+        <li>artifact:standard-site.html</li>
+        <li>check:artifact-integrity</li>
+        <li>check:rendered-html</li>
+        <li>check:rendered-search</li>
+        <li>claim:committed-artifacts-match-inventory</li>
+        <li>claim:rendered-html-passed-declared-audit</li>
+        <li>claim:rendered-search-matches-selected-html</li>
+        <li>limitation:target-local-only</li>
+        <li>limitation:no-deployment-verification</li>
+        <li>limitation:no-accessibility-verification</li>
+        <li>limitation:no-prose-quality-verification</li>
+        <li>limitation:no-universal-reproducibility-claim</li>
+        <li>limitation:omitted-projections-not-certified</li>
+      </ul>
+    </details>
+    <details>
+      <summary>target-owns-artifact (12 edges)</summary>
+      <p class="edge-explain">The target includes this artifact inventory record.</p>
+      <ul class="plain">
+        <li>target → artifact:_boris/search/search-index.json</li>
+        <li>target → artifact:assets/css/boris.css</li>
+        <li>target → artifact:atproto.html</li>
+        <li>target → artifact:boris.html</li>
+        <li>target → artifact:guides/getting-started.html</li>
+        <li>target → artifact:guides/publishing.html</li>
+        <li>target → artifact:guides/standard-site-tests.html</li>
+        <li>target → artifact:guides/test-runs.html</li>
+        <li>target → artifact:guides/testing-plan.html</li>
+        <li>target → artifact:index.html</li>
+        <li>target → artifact:sitemap.xml</li>
+        <li>target → artifact:standard-site.html</li>
+      </ul>
+    </details>
+    <details>
+      <summary>artifact-subject-of-check (22 edges)</summary>
+      <p class="edge-explain">The artifact is part of the check&#39;s declared subject scope.</p>
+      <ul class="plain">
+        <li>artifact:_boris/search/search-index.json → check:artifact-integrity</li>
+        <li>artifact:_boris/search/search-index.json → check:rendered-search</li>
+        <li>artifact:assets/css/boris.css → check:artifact-integrity</li>
+        <li>artifact:atproto.html → check:artifact-integrity</li>
+        <li>artifact:atproto.html → check:rendered-html</li>
+        <li>artifact:boris.html → check:artifact-integrity</li>
+        <li>artifact:boris.html → check:rendered-html</li>
+        <li>artifact:guides/getting-started.html → check:artifact-integrity</li>
+        <li>artifact:guides/getting-started.html → check:rendered-html</li>
+        <li>artifact:guides/publishing.html → check:artifact-integrity</li>
+        <li>artifact:guides/publishing.html → check:rendered-html</li>
+        <li>artifact:guides/standard-site-tests.html → check:artifact-integrity</li>
+        <li>artifact:guides/standard-site-tests.html → check:rendered-html</li>
+        <li>artifact:guides/test-runs.html → check:artifact-integrity</li>
+        <li>artifact:guides/test-runs.html → check:rendered-html</li>
+        <li>artifact:guides/testing-plan.html → check:artifact-integrity</li>
+        <li>artifact:guides/testing-plan.html → check:rendered-html</li>
+        <li>artifact:index.html → check:artifact-integrity</li>
+        <li>artifact:index.html → check:rendered-html</li>
+        <li>artifact:sitemap.xml → check:artifact-integrity</li>
+        <li>artifact:standard-site.html → check:artifact-integrity</li>
+        <li>artifact:standard-site.html → check:rendered-html</li>
+      </ul>
+    </details>
+    <details>
+      <summary>artifact-supports-check (21 edges)</summary>
+      <p class="edge-explain">The artifact is supporting evidence used by the check.</p>
+      <ul class="plain">
+        <li>artifact:_boris/search/search-index.json → check:rendered-html</li>
+        <li>artifact:assets/css/boris.css → check:rendered-html</li>
+        <li>artifact:atproto.html → check:rendered-html</li>
+        <li>artifact:atproto.html → check:rendered-search</li>
+        <li>artifact:boris.html → check:rendered-html</li>
+        <li>artifact:boris.html → check:rendered-search</li>
+        <li>artifact:guides/getting-started.html → check:rendered-html</li>
+        <li>artifact:guides/getting-started.html → check:rendered-search</li>
+        <li>artifact:guides/publishing.html → check:rendered-html</li>
+        <li>artifact:guides/publishing.html → check:rendered-search</li>
+        <li>artifact:guides/standard-site-tests.html → check:rendered-html</li>
+        <li>artifact:guides/standard-site-tests.html → check:rendered-search</li>
+        <li>artifact:guides/test-runs.html → check:rendered-html</li>
+        <li>artifact:guides/test-runs.html → check:rendered-search</li>
+        <li>artifact:guides/testing-plan.html → check:rendered-html</li>
+        <li>artifact:guides/testing-plan.html → check:rendered-search</li>
+        <li>artifact:index.html → check:rendered-html</li>
+        <li>artifact:index.html → check:rendered-search</li>
+        <li>artifact:sitemap.xml → check:rendered-html</li>
+        <li>artifact:standard-site.html → check:rendered-html</li>
+        <li>artifact:standard-site.html → check:rendered-search</li>
+      </ul>
+    </details>
+    <details>
+      <summary>check-reported-finding (0 edges)</summary>
+      <p class="edge-explain">The finding was reported by this check.</p>
+      <p class="empty">No edges are present in this relationship group.</p>
+    </details>
+    <details>
+      <summary>check-supports-claim (3 edges)</summary>
+      <p class="edge-explain">The claim is bound to evidence from this check. This does not imply the check passed.</p>
+      <ul class="plain">
+        <li>check:artifact-integrity → claim:committed-artifacts-match-inventory</li>
+        <li>check:rendered-html → claim:rendered-html-passed-declared-audit</li>
+        <li>check:rendered-search → claim:rendered-search-matches-selected-html</li>
+      </ul>
+    </details>
+    <details>
+      <summary>claim-limited-by (16 edges)</summary>
+      <p class="edge-explain">The limitation restricts the scope of this claim.</p>
+      <ul class="plain">
+        <li>claim:committed-artifacts-match-inventory → limitation:target-local-only</li>
+        <li>claim:committed-artifacts-match-inventory → limitation:no-deployment-verification</li>
+        <li>claim:committed-artifacts-match-inventory → limitation:no-accessibility-verification</li>
+        <li>claim:committed-artifacts-match-inventory → limitation:no-prose-quality-verification</li>
+        <li>claim:committed-artifacts-match-inventory → limitation:no-universal-reproducibility-claim</li>
+        <li>claim:rendered-html-passed-declared-audit → limitation:target-local-only</li>
+        <li>claim:rendered-html-passed-declared-audit → limitation:no-deployment-verification</li>
+        <li>claim:rendered-html-passed-declared-audit → limitation:no-accessibility-verification</li>
+        <li>claim:rendered-html-passed-declared-audit → limitation:no-prose-quality-verification</li>
+        <li>claim:rendered-html-passed-declared-audit → limitation:no-universal-reproducibility-claim</li>
+        <li>claim:rendered-search-matches-selected-html → limitation:target-local-only</li>
+        <li>claim:rendered-search-matches-selected-html → limitation:no-deployment-verification</li>
+        <li>claim:rendered-search-matches-selected-html → limitation:no-accessibility-verification</li>
+        <li>claim:rendered-search-matches-selected-html → limitation:no-prose-quality-verification</li>
+        <li>claim:rendered-search-matches-selected-html → limitation:no-universal-reproducibility-claim</li>
+        <li>claim:rendered-search-matches-selected-html → limitation:omitted-projections-not-certified</li>
+      </ul>
+    </details>
+  </section>
+
+  <section id="inputs">
+    <h2>Inputs</h2>
+    <p>The Proof Pack is derived exclusively from the exact committed bytes of the four evidence reports below; nothing is reread or re-derived from source, payload, or deployment state.</p>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>input</th><th>path</th><th>bytes</th><th>sha256</th><th>format</th><th>schema</th><th>target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>artifacts</td><td><code>_boris/proof/artifacts.json</code></td><td>4624</td><td><code>51ee000ead277946590fa616c6c427a653bb38b060e51bb40bb81c14446d8c03</code></td><td><code>boris-publication-artifacts</code></td><td>1</td><td><code>default</code></td></tr>
+        <tr><td>checks</td><td><code>_boris/proof/checks.json</code></td><td>2244</td><td><code>adcd22ae3f3fcc70c86f792df13b65b340dc4e52060ae876c7a85ed6b8f4ba77</code></td><td><code>boris-publication-checks</code></td><td>1</td><td><code>default</code></td></tr>
+        <tr><td>claims</td><td><code>_boris/proof/claims.json</code></td><td>6511</td><td><code>883a4e002d045eb9efe68c18c036ae846183621ee1320bb1f0eb6ceac16f90ff</code></td><td><code>boris-publication-claims</code></td><td>1</td><td><code>default</code></td></tr>
+        <tr><td>touches</td><td><code>_boris/proof/touches.json</code></td><td>17922</td><td><code>6d86956a94876da7a6b6593484eeee7d4b844a7b7180490d2ac9ca05922297d3</code></td><td><code>boris-publication-touches</code></td><td>1</td><td><code>default</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    This page is a deterministic static rendering of <code>_boris/proof/proof-pack.json</code>
+    (target <code>default</code>). It requires no JavaScript, loads no remote resources,
+    and is printable. A rendered page is not a new verification claim.
+  </p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Standard.site Test Procedures · Boris on ATProto</title>
+  <link rel="stylesheet" href="../assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:standard-site-tests">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="../index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="../atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="../boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="publishing.html">Publishing</a></li>
+<li class="site-nav__satellite is-current"><a href="standard-site-tests.html" aria-current="page">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="../index.html">Boris on ATProto</a></li>
+<li aria-current="page">Standard.site Test Procedures</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#standardsite-test-procedures">Standard.site Test Procedures</a></li>
+<li class="page-toc__l2"><a href="#t-01-offline-plan">T-01 — Offline plan</a></li>
+<li class="page-toc__l2"><a href="#t-02-canonical-records">T-02 — Canonical records</a></li>
+<li class="page-toc__l2"><a href="#t-03-verify-built-tree">T-03 — Verify built tree</a></li>
+<li class="page-toc__l2"><a href="#t-04-auth-oauth-primary">T-04 — Auth, OAuth (primary)</a></li>
+<li class="page-toc__l2"><a href="#t-05-auth-app-password-opt-in">T-05 — Auth, app-password (opt-in)</a></li>
+<li class="page-toc__l2"><a href="#t-06-sessions-lifecycle">T-06 — Sessions lifecycle</a></li>
+<li class="page-toc__l2"><a href="#t-07-publish">T-07 — Publish</a></li>
+<li class="page-toc__l2"><a href="#t-08-live-interop-smoke">T-08 — Live interop smoke</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="standardsite-test-procedures">Standard.site Test Procedures</h1>
+<p>Step-by-step procedures for each ATProto surface in the test matrix. All paths
+relative to the extracted kit root (the directory containing <code>bin/boris</code>).</p>
+<h2 id="t-01-offline-plan">T-01 — Offline plan</h2>
+<pre><code class="language-text">bin/boris standard-site plan --profile standard-site.json --out plan.json
+</code></pre>
+<ul>
+<li>Produces a deterministic record projection: the <code>site.standard.publication</code>
+record, the <code>.well-known/</code> verification project path, and document exclusions.</li>
+<li>Documents are excluded until they have a <code>published_at</code> date; exclusion reasons
+are recordable and part of the expected output.</li>
+<li><strong>Pass</strong> when: output is stable across repeated runs with identical input/profile,
+all <code>at_uri</code>s and <code>payload_sha256</code> values match, and no network/credential is touched.</li>
+</ul>
+<h2 id="t-02-canonical-records">T-02 — Canonical records</h2>
+<pre><code class="language-text">bin/boris standard-site records --profile standard-site.json --out records.json
+</code></pre>
+<ul>
+<li>Dumps the full canonical record payloads (e.g. <code>{&quot;collection&quot;:&quot;site.standard.publication&quot;,&quot;rkey&quot;:&quot;self&quot;,...}</code>).</li>
+<li><strong>Pass</strong> when: the payload is byte-stable, <code>collection</code>/<code>rkey</code>/<code>at_uri</code> are correct,
+and it runs fully offline.</li>
+</ul>
+<h2 id="t-03-verify-built-tree">T-03 — Verify built tree</h2>
+<pre><code class="language-text">bin/boris standard-site verify --profile standard-site.json --dist dist --out verify.json
+</code></pre>
+<ul>
+<li>Cross-checks the built head links and the well-known file <strong>offline</strong> against the
+profile. Fails on drift between the profile URL and the built output.</li>
+<li><strong>Pass</strong> when: it reports the expected <code>.well-known/site.standard.publication</code>
+project file at the required public URL and a matching set of document links.</li>
+</ul>
+<h2 id="t-04-auth-oauth-primary">T-04 — Auth, OAuth (primary)</h2>
+<pre><code class="language-text">bin/boris standard-site login --did did:plc:TESTID
+</code></pre>
+<ul>
+<li>Browser OAuth requesting granular repo scopes
+(<code>site.standard.document</code>, <code>site.standard.publication</code>).</li>
+<li>Not granted by <code>bsky.social</code>; requires a compliant PDS.</li>
+<li><strong>Pass</strong> when: session persists to a <code>0600</code> store and <code>sessions</code> lists it.</li>
+<li><strong>Skip</strong> if the test PDS does not implement OAuth; fall back to T-05 only for
+a dedicated test identity.</li>
+</ul>
+<h2 id="t-05-auth-app-password-opt-in">T-05 — Auth, app-password (opt-in)</h2>
+<pre><code class="language-text">bin/boris standard-site login --app-password --handle &lt;test-handle&gt;
+</code></pre>
+<ul>
+<li>Password is read <strong>once from stdin</strong> only — never from argv, profile, or env.</li>
+<li>Works on <code>bsky.social</code>. Grants broad account write <strong>in its scope</strong>, so use a
+dedicated, disposable test identity.</li>
+<li><strong>Pass</strong> when: session persists, <code>sessions</code> shows the DID/flavor/PDS with no
+secrets, and <code>logout</code> erases it.</li>
+</ul>
+<h2 id="t-06-sessions-lifecycle">T-06 — Sessions lifecycle</h2>
+<pre><code class="language-text">bin/boris standard-site sessions
+bin/boris standard-site logout --handle &lt;test-handle&gt;
+</code></pre>
+<ul>
+<li><strong>Pass</strong> when: <code>sessions</code> lists DID/flavor/PDS without exposing keys, <code>logout</code>
+securely erases the store, and a later <code>sessions</code> no longer lists it.</li>
+</ul>
+<h2 id="t-07-publish">T-07 — Publish</h2>
+<pre><code class="language-text">bin/boris standard-site publish --profile standard-site.json --out evidence.json
+</code></pre>
+<ul>
+<li>One-shot publish from a stored session; reconcile + rotate-or-die on refresh.</li>
+<li>With a committed <code>--plan PATH</code> it is fail-closed on drift against that plan.</li>
+<li><strong>Pass</strong> when: <code>evidence.json</code> is emitted with the created <code>at_uri</code>, the record
+is readable back from the PDS, and pruning only occurs with explicit <code>--prune</code>
+authority.</li>
+</ul>
+<h2 id="t-08-live-interop-smoke">T-08 — Live interop smoke</h2>
+<pre><code class="language-text">bin/boris standard-site smoke --did did:plc:TESTID --namespace boris-smoke-test --out smoke.json
+</code></pre>
+<ul>
+<li>Manual, opt-in, <strong>never in CI</strong>. Bounded, leaves no residue.</li>
+<li>Creates two records under unique <code>boris-smoke-&lt;…&gt;</code> rkeys, readback-verifies
+them against the PDS, deletes them, and emits a <code>boris-live-smoke-result</code>.</li>
+<li>Uses a clock-derived namespace by default; pass <code>--namespace</code> for a throwaway prefix.</li>
+<li>Optional: <code>--surface-url</code> to verify the served origin, <code>--indexer</code> for a
+non-normative AppView observation.</li>
+<li><strong>Pass</strong> when: both records are written and read back, both are deleted, and the
+result artifact records the whole lifecycle.</li>
+</ul>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

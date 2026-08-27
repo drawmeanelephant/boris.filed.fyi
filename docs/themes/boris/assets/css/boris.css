@@ -1,0 +1,241 @@
+/*
+  Boris on ATProto — theme.
+  A grounded, technical-document aesthetic: warm paper, ink, a single
+  amber accent, and a monospace sidebar identity. No external assets.
+*/
+:root {
+  --ink: #211d1a;
+  --ink-soft: #4a443d;
+  --paper: #faf7f2;
+  --paper-soft: #f3ede4;
+  --muted: #6b6359;
+  --accent: #b06a1a;          /* amber — the Boris accent */
+  --accent-soft: #f4e6d0;
+  --rule: #ddd4c5;
+  --rule-soft: #ece6da;
+  --code-bg: #f0eadd;
+  --code-ink: #2c2620;
+  --shadow: 0 1px 2px rgba(33, 29, 26, 0.04);
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --maxw: 66rem;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0 auto;
+  max-width: var(--maxw);
+  padding: 0 1.5rem 3rem;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.site-header {
+  padding: 1.75rem 0 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.site-title {
+  font-size: 1.35rem;
+  font-weight: 750;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.site-title a { color: var(--ink); text-decoration: none; }
+.site-title a:hover { color: var(--accent); }
+
+.site-tagline {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 0.25rem 0 0;
+  font-style: italic;
+}
+
+/* ── Nav forest ─────────────────────────────────────────── */
+.site-nav { margin-top: 0.9rem; font-size: 0.92rem; }
+.site-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+}
+.site-nav ul ul { display: none; }   /* trunk shown inline; satellites as siblings */
+.site-nav li { margin: 0; }
+.site-nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+}
+.site-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.site-nav .is-current > a,
+.site-nav .is-current a[aria-current="page"] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── Body layout: main + TOC ─────────────────────────────── */
+.site-body { display: block; }
+
+.site-breadcrumb {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0 0 1.25rem;
+}
+.site-breadcrumb ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.4rem;
+}
+.site-breadcrumb li::after { content: "›"; margin-left: 0.4rem; color: var(--rule); }
+.site-breadcrumb li:last-child::after { content: ""; }
+.site-breadcrumb a { color: var(--accent); text-decoration: none; }
+.site-breadcrumb a:hover { text-decoration: underline; }
+
+.site-toc {
+  background: var(--paper-soft);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 0.85rem 1.1rem;
+  margin: 0 0 1.75rem;
+  font-size: 0.88rem;
+  box-shadow: var(--shadow);
+}
+.site-toc:empty { display: none; }
+.site-toc::before {
+  content: "On this page";
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.site-toc ul { list-style: none; padding: 0; margin: 0; }
+.site-toc .page-toc__l1 { font-weight: 550; margin-top: 0.3rem; }
+.site-toc .page-toc__l1:first-child { margin-top: 0; }
+.site-toc .page-toc__l2 { padding-left: 0.9rem; font-weight: 400; }
+.site-toc .page-toc__l3 { padding-left: 1.8rem; font-weight: 400; font-size: 0.95em; }
+.site-toc a { color: var(--ink-soft); text-decoration: none; }
+.site-toc a:hover { color: var(--accent); }
+
+/* ── Article content ────────────────────────────────────── */
+.site-content { max-width: 48rem; }
+
+.site-content h1 {
+  font-size: 2rem;
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.5rem;
+}
+
+.site-content h2 {
+  font-size: 1.32rem;
+  margin: 2.25rem 0 0.75rem;
+  letter-spacing: -0.01em;
+}
+.site-content h3 { font-size: 1.08rem; margin: 1.75rem 0 0.5rem; }
+.site-content p { margin: 0 0 1.1rem; }
+.site-content ul, .site-content ol { margin: 0 0 1.1rem; padding-left: 1.4rem; }
+.site-content li { margin: 0.25rem 0; }
+.site-content li > ul, .site-content li > ol { margin: 0.25rem 0; }
+
+.site-content a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-soft);
+}
+.site-content a:hover { border-bottom-color: var(--accent); }
+
+.site-content blockquote {
+  margin: 1.1rem 0;
+  padding: 0.6rem 1.1rem;
+  border-left: 3px solid var(--rule);
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+}
+
+.site-content code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--code-bg);
+  color: var(--code-ink);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+.site-content pre {
+  background: var(--code-bg);
+  color: var(--code-ink);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.85rem 1.05rem;
+  overflow-x: auto;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+}
+.site-content pre code { background: none; padding: 0; font-size: inherit; }
+
+.site-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+}
+.site-content th, .site-content td {
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+.site-content th { background: var(--paper-soft); font-weight: 600; }
+.site-content tr:nth-child(even) td { background: rgba(243, 237, 228, 0.4); }
+
+.site-content hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.site-footer {
+  margin-top: 3.5rem;
+  padding-top: 1.1rem;
+  border-top: 2px solid var(--ink);
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+.site-footer code { font-family: var(--mono); font-size: 0.92em; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 38rem) {
+  body { padding: 0 1rem 2.5rem; font-size: 15px; }
+  .site-content h1 { font-size: 1.65rem; }
+  .site-content h2 { font-size: 1.18rem; }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

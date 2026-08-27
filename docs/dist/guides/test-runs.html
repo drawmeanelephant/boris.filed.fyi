@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Runs · Boris on ATProto</title>
+  <link rel="stylesheet" href="../assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/guides:test-runs">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="../index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="../atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="../boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite is-current"><a href="test-runs.html" aria-current="page">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite"><a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="../index.html">Boris on ATProto</a></li>
+<li aria-current="page">Test Runs</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#test-runs">Test Runs</a></li>
+<li class="page-toc__l2"><a href="#run-log">Run log</a></li>
+<li class="page-toc__l2"><a href="#notes">Notes</a></li>
+<li class="page-toc__l2"><a href="#pending-blocked">Pending / blocked</a></li>
+<li class="page-toc__l3"><a href="#finding-t-08-oauth-path">Finding (T-08, OAuth path)</a></li>
+<li class="page-toc__l3"><a href="#resolution-t-05-t-08-app-password-path-passed">Resolution (T-05 + T-08: app-password path) — PASSED</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="test-runs">Test Runs</h1>
+<p>A running log of executed tests against the <code>ef23e37785ce</code> kit. Each entry
+records the procedure area, the command used, the observed result, and the
+evidence artifact. The loop these tests exercise is documented in
+<a href="../standard-site.html">Standard.site — the Boris/ATProto loop</a>; the kit under test is described in <a href="../boris.html">Boris</a>.</p>
+<h2 id="run-log">Run log</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>ID</th>
+<th>Command</th>
+<th>Result</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-08-27</td>
+<td>T-01</td>
+<td><code>standard-site plan</code></td>
+<td><strong>passed</strong></td>
+<td><code>evidence/plan.json</code> (offline, stable, real DID)</td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>T-02</td>
+<td><code>standard-site records</code></td>
+<td><strong>passed</strong></td>
+<td><code>evidence/records.json</code> (offline, real DID)</td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>T-03</td>
+<td><code>standard-site verify</code></td>
+<td><strong>passed</strong> (well-known match, 9 docs verified)</td>
+<td><code>evidence/verify.json</code></td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>T-00</td>
+<td><code>boris build</code> (site)</td>
+<td><strong>passed</strong></td>
+<td><code>dist/**/*.html</code></td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>T-04</td>
+<td><code>standard-site login --did</code> (OAuth)</td>
+<td><strong>partial</strong> — read-side OK, writes fail</td>
+<td><code>sessions</code></td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>T-05</td>
+<td><code>standard-site login --app-password</code></td>
+<td><strong>passed</strong> (stdin-only secret)</td>
+<td><code>sessions</code> (flavor <code>app-password</code>)</td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>T-08</td>
+<td><code>standard-site smoke</code> (app-pw, throwaway identity)</td>
+<td><strong>passed — full live round-trip</strong></td>
+<td><code>evidence/live-smoke.json</code></td>
+</tr>
+<tr>
+<td>2026-08-27</td>
+<td>T-07</td>
+<td><code>standard-site publish</code> (app-pw, <code>boris.filed.fyi</code>)</td>
+<td><strong>passed — <code>self</code> record created live</strong></td>
+<td><code>evidence/publish.json</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><strong>T-01 insight</strong> — Documents are excluded until they carry a <code>published_at</code>;
+the starter's pages appear in <code>exclusions</code> with reason <code>missing-date</code>. That is
+expected and worth recording as documented behavior, not a bug.</li>
+<li><strong>T-02 insight</strong> — The canonical record for <code>site.standard.publication</code> with
+rkey <code>self</code> is <code>{&quot;url&quot;:..., &quot;name&quot;:...}</code>; the plan adds the derived <code>at_uri</code>,
+description, and <code>payload_sha256</code>.</li>
+<li><strong>T-03 insight (important)</strong> — <code>verify</code> initially reported
+<code>overall_passed: false</code> from <code>evidence/verify.json</code>: the well-known file was
+<code>missing</code> and <code>documents</code> was empty. This was the expected fail-closed
+behavior before a real deployment URL and published documents existed. It
+was <strong>not a failure of the tool</strong> — it was the verification gate doing its
+job.</li>
+</ul>
+<p><strong>Update 2026-08-27 (T-03 now PASSED):</strong> once the build was run with
+<code>--profile standard-site.json</code> (which emits the
+<code>.well-known/site.standard.publication</code> file) and every page carried a
+<code>published_at</code> date + <code>summary</code>, <code>verify</code> now reports <code>overall_passed: true</code>:
+well-known <code>match</code>, all 9 documents <code>verified</code>. See
+<code>evidence/verify.json</code>.</p>
+<h2 id="pending-blocked">Pending / blocked</h2>
+<ul>
+<li><strong>T-08 smoke (live)</strong> — attempted 2026-08-27 against the stored
+<code>did:plc:xrqjadveiamk7vq7sfnvfddz</code> OAuth session (PDS <code>pholiota.us-west.host.bsky.network</code>)
+with <code>--namespace boris-smoke-test</code>. Result: <strong>blocked — <code>InvalidNonce</code> (exit 3)</strong>.
+Both stored OAuth access tokens are expired (obtained 2026-08-21 / 2026-08-26,
+1-hour lifetime, well past <code>expires_in</code>), and the DPoP refresh is failing at the
+network layer rather than returning a clean &quot;session expired&quot; state. The live path
+needs a fresh authorization before it can create/readback/delete the two temporary
+records.</li>
+</ul>
+<p><strong>Update 2026-08-27 (post re-auth):</strong> <code>standard-site login --did did:plc:xrqjadveiamk7vq7sfnvfddz</code> re-signed-in successfully and the session was
+refreshed (<code>sessions</code> confirms the PDS binding). <strong>T-08 still failed with
+<code>InvalidNonce</code> (exit 3)</strong> on <strong>both</strong> test DIDs / PDS instances
+(<code>pholiota.us-west.host.bsky.network</code> and <code>morel.us-east.host.bsky.network</code>).</p>
+<h3 id="finding-t-08-oauth-path">Finding (T-08, OAuth path)</h3>
+<p>The live smoke's <strong>OAuth + DPoP write path fails with <code>InvalidNonce</code> against
+bsky.network PDS instances, reproducibly, on a freshly signed-in session</strong>.
+<code>login</code> itself succeeds (read-side discovery + token exchange), but the smoke's
+record writes are rejected at the DPoP nonce layer. This is consistent with the
+upstream Boris note that bsky.social does not reliably grant the Standard.site
+write scope via the OAuth/DPoP path, and that the <strong>recorded passing live smoke
+against bsky.social used the opt-in app-password (<code>Bearer</code>) path instead</strong>
+(2026-08-16 fixture).</p>
+<h3 id="resolution-t-05-t-08-app-password-path-passed">Resolution (T-05 + T-08: app-password path) — PASSED</h3>
+<p><strong>2026-08-27, <code>did:plc:xrqjadveiamk7vq7sfnvfddz</code>, PDS <code>pholiota.us-west.host.bsky.network</code>.</strong>
+Logged in with a dedicated throwaway test identity app-password
+(<code>standard-site login --app-password</code>, secret read once from stdin — never
+argv/env/profile), then ran <code>standard-site smoke --namespace boris-smoke-test</code>.
+<strong>Overall verdict: passed (exit 0).</strong> This throwaway identity is now retired;
+the production identity for this site is <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code>
+(<code>boris.filed.fyi</code>).</p>
+<p>From <code>evidence/live-smoke.json</code> (<code>boris-live-smoke-result</code>, <code>boris/0.8.1</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>discovery</td>
+<td>passed</td>
+</tr>
+<tr>
+<td>authorization</td>
+<td>passed (Bearer app-password path)</td>
+</tr>
+<tr>
+<td>write</td>
+<td>passed — <code>site.standard.publication</code> + <code>site.standard.document</code>, unique rkeys</td>
+</tr>
+<tr>
+<td>readback</td>
+<td>passed — AT-URI + value + CID verified for <strong>both</strong> records</td>
+</tr>
+<tr>
+<td>verification surface</td>
+<td>skipped (no <code>--surface-url</code>)</td>
+</tr>
+<tr>
+<td>indexer</td>
+<td>skipped (no <code>--indexer</code>)</td>
+</tr>
+<tr>
+<td>cleanup</td>
+<td>passed — <strong>both records deleted, zero residue</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Net finding:</strong> the OAuth/DPoP write path is non-pairity on bsky.network
+(<code>InvalidNonce</code>), but the <strong>app-password (<code>Bearer</code>) path completes the full live
+interop round-trip cleanly against bsky.social</strong>. This matches the upstream
+recorded fixture. Granular <code>repo:site.standard.*</code> scopes are not what the
+app-password path relies on; app-password grants broad account write (revoke
+after use), so it must stay on a dedicated, disposable test identity.</p>
+<p><strong>Implication for the plan:</strong> the supported live parity target on bsky.social is
+the app-password path. OAuth writes need a self-hosted PDS that grants the
+granular collection scopes.</p>
+<ul>
+<li><strong>T-07 (publish) — PASSED</strong> — <code>standard-site publish --profile standard-site.json</code>
+wrote the <code>site.standard.publication/self</code> record to
+<code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> (PDS <code>auriporia.us-west.host.bsky.network</code>),
+intent <code>create</code>, verified via write response. The record is now live at
+<code>at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self</code>
+(CID <code>bafyreibsgzcmlq37gspdgz2avdiizr6erfp5dx4gqwslsu7w5j2t6yzjgu</code>). See
+<code>evidence/publish.json</code>.</li>
+<li><strong>T-04 / T-05 / T-06 (live auth)</strong> — <code>sessions</code> (T-06) runs and lists all
+stored DIDs/flavors/PDS with no secrets, including the production identity
+<code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> (<code>boris.filed.fyi</code>). OAuth re-login works
+(T-04 partial: read-side authorization succeeds). Live <code>publish</code>/<code>smoke</code> OAuth
+writes are non-parity on bsky.network per the finding above; the production
+identity uses the app-password path.</li>
+<li><strong>T-09 (context)</strong> and <strong>T-10 (nostr)</strong> — offline or scheduler-only; not yet run.</li>
+</ul>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "format": "boris-standard-site-evidence",
+  "schema_version": 1,
+  "identity": {
+    "did": "did:plc:jiokpoojzqntdpyw5xvfr7rv",
+    "pds_origin": "https://auriporia.us-west.host.bsky.network"
+  },
+  "bindings": {
+    "source_commit": "unknown",
+    "boris_pin": "boris/0.8.1",
+    "oliver_pin": "oliver@d74249415975d652654e521b7abea40c85b13255",
+    "plan_sha256": "5cf2bf5ed16494798bfa855d59a232c02b969f90bde3dd6c1da9e141fb6c2e47"
+  },
+  "records": [
+    {
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self",
+      "rkey": "self",
+      "intent": "create",
+      "outcome": "created",
+      "verification": "write_response",
+      "intended_payload_sha256": "5d340136e7248f4e6ff4badad50157ada78f13a7effaa8c495c47715f6c5661e",
+      "observed_cid": "bafyreibsgzcmlq37gspdgz2avdiizr6erfp5dx4gqwslsu7w5j2t6yzjgu",
+      "observed_at": "2026-08-27T17:18:25.000Z",
+      "failure": null
+    }
+  ],
+  "overall": "passed"
+}

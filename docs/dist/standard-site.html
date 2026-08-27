@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Standard.site — the Boris/ATProto loop · Boris on ATProto</title>
+  <link rel="stylesheet" href="assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/standard-site">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite is-current"><a href="standard-site.html" aria-current="page">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="index.html">Boris on ATProto</a></li>
+<li aria-current="page">Standard.site — the Boris/ATProto loop</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#standardsite-the-borisatproto-loop">Standard.site — the Boris/ATProto loop</a></li>
+<li class="page-toc__l2"><a href="#the-loop">The loop</a></li>
+<li class="page-toc__l2"><a href="#the-profile">The profile</a></li>
+<li class="page-toc__l2"><a href="#step-1-build-offline">Step 1 — build (offline)</a></li>
+<li class="page-toc__l3"><a href="#dated-documents-project-as-records">Dated documents project as records</a></li>
+<li class="page-toc__l2"><a href="#step-2-plan-offline">Step 2 — plan (offline)</a></li>
+<li class="page-toc__l2"><a href="#step-3-records-offline">Step 3 — records (offline)</a></li>
+<li class="page-toc__l2"><a href="#step-4-verify-offline">Step 4 — verify (offline)</a></li>
+<li class="page-toc__l2"><a href="#step-5-login-live">Step 5 — login (live)</a></li>
+<li class="page-toc__l2"><a href="#step-6-publish-live-explicit">Step 6 — publish (live, explicit)</a></li>
+<li class="page-toc__l2"><a href="#step-7-smoke-live-manual-never-in-ci">Step 7 — smoke (live, manual, never in CI)</a></li>
+<li class="page-toc__l2"><a href="#the-meta-point">The meta point</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="standardsite-the-borisatproto-loop">Standard.site — the Boris/ATProto loop</h1>
+<p>This is the meta guide. It documents how to take a Boris-built site and
+project, verify, authorize, and publish it to the AT Protocol via the
+<code>boris standard-site</code> family — and the site you are reading is itself
+produced by that loop. Every command below is run against this site.</p>
+<p>The two references this page ties together: <a href="boris.html">Boris</a> (the compiler and
+proof pack) and <a href="atproto.html">The AT Protocol</a> (the network pieces). The procedures are in
+<a href="guides/standard-site-tests.html">Standard.site Test Procedures</a>; the run log in <a href="guides/test-runs.html">Test Runs</a>.</p>
+<h2 id="the-loop">The loop</h2>
+<pre><code class="language-text">            ┌─────────────────────────────────────────────────────┐
+            │  content/  ──boris build──▶  dist/  +  _boris/proof │
+            │                          (offline, deterministic)   │
+            └─────────────────────────────────────────────────────┘
+                                    │
+              ┌─────────────────────┼─────────────────────┐
+              ▼                     ▼                     ▼
+       standard-site plan    standard-site verify    standard-site records
+        (offline project)    (offline cross-check)   (offline payloads)
+              │                     │
+              └──────────┬──────────┘
+                         ▼
+                 standard-site login      (live, session stored 0600)
+                         │
+                         ▼
+                 standard-site publish   (live, explicit, plan-guarded)
+                         │
+                         ▼
+                 standard-site smoke     (live, manual, bounded, no residue)
+</code></pre>
+<p>The first row (build, plan, verify, records) is <strong>offline, deterministic,
+and CI-safe</strong> — no network, no credentials. The second row (login,
+publish, smoke) is <strong>live, explicit, and session-gated</strong> — nothing is
+written to the network without an explicit command.</p>
+<h2 id="the-profile">The profile</h2>
+<p><code>standard-site.json</code> is the anchor. It records the identity and origin
+that tie a built tree to the network:</p>
+<pre><code class="language-json">{
+  &quot;format&quot;: &quot;boris-publication-profile&quot;,
+  &quot;publication&quot;: {
+    &quot;target&quot;: &quot;standard-site&quot;,
+    &quot;base_url&quot;: &quot;https://boris.filed.fyi/&quot;,
+    &quot;origin&quot;: &quot;https://boris.filed.fyi/&quot;,
+    &quot;did&quot;: &quot;did:plc:jiokpoojzqntdpyw5xvfr7rv&quot;,
+    &quot;name&quot;: &quot;Boris on ATProto&quot;,
+    &quot;show_in_discover&quot;: false,
+    &quot;prune&quot;: false
+  },
+  &quot;targets&quot;: [
+    { &quot;name&quot;: &quot;public&quot;, &quot;output&quot;: &quot;dist&quot;, &quot;public&quot;: true, &quot;theme&quot;: &quot;themes/boris&quot; }
+  ]
+}
+</code></pre>
+<ul>
+<li><code>did</code> — the owning identity. This site is wired to the real
+identity <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> (handle <code>boris.filed.fyi</code>,
+PDS <code>https://auriporia.us-west.host.bsky.network</code>).</li>
+<li><code>base_url</code> / <code>origin</code> — the production URL. <strong>This is publication
+truth.</strong> <code>https://boris.filed.fyi/</code> — the offline steps run against
+it, and <code>publish</code> writes the real record to the PDS.</li>
+<li><code>show_in_discover</code> — whether the publication advertises itself to
+discovery surfaces.</li>
+<li><code>prune</code> — whether publish may delete stale documents. ANDs with the
+explicit <code>--prune</code> flag; never implicit.</li>
+</ul>
+<p>The old placeholder DID (<code>did:plc:aaaa…</code>) and the throwaway test
+identity (<code>did:plc:xrqjadveiamk7vq7sfnvfddz</code>) are both retired from
+this site's config. The live session for the new identity is stored
+and <code>publish</code>-ready.</p>
+<h2 id="step-1-build-offline">Step 1 — build (offline)</h2>
+<p>The build is two commands: the HTML build (with profile, sitemap) and
+the standalone <code>llms.txt</code> export:</p>
+<pre><code class="language-text">boris build --input content --html-dir dist --theme themes/boris \
+  --profile standard-site.json --sitemap --site-url https://boris.filed.fyi/
+boris --input content --llms --llms-path dist/llms.txt
+</code></pre>
+<p>The first command produces the HTML target, the proof pack under
+<code>dist/_boris/proof/</code>, the <code>.well-known/site.standard.publication</code>
+verification file, and <code>dist/sitemap.xml</code>. The <code>.well-known</code> file
+contains the publication record's AT-URI
+(<code>at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self</code>)
+so a reader who fetches
+<code>https://boris.filed.fyi/.well-known/site.standard.publication</code> can
+confirm the DID points at this origin. The sitemap lists all 9 pages
+under <code>https://boris.filed.fyi/</code>. The second command exports <code>llms.txt</code>,
+a deterministic LLM-consumable index of every page with its title and
+summary. See <a href="boris.html">Boris</a> for what the pack guarantees. This is the step
+you repeat on every content change.</p>
+<h3 id="dated-documents-project-as-records">Dated documents project as records</h3>
+<p>A page projects as a <code>site.standard.document</code> record only when its
+frontmatter carries a <code>published_at</code> date (full UTC:
+<code>YYYY-MM-DDTHH:MM:SSZ</code>) and a non-empty <code>summary</code>. Without both, the
+page appears in the plan's <code>exclusions</code> with reason <code>missing-date</code>.
+Every page on this site now carries both, so all 9 project as document
+records — 10 records total (1 publication + 9 documents).</p>
+<h2 id="step-2-plan-offline">Step 2 — plan (offline)</h2>
+<pre><code class="language-text">boris standard-site plan --profile standard-site.json --out evidence/plan.json
+</code></pre>
+<p>Emits a deterministic projection of the records that <em>would</em> be
+published: the <code>site.standard.publication</code> record (rkey <code>self</code>), the
+9 <code>site.standard.document</code> records (one per dated page), the
+<code>.well-known/site.standard.publication</code> verification file path, the
+document exclusions (now empty — every page is dated), and the
+verification surface projection.</p>
+<p>No network, no credentials. The output is byte-stable across runs with
+identical input + profile. This is what you commit and diff against.</p>
+<h2 id="step-3-records-offline">Step 3 — records (offline)</h2>
+<pre><code class="language-text">boris standard-site records --profile standard-site.json --out evidence/records.json
+</code></pre>
+<p>Dumps the full canonical record payloads — the exact JSON that would be
+written to the PDS. For a fresh site this is just the <code>self</code> publication
+record (<code>{&quot;url&quot;:..., &quot;name&quot;:...}</code>); once pages carry <code>published_at</code>
+dates, it includes the <code>site.standard.document</code> records too.</p>
+<h2 id="step-4-verify-offline">Step 4 — verify (offline)</h2>
+<pre><code class="language-text">boris standard-site verify --profile standard-site.json --dist dist --out evidence/verify.json
+</code></pre>
+<p>Cross-checks the <strong>built</strong> tree against the <strong>profile projection</strong>:
+the head links in the HTML and the <code>.well-known/site.standard.publication</code>
+project file. Fails on drift.</p>
+<p>Before a real origin and dated documents exist, <code>verify</code> correctly
+reports <code>overall_passed: false</code> (well-known <code>missing</code>, <code>documents</code>
+empty). This is the fail-closed gate doing its job, not a tool failure —
+see the insight in <a href="guides/test-runs.html">Test Runs</a>. T-04 passes once the production
+origin is configured and documents carry dates.</p>
+<h2 id="step-5-login-live">Step 5 — login (live)</h2>
+<pre><code class="language-text"># OAuth + DPoP path (granular scopes; needs a compliant PDS)
+boris standard-site login --did did:plc:jiokpoojzqntdpyw5xvfr7rv
+
+# app-password path (broad write; works on bsky.social; secret via stdin)
+boris standard-site login --app-password --handle boris.filed.fyi
+</code></pre>
+<p>Persists a session to a <code>0600</code> store. <code>sessions</code> lists DID/flavor/PDS
+with no secrets. The app-password is read <strong>once from stdin only</strong> —
+never argv, profile, or environment.</p>
+<p><strong>Finding:</strong> on <code>bsky.social</code>, OAuth + DPoP writes fail with
+<code>InvalidNonce</code>; the app-password path is the supported live target.
+See <a href="atproto.html">The AT Protocol</a> and <a href="guides/test-runs.html">Test Runs</a>.</p>
+<pre><code class="language-text">boris standard-site sessions
+boris standard-site logout --handle &lt;test-handle&gt;
+</code></pre>
+<h2 id="step-6-publish-live-explicit">Step 6 — publish (live, explicit)</h2>
+<pre><code class="language-text">boris standard-site publish --profile standard-site.json --out evidence.json
+</code></pre>
+<p>One-shot publish from the stored session. Reconciles the live repository
+state, rotates tokens (rotate-or-die on refresh failure), and writes the
+projected records. With a committed <code>--plan PATH</code>, it is <strong>fail-closed</strong>
+on drift between the profile and the committed plan.</p>
+<p>Pruning only occurs with explicit <code>--prune</code> authority (ANDs with the
+profile <code>prune</code> flag). Nothing is deleted implicitly.</p>
+<h2 id="step-7-smoke-live-manual-never-in-ci">Step 7 — smoke (live, manual, never in CI)</h2>
+<pre><code class="language-text">boris standard-site smoke --did did:plc:jiokpoojzqntdpyw5xvfr7rv \
+  --namespace boris-smoke-test --out evidence/live-smoke.json
+</code></pre>
+<p>A bounded, manual interop check — <strong>never run in CI</strong>. It creates two
+records under unique <code>boris-smoke-&lt;…&gt;</code> rkeys, readback-verifies them
+against the PDS (AT-URI + value + CID), then deletes them, leaving no
+residue. Optional <code>--surface-url</code> checks the served origin;
+<code>--indexer</code> observes a non-normative AppView.</p>
+<p>This site's last smoke (2026-08-27, app-password path, against the
+earlier throwaway identity) <strong>passed</strong> across discovery, authorization,
+write, readback, and cleanup. See <code>evidence/live-smoke.json</code> and
+<a href="guides/test-runs.html">Test Runs</a>. A fresh smoke against the live <code>boris.filed.fyi</code>
+identity is the next planned run.</p>
+<h2 id="the-meta-point">The meta point</h2>
+<p>This page is part of the site it documents. The Markdown source lives at
+<code>content/standard-site.md</code>; <code>boris build</code> compiles it into the HTML you
+are reading and includes it in the proof pack's artifact inventory;
+<code>standard-site plan</code> would project it as a <code>site.standard.document</code>
+record (once it carries a <code>published_at</code> date); <code>standard-site verify</code>
+would cross-check its head links offline; and <code>standard-site publish</code>
+would write it to the PDS, gated by the stored session and the
+committed-plan guard.</p>
+<p>Every command in this loop is reproducible from the kit. Start with
+<a href="guides/getting-started.html">Getting Started</a> to add a page, <a href="guides/publishing.html">Publishing</a> for the
+profile details, and <a href="guides/standard-site-tests.html">Standard.site Test Procedures</a> for the per-surface
+procedures.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>
