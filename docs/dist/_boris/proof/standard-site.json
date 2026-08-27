@@ -49,6 +49,11 @@
       "status": "emitted"
     },
     {
+      "entity_id": "operations",
+      "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/operations",
+      "status": "emitted"
+    },
+    {
       "entity_id": "standard-site",
       "at_uri": "at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/standard-site",
       "status": "emitted"

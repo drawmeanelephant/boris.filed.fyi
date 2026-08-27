@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operating this site · Boris on ATProto</title>
+  <link rel="stylesheet" href="assets/css/boris.css">
+    <link rel="site.standard.document" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.document/operations">
+  <link rel="site.standard.publication" href="at://did:plc:jiokpoojzqntdpyw5xvfr7rv/site.standard.publication/self">
+
+</head>
+<body>
+<header class="site-header">
+  <p class="site-title">Boris on ATProto</p>
+  <p class="site-tagline">A Zig content compiler, its proof pack, and the AT Protocol surface it publishes to.</p>
+  <nav class="site-nav"><nav class="site-nav" aria-label="Site">
+<ul>
+<li class="site-nav__trunk is-ancestor"><a href="index.html">Boris on ATProto</a>
+<ul>
+<li class="site-nav__satellite"><a href="atproto.html">The AT Protocol</a></li>
+<li class="site-nav__satellite"><a href="boris.html">Boris</a></li>
+<li class="site-nav__satellite"><a href="guides/getting-started.html">Getting Started</a></li>
+<li class="site-nav__satellite"><a href="guides/publishing.html">Publishing</a></li>
+<li class="site-nav__satellite"><a href="guides/standard-site-tests.html">Standard.site Test Procedures</a></li>
+<li class="site-nav__satellite"><a href="guides/test-runs.html">Test Runs</a></li>
+<li class="site-nav__satellite"><a href="guides/testing-plan.html">Testing Plan</a></li>
+<li class="site-nav__satellite is-current"><a href="operations.html" aria-current="page">Operating this site</a></li>
+<li class="site-nav__satellite"><a href="standard-site.html">Standard.site — the Boris/ATProto loop</a></li>
+</ul>
+</li>
+</ul>
+</nav></nav>
+</header>
+<main class="site-body" data-boris-search-root>
+  <div class="site-breadcrumb"><nav class="breadcrumb" aria-label="Breadcrumb">
+<ol>
+<li><a href="index.html">Boris on ATProto</a></li>
+<li aria-current="page">Operating this site</li>
+</ol>
+</nav></div>
+  <aside class="site-toc"><nav class="page-toc" aria-label="On this page">
+<ul>
+<li class="page-toc__l1"><a href="#operating-this-site">Operating this site</a></li>
+<li class="page-toc__l2"><a href="#the-two-layer-model">The two-layer model</a></li>
+<li class="page-toc__l2"><a href="#deploy-pipeline">Deploy pipeline</a></li>
+<li class="page-toc__l2"><a href="#branch-protection-on-main">Branch protection on main</a></li>
+<li class="page-toc__l2"><a href="#the-secret-convention">The secret convention</a></li>
+<li class="page-toc__l2"><a href="#the-publish-routine">The publish routine</a></li>
+<li class="page-toc__l2"><a href="#the-agent-workflow">The agent workflow</a></li>
+</ul>
+</nav></aside>
+  <article class="site-content"><h1 id="operating-this-site">Operating this site</h1>
+<p>This page is the ops playbook: how <code>boris.filed.fyi</code> is built, deployed,
+and published to the AT Protocol. It is the <em>this-repo-specific</em> guide —
+the general Boris concepts live in <a href="boris.html">Boris</a>, <a href="atproto.html">The AT Protocol</a>, and
+<a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>. The upstream project documentation at
+<code>github.com/drawmeanelephant/boris</code> (GitHub Pages) remains the canonical
+source for the tool itself; this site is a complementary help area, not a
+replacement.</p>
+<h2 id="the-two-layer-model">The two-layer model</h2>
+<p>This site lives in <strong>two places</strong> that are easy to conflate, and they do
+different jobs:</p>
+<ol>
+<li><strong>The hosting layer — Cloudflare Pages.</strong> Serves the static HTML at
+<code>https://boris.filed.fyi/</code>. The project is <code>boris-product</code>, and its
+default pages.dev URL (<code>boris-product.pages.dev</code>) points at the same
+deployment as the custom domain.</li>
+<li><strong>The ATProto layer — your PDS.</strong> Holds the records that <em>point at</em>
+the hosted site: <code>site.standard.publication/self</code> says &quot;this DID owns
+the site at this URL&quot;, and the <code>site.standard.document</code> records point
+at individual pages.</li>
+</ol>
+<p><code>standard.site</code> is <strong>not a web host.</strong> It's a lexicon — a record type on
+your PDS. The HTML still needs a host; the records make the hosted site
+verifiable and portable on the network. Cloudflare serves the files; the
+PDS serves the pointers. Both are required; neither replaces the other.</p>
+<p>The bridge between them is the <code>.well-known/site.standard.publication</code>
+file: a reader resolves the DID → gets the URL → fetches the well-known
+file → confirms the site claims that DID. The loop is closed when the
+deployed file matches the PDS record (see <a href="standard-site.html">Standard.site — the Boris/ATProto loop</a>).</p>
+<h2 id="deploy-pipeline">Deploy pipeline</h2>
+<p>The site deploys automatically from GitHub. The flow:</p>
+<pre><code class="language-text">push/merge to main
+  → GitHub Action &quot;Deploy to Cloudflare Pages&quot;
+  → wrangler pages deploy docs/dist --project-name=boris-product
+  → live at boris.filed.fyi
+</code></pre>
+<p>Key facts:</p>
+<ul>
+<li><strong><code>dist/</code> is committed.</strong> Boris is a native binary that can't run on a
+Cloudflare or GitHub Actions runner (it's Darwin-arm64 and lives in the
+gitignored <code>boris-agent-kit/</code>), so the built output is committed and
+deployed as-is. Rebuild locally, commit <code>dist/</code>, push.</li>
+<li>The workflow runs on <strong>both</strong> push to main (production deploy) and
+pull requests (preview deploy) — the PR run is what satisfies the
+required status check.</li>
+<li>The deploy workflow is the required check on <code>main</code> — PRs can't merge
+without it passing.</li>
+</ul>
+<p>The two-command build:</p>
+<pre><code class="language-text">boris build --input docs/content --html-dir docs/dist --theme docs/themes/boris \
+  --profile docs/standard-site.json --sitemap --site-url https://boris.filed.fyi/
+boris --input docs/content --llms --llms-path docs/dist/llms.txt
+</code></pre>
+<h2 id="branch-protection-on-main">Branch protection on main</h2>
+<p><code>main</code> is protected so agents can work safely:</p>
+<ul>
+<li><strong>Pull requests required</strong> — no direct pushes to main.</li>
+<li><strong>0 required approvals</strong> — PRs merge when the deploy check passes
+(auto-merge friendly; no human gate for agents).</li>
+<li><strong>Required status check</strong> — the <code>deploy</code> job must pass.</li>
+<li><strong>Strict up-to-date</strong> — PRs must be rebased on latest main.</li>
+<li><strong>No force pushes, no deletions</strong> — enforced on admins too.</li>
+<li><strong>Dismiss stale reviews</strong> when new commits land.</li>
+</ul>
+<p>Repo-level conveniences: <strong>auto-merge</strong> is on (PRs merge themselves once
+green) and <strong>auto-delete head branches</strong> is on (merged PR branches vanish
+automatically).</p>
+<h2 id="the-secret-convention">The secret convention</h2>
+<p>The repo has three secrets:</p>
+<table>
+<thead>
+<tr>
+<th>Secret</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CLOUDFLARE_API_TOKEN</code></td>
+<td>Deploying to Cloudflare Pages</td>
+</tr>
+<tr>
+<td><code>CLOUDFLARE_ACCOUNT_ID</code></td>
+<td>Deploying to Cloudflare Pages</td>
+</tr>
+<tr>
+<td><code>BORIS_APP_PASSWORD</code></td>
+<td>Manual ATProto publish (stdin only)</td>
+</tr>
+</tbody>
+</table>
+<p>The ATProto app-password is a <strong>broad-write</strong> credential. It is stored
+only as a GitHub secret (or the local session store) — never in a file in
+the repo, never in shell history. Boris accepts it <strong>only via stdin</strong>:</p>
+<pre><code class="language-text">printf '%s' &quot;$BORIS_APP_PASSWORD&quot; | boris standard-site login --app-password --handle boris.filed.fyi
+</code></pre>
+<p>If it's ever exposed (e.g. pasted in a chat), revoke it in the provider's
+app-password settings and mint a new one.</p>
+<h2 id="the-publish-routine">The publish routine</h2>
+<p>The ATProto records are <strong>not</strong> deployed by CI. They are published
+manually, and only when the site <em>structure</em> changes — adding/renaming
+pages, changing the origin, or updating a title/summary. Content edits
+redeploy to Cloudflare automatically; the records don't move for those.</p>
+<pre><code class="language-text"># login (once per session; password via stdin)
+printf '%s' &quot;$BORIS_APP_PASSWORD&quot; | boris standard-site login --app-password --handle boris.filed.fyi
+
+# publish (only when site structure changed)
+boris standard-site publish --profile docs/standard-site.json --plan docs/evidence/plan.json
+</code></pre>
+<p>The result lands in <code>docs/evidence/publish*.json</code> and should be
+committed so the record of what was published stays in the repo. This
+manual-explicit design is deliberate — see the &quot;explicit, never
+implicit&quot; stance in <a href="boris.html">Boris</a>.</p>
+<h2 id="the-agent-workflow">The agent workflow</h2>
+<p>The whole pipeline is built for agent-driven changes:</p>
+<pre><code class="language-text">agent: branch → commit → push → open PR (auto-merge enabled)
+  → deploy check runs (preview deploy)
+  → check passes → PR auto-merges
+  → production deploy fires → head branch auto-deletes
+</code></pre>
+<p>No force-pushes, no deleted branches, no direct-to-main commits — but
+agents can ship without waiting on a human review. The evidence trail
+(publish artifacts, proof pack, verify results) stays in the repo so
+every change is auditable.</p>
+</article>
+</main>
+<footer class="site-footer">
+  <p>Built with <strong>boris/0.8.1</strong> · <code>did:plc:jiokpoojzqntdpyw5xvfr7rv</code> · <a href="https://boris.filed.fyi/">boris.filed.fyi</a> · <a href="https://github.com/drawmeanelephant/boris">drawmeanelephant/boris</a> · commit <code>ef23e37785ce</code></p>
+</footer>
+</body>
+</html>

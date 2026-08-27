@@ -2,16 +2,24 @@
 title: Boris on ATProto
 tags: [home]
 published_at: 2026-08-27T17:30:00Z
-summary: A hands-on technical overview of the Boris Zig content compiler and the AT Protocol surface it publishes to — a site built with Boris, documenting Boris.
+summary: An all-around help area for the Boris Zig content compiler and the AT Protocol — built with Boris, documenting Boris, and operating as a living demo of the tool it describes.
 ---
 
 # Boris on ATProto
 
-This site is a hands-on technical overview of **Boris** — the Zig content
-compiler — and **the AT Protocol** surface it publishes to. It is also a
-living demo: every page here is compiled by Boris itself, and the whole
-site can be projected onto the `standard.site` lexicon and published to an
-ATProto PDS. The docs are an artifact of the tool under description.
+This is an **all-around help area for Boris** — the Zig content compiler —
+and the **AT Protocol** surface it publishes to. It is also a living demo:
+every page here is compiled by Boris itself, the whole site projects onto
+the `standard.site` lexicon on ATProto, and it deploys automatically from
+a public GitHub repo. The docs are an artifact of the tool under
+description.
+
+This site is a **complement to the upstream project docs**, not a
+replacement: the canonical source for the tool remains the
+[drawmeanelephant/boris](https://github.com/drawmeanelephant/boris)
+GitHub Pages. Here you'll find the help-area view: what Boris is, how
+ATProto works, how to use the `standard-site` family, and how this
+specific site is operated end to end.
 
 ## What you are looking at
 
@@ -36,6 +44,10 @@ The three ideas this site explores:
   project, verify, authorize, and publish it to ATProto with the
   `boris standard-site` family. This page is the operator's manual, and
   it is exercised by the very site it documents.
+- [[operations]] — the ops playbook: the two-layer model (Cloudflare
+  serves the files, ATProto records point at them), the deploy pipeline,
+  branch protection, the `BORIS_APP_PASSWORD` secret convention, the
+  publish routine, and the agent workflow.
 
 ## Why this is interesting
 
@@ -112,6 +124,7 @@ docs/
     boris.md                        Boris technical overview
     atproto.md                      AT Protocol technical overview
     standard-site.md                the meta guide (operator's manual)
+    operations.md                   the ops playbook (deploy + publish)
     guides/testing-plan.md          test matrix, parent: index
     guides/standard-site-tests.md   per-surface procedures
     guides/test-runs.md             running log of executed tests
@@ -128,5 +141,6 @@ docs/
 
 New here? Skim [[boris]] for the mental model, then [[atproto]] for the
 network side, then [[standard-site]] for the loop that ties them together.
-If you want to reproduce the build, the procedures live in
+If you want to know how this site is deployed and published, read
+[[operations]]. If you want to reproduce the build, the procedures live in
 [[guides/standard-site-tests]] and the run log in [[guides/test-runs]].
